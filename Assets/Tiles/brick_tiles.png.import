@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dg0cvow0f0hoe"
-path="res://.godot/imported/stone_tiles.png-2176c24b3c979ccda42de2a43b9a3f9c.ctex"
+uid="uid://cbwfh0psntxlg"
+path="res://.godot/imported/brick_tiles.png-76989be3fb36a6f9e70b9903b7b68513.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Tiles/stone_tiles.png"
-dest_files=["res://.godot/imported/stone_tiles.png-2176c24b3c979ccda42de2a43b9a3f9c.ctex"]
+source_file="res://Assets/Tiles/brick_tiles.png"
+dest_files=["res://.godot/imported/brick_tiles.png-76989be3fb36a6f9e70b9903b7b68513.ctex"]
 
 [params]
 
