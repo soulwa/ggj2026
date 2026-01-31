@@ -408,4 +408,4 @@ emitting = false
 script = ExtResource("12_smash")
 
 [node name="WeaponTip" type="Marker2D" parent="."]
-position = Vector2(48, 8)
+position = Vector2(80, 8)
