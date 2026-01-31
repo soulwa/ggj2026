@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://djfgeus8lq30a"]
 
-[ext_resource type="TileSet" uid="uid://b7xqu05up2p0m" path="res://Scenes/tileset.tres" id="1_wuvem"]
+[ext_resource type="TileSet" uid="uid://cs3dniqm6bgdo" path="res://Scenes/tileset.tres" id="1_wuvem"]
 [ext_resource type="PackedScene" uid="uid://bsfa1tlsh7fwr" path="res://Scenes/player.tscn" id="2_wuvem"]
 
 [node name="Gym" type="Node2D" unique_id=1592968127]
@@ -11,3 +11,29 @@ tile_set = ExtResource("1_wuvem")
 
 [node name="Player" parent="." unique_id=1327567935 instance=ExtResource("2_wuvem")]
 position = Vector2(163, 495)
+run_accel = null
+run_top_speed = null
+ground_friction = null
+air_accel = null
+air_top_speed = null
+air_friction = null
+turnaround_multiplier = null
+gravity = null
+jump_pixels = null
+jump_cancel_pixels = null
+max_fall_speed = null
+jump_buffer = null
+coyote_time = null
+action_buffer = null
+thrust_forward_pixels = null
+thrust_height_pixels = null
+thrust_time = null
+num_thrusts_per_jump = null
+wall_bounce_force_x = null
+wall_bounce_height_pixels = null
+dj_startup_time = null
+double_jump_power = null
+double_jump_arc = null
+dive_startup_time = null
+dive_accel = null
+dive_max_speed = null

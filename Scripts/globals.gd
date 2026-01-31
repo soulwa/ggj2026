@@ -12,3 +12,10 @@ var has_crying := false
 # 0 to 1 to fill screen, "cutscene" maybe.
 # when its 1.0 you can swim
 var waterworld := 0.0
+
+enum Action {
+	Thrust,
+	DoubleJump,
+	Dive,
+}
+var currently_selected_action: Action = Action.Thrust

@@ -20,6 +20,9 @@ class_name Player extends CharacterBody2D
 
 # sprites
 @onready var sprites: Array[AnimatedSprite2D] = [$Body, $Mask, $Spear]
+@onready var spear_hitbox: Area2D = $SpearHitbox
+@onready var shape_right: CollisionShape2D = $SpearHitbox/ShapeRight
+@onready var shape_left: CollisionShape2D = $SpearHitbox/ShapeLeft
 
 
 const DT := 0.016
@@ -55,7 +58,7 @@ var thrust_forward_force: float
 var thrust_up_force: float
 @export var thrust_time := DT * 10
 @export var num_thrusts_per_jump := 1
-@export var wall_bounce_force_x := 250.0
+@export var wall_bounce_force_x := 100.0
 @export var wall_bounce_height_pixels := 16*8
 var wall_bounce_force_y: float
 
@@ -84,6 +87,7 @@ var last_hmove := 0
 var coyote_timer := coyote_time
 var jump_buffer_timer := 0.0
 var action_buffer_timer := 0.0
+var was_in_air_last_frame: bool = false
 
 var thrust_timer: float
 var thrust_direction: int
@@ -93,15 +97,6 @@ var last_tick_left: int
 var last_tick_right: int
 var last_tick_up: int
 var last_tick_down: int
-
-enum Action {
-	Thrust,
-	DoubleJump,
-	Downdash,
-}
-var currently_selected_action: Action = Action.Thrust
-var has_double_jump := false
-var has_downdash := false
 
 
 func _ready() -> void:
@@ -223,10 +218,14 @@ func _physics_process(delta: float) -> void:
 			thrusts_remaining = num_thrusts_per_jump
 		if input_action_pressed:
 			action_buffer_timer = action_buffer
-		if action_buffer_timer > 0 and thrusts_remaining > 0:
-			current_state = MoveState.THRUST
-			thrust_timer = thrust_time
-			thrusts_remaining -= 1
+		match Globals.currently_selected_action:
+			Globals.Action.Thrust:
+				if action_buffer_timer > 0 and thrusts_remaining > 0:
+					begin_thrust()
+			Globals.Action.Dive:
+				pass
+			Globals.Action.DoubleJump:
+				pass
 		
 		# compute maximums (unless we want to bypass), gravity as final pass on "physics"
 		#velocity.x = clamp(velocity.x, -effective_top_speed, effective_top_speed)
@@ -245,40 +244,75 @@ func _physics_process(delta: float) -> void:
 		thrust_timer -= delta
 		if thrust_timer < 0:
 			current_state = MoveState.THRUST_ACTIONABLE
-		# if we hit wall, bounce off
-		if is_on_wall():
-			# TODO: check via spear hitbox
-			velocity.x = -facedir * wall_bounce_force_x
-			velocity.y = wall_bounce_force_y
-			current_state = MoveState.NORMAL
+		# check for hits
+		for body in spear_hitbox.get_overlapping_bodies():
+			if body is TileMapLayer:
+				bounce_off_wall()
+	
 	# thrust can be cancelled, gravity applies now
 	elif current_state == MoveState.THRUST_ACTIONABLE:
 		# apply gravity
 		velocity.y += gravity * delta
 		if sign(hmove) == -sign(velocity.x) or is_on_floor() or is_on_wall():
-			current_state = MoveState.NORMAL
-	
-	print(MoveState.keys()[current_state])
+			end_thrust()
 	
 	move_and_slide()
 	var num_cols = get_slide_collision_count()
 	for idx in num_cols:
 		var collision = get_slide_collision(idx)
 		# TODO (sam): do relevant stuff here if we need, like enemies, walls, spike
+		pass
 	#endregion
 	
 	#region ANIMATION
 	for sprite in sprites:
 		sprite.flip_h = facedir == -1
 		if current_state == MoveState.NORMAL:
-			if hmove != 0:
-				sprite.play("run")
+			if is_on_floor():
+				if hmove != 0:
+					sprite.play("run")
+				else:
+					if sprite.animation != "land": sprite.play("idle")
+				if was_in_air_last_frame:
+					sprite.play("land")
 			else:
-				sprite.play("idle")
+				if sprite.animation != "jump": sprite.play("jump")
 		elif current_state == MoveState.THRUST or current_state == MoveState.THRUST_ACTIONABLE and sprite.animation != "thrust":
 			sprite.play("thrust")
+	
+	if !is_on_floor():
+		was_in_air_last_frame = true
+	else:
+		was_in_air_last_frame = false
+	print($Body.animation)
 	#endregion
 
 func switch_level(direction: Level.Direction):
 	var current_level: Level = get_parent()
 	current_level.switch_level(direction)
+
+
+func begin_thrust() -> void:
+	current_state = MoveState.THRUST
+	thrust_timer = thrust_time
+	thrusts_remaining -= 1
+	action_buffer_timer = 0
+	spear_hitbox.monitoring = true
+	if facedir < 0:
+		shape_right.disabled = true
+		shape_left.disabled = false
+	else:
+		shape_right.disabled = false
+		shape_left.disabled = true
+
+func end_thrust() -> void:
+	spear_hitbox.monitoring = false
+	shape_right.disabled = true
+	shape_left.disabled = true
+	current_state = MoveState.NORMAL
+
+func bounce_off_wall() -> void:
+	# if we hit wall, bounce off
+	velocity.x = -facedir * wall_bounce_force_x
+	velocity.y = wall_bounce_force_y
+	end_thrust()
