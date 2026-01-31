@@ -1,12 +1,77 @@
 [gd_scene format=3 uid="uid://bp0vyljlm4fyv"]
 
-[ext_resource type="Texture2D" uid="uid://bc5ucxfgt8xk7" path="res://Assets/Sprites/entitiesplaceholder.png" id="1_ld55o"]
+[ext_resource type="Script" uid="uid://b26yahfh282p7" path="res://Scripts/enemyfrog.gd" id="1_mxdow"]
+[ext_resource type="Texture2D" uid="uid://dinxxukahkamg" path="res://Assets/Sprites/frog.png" id="3_4qy08"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_mxdow"]
-atlas = ExtResource("1_ld55o")
-region = Rect2(32, 0, 32, 32)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mxdow"]
+size = Vector2(78, 66)
 
-[node name="Enemy1" type="Node2D" unique_id=513876455]
+[sub_resource type="AtlasTexture" id="AtlasTexture_apx2k"]
+atlas = ExtResource("3_4qy08")
+region = Rect2(0, 0, 192, 192)
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1169438698]
-texture = SubResource("AtlasTexture_mxdow")
+[sub_resource type="AtlasTexture" id="AtlasTexture_v54tr"]
+atlas = ExtResource("3_4qy08")
+region = Rect2(0, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ite14"]
+atlas = ExtResource("3_4qy08")
+region = Rect2(192, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tq1cn"]
+atlas = ExtResource("3_4qy08")
+region = Rect2(192, 0, 192, 192)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mxdow"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_apx2k")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v54tr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ite14")
+}],
+"loop": true,
+"name": &"jumping_down",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tq1cn")
+}],
+"loop": true,
+"name": &"jumping_up",
+"speed": 5.0
+}]
+
+[node name="Enemy1" type="CharacterBody2D" unique_id=633650046]
+scale = Vector2(1.5, 1.5)
+collision_layer = 16
+collision_mask = 2
+script = ExtResource("1_mxdow")
+jumping_up_time = 0.4
+gravity = 100.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=618495061]
+position = Vector2(0, -10)
+shape = SubResource("RectangleShape2D_mxdow")
+
+[node name="DamageRegion" type="Area2D" parent="." unique_id=1979899266]
+position = Vector2(0, -10)
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageRegion" unique_id=1887129810]
+shape = SubResource("RectangleShape2D_mxdow")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=299828257]
+position = Vector2(-2, -8)
+sprite_frames = SubResource("SpriteFrames_mxdow")
+animation = &"idle"
