@@ -1,8 +1,7 @@
 [gd_scene format=4 uid="uid://co3g4wul2d857"]
 
 [ext_resource type="Texture2D" uid="uid://bein05sof8k23" path="res://Assets/Sprites/tilesplaceholder.png" id="1_go701"]
-[ext_resource type="Texture2D" uid="uid://dl5f81bu7ns5q" path="res://Assets/Sprites/playerplaceholder.png" id="2_5a7ea"]
-[ext_resource type="Script" uid="uid://utx1cv7juuf5" path="res://Scripts/player.gd" id="2_8j60k"]
+[ext_resource type="PackedScene" uid="uid://bsfa1tlsh7fwr" path="res://Scenes/player.tscn" id="2_go701"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fj7yv"]
 texture = ExtResource("1_go701")
@@ -21,43 +20,6 @@ physics_layer_0/collision_layer = 2
 physics_layer_0/collision_mask = 0
 sources/0 = SubResource("TileSetAtlasSource_fj7yv")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_f3sb7"]
-size = Vector2(16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fj7yv"]
-atlas = ExtResource("2_5a7ea")
-region = Rect2(0, 0, 21, 21)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_tlwt5"]
-atlas = ExtResource("2_5a7ea")
-region = Rect2(0, 0, 21, 21)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_aqk2v"]
-atlas = ExtResource("2_5a7ea")
-region = Rect2(21, 0, 21, 21)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_036b0"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_fj7yv")
-}],
-"loop": true,
-"name": &"idle",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_tlwt5")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_aqk2v")
-}],
-"loop": true,
-"name": &"run",
-"speed": 10.0
-}]
-
 [node name="World" type="Node2D" unique_id=349544989]
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=464982810]
@@ -67,16 +29,5 @@ tile_set = SubResource("TileSet_tlwt5")
 [node name="Camera2D" type="Camera2D" parent="." unique_id=197655643]
 position = Vector2(264, -120)
 
-[node name="Player" type="CharacterBody2D" parent="." unique_id=1097967219]
+[node name="Player" parent="." unique_id=1327567935 instance=ExtResource("2_go701")]
 position = Vector2(163, -124)
-collision_mask = 6
-script = ExtResource("2_8j60k")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=2063786352]
-shape = SubResource("RectangleShape2D_f3sb7")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player" unique_id=1168755641]
-texture_filter = 1
-position = Vector2(0, -2.5)
-sprite_frames = SubResource("SpriteFrames_036b0")
-animation = &"idle"

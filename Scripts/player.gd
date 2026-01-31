@@ -21,18 +21,18 @@ class_name Player extends CharacterBody2D
 const DT := 0.016
 
 @export_group("Movement")
-@export var run_accel := 200.0
+@export var run_accel := 2000.0
 @export var run_top_speed := 200.0
-@export var air_accel := 50.0
+@export var air_accel := 1000.0
 @export var air_top_speed := 250.0
 @export var turnaround_multiplier := 6.0
-@export var gravity := 500.0
-@export var gravity_on_wall := 150.0
-@export var jump_power := -200.0
+@export var gravity := 1600.0
+@export var gravity_on_wall := 200.0
+@export var jump_power := -500.0
 @export var jump_cancel_power := -100.0
 @export var wall_jump_power_x := 100.0
 @export var wall_jump_power_y := -150.0
-@export var max_fall_speed := 250.0
+@export var max_fall_speed := 2000.0
 @export var max_fall_speed_on_wall := 50.0
 
 @export var wall_stickiness := DT * 10
@@ -180,7 +180,7 @@ func _physics_process(delta: float) -> void:
 	# compute maximums (unless we want to bypass), gravity as final pass on "physics"
 	velocity.x = clamp(velocity.x, -effective_top_speed, effective_top_speed)
 	
-	var effective_gravity = gravity if not is_on_wall() else gravity_on_wall
+	var effective_gravity = gravity if not (is_on_wall() and velocity.y > 0) else gravity_on_wall
 	velocity.y += effective_gravity * delta
 	
 	var effective_max_fall_speed = max_fall_speed if not is_on_wall() else max_fall_speed_on_wall
