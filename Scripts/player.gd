@@ -21,6 +21,10 @@ class_name Player extends CharacterBody2D
 # sprites
 @onready var sprites: Array[AnimatedSprite2D] = [$Body, $Mask, $Spear]
 
+# particles
+@onready var smash_particles: SmashParticles = $SmashParticles
+@onready var weapon_tip: Marker2D = $WeaponTip
+
 
 const DT := 0.016
 
@@ -248,6 +252,8 @@ func _physics_process(delta: float) -> void:
 		# if we hit wall, bounce off
 		if is_on_wall():
 			# TODO: check via spear hitbox
+			# Emit smash particles at weapon tip
+			_emit_wall_smash_particles()
 			velocity.x = -facedir * wall_bounce_force_x
 			velocity.y = wall_bounce_force_y
 			current_state = MoveState.NORMAL
@@ -278,6 +284,23 @@ func _physics_process(delta: float) -> void:
 		elif current_state == MoveState.THRUST or current_state == MoveState.THRUST_ACTIONABLE and sprite.animation != "thrust":
 			sprite.play("thrust")
 	#endregion
+
+func _emit_wall_smash_particles() -> void:
+	if not smash_particles:
+		return
+	
+	# Get the weapon tip position (flipped based on face direction)
+	var tip_offset = weapon_tip.position
+	if facedir == -1:
+		tip_offset.x = -tip_offset.x
+	var emit_pos = global_position + tip_offset
+	
+	# Get wall normal for particle direction
+	var wall_normal = get_wall_normal()
+	
+	# Emit particles away from the wall
+	smash_particles.emit_burst(emit_pos, wall_normal, velocity)
+
 
 func switch_level(direction: Level.Direction):
 	var current_level: Level = get_parent()

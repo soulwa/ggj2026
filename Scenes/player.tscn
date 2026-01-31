@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://swei1d44s7gd" path="res://Assets/Sprites/player-thrust-mask.png" id="7_gymyn"]
 [ext_resource type="Texture2D" uid="uid://c47nouorgr18i" path="res://Assets/Sprites/player-thrust-spear.png" id="10_pu2lt"]
 [ext_resource type="Script" path="res://Scripts/afterimage_trail.gd" id="11_trail"]
+[ext_resource type="Script" path="res://Scripts/smash_particles.gd" id="12_smash"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f3sb7"]
 size = Vector2(21, 21)
@@ -250,3 +251,10 @@ animation = &"thrust"
 
 [node name="AfterimageTrail" type="Node2D" parent="."]
 script = ExtResource("11_trail")
+
+[node name="SmashParticles" type="CPUParticles2D" parent="."]
+emitting = false
+script = ExtResource("12_smash")
+
+[node name="WeaponTip" type="Marker2D" parent="."]
+position = Vector2(48, 8)
