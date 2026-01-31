@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://p8si7hu4ur8y"]
+
+[ext_resource type="Script" uid="uid://dmfntsms33l5t" path="res://Scripts/player_spawn.gd" id="1_86iqg"]
+[ext_resource type="Texture2D" uid="uid://bc5ucxfgt8xk7" path="res://Assets/Sprites/entitiesplaceholder.png" id="1_lldu1"]
+[ext_resource type="Script" uid="uid://btalho2esa36m" path="res://Scripts/invisible_entity.gd" id="2_usbxr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_usbxr"]
+atlas = ExtResource("1_lldu1")
+region = Rect2(0, 0, 32, 32)
+
+[node name="PlayerSpawn" type="Node2D" unique_id=1409851272]
+script = ExtResource("1_86iqg")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=778347020]
+texture = SubResource("AtlasTexture_usbxr")
+script = ExtResource("2_usbxr")

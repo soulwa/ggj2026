@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://kx6ysfcstest"]
+
+[ext_resource type="Script" uid="uid://dciakoroan1qv" path="res://Scripts/level_transition.gd" id="1_jyox7"]
+[ext_resource type="Texture2D" uid="uid://bc5ucxfgt8xk7" path="res://Assets/Sprites/entitiesplaceholder.png" id="2_b1xps"]
+[ext_resource type="Script" uid="uid://btalho2esa36m" path="res://Scripts/invisible_entity.gd" id="3_btau1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mmgyd"]
+atlas = ExtResource("2_b1xps")
+region = Rect2(96, 64, 32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t4ib2"]
+size = Vector2(32, 32)
+
+[node name="LevelTransition" type="Area2D" unique_id=1147212597]
+script = ExtResource("1_jyox7")
+direction = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1193272325]
+texture = SubResource("AtlasTexture_mmgyd")
+script = ExtResource("3_btau1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=592925148]
+shape = SubResource("RectangleShape2D_t4ib2")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

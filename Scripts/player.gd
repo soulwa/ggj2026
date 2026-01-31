@@ -201,3 +201,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		$AnimatedSprite2D.play("idle")
 	#endregion
+
+func switch_level(direction: Level.Direction):
+	var current_level: Level = get_parent()
+	current_level.switch_level(direction)

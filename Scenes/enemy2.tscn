@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://c564a211r30kc"]
+
+[ext_resource type="Texture2D" uid="uid://bc5ucxfgt8xk7" path="res://Assets/Sprites/entitiesplaceholder.png" id="1_5odvm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g6ed3"]
+atlas = ExtResource("1_5odvm")
+region = Rect2(64, 0, 32, 32)
+
+[node name="Enemy2" type="Node2D" unique_id=1969491813]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=85145220]
+texture = SubResource("AtlasTexture_g6ed3")

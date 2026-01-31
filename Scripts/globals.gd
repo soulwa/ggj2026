@@ -3,6 +3,8 @@ extends Node
 var death_count := 0
 var time_spent := 0.0
 
+var opposite_direction_from := Level.Direction.Left
+
 var has_double_jump := false
 var has_downdash := false
 var has_crying := false

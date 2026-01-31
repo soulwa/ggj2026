@@ -1,7 +1,7 @@
 [gd_scene format=4 uid="uid://co3g4wul2d857"]
 
 [ext_resource type="Texture2D" uid="uid://bein05sof8k23" path="res://Assets/Sprites/tilesplaceholder.png" id="1_go701"]
-[ext_resource type="PackedScene" uid="uid://bsfa1tlsh7fwr" path="res://Scenes/player.tscn" id="2_go701"]
+[ext_resource type="PackedScene" path="res://Scenes/player.tscn" id="2_go701"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fj7yv"]
 texture = ExtResource("1_go701")
