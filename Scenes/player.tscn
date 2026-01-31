@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://vtqqxwx8dueg" path="res://Assets/Sprites/player-running-spear.png" id="7_3smsa"]
 [ext_resource type="Texture2D" uid="uid://swei1d44s7gd" path="res://Assets/Sprites/player-thrust-mask.png" id="7_gymyn"]
 [ext_resource type="Texture2D" uid="uid://c47nouorgr18i" path="res://Assets/Sprites/player-thrust-spear.png" id="10_pu2lt"]
+[ext_resource type="Script" path="res://Scripts/afterimage_trail.gd" id="11_trail"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f3sb7"]
 size = Vector2(21, 21)
@@ -246,3 +247,6 @@ animation = &"thrust"
 [node name="Spear" type="AnimatedSprite2D" parent="." unique_id=2118708115]
 sprite_frames = SubResource("SpriteFrames_f1ek2")
 animation = &"thrust"
+
+[node name="AfterimageTrail" type="Node2D" parent="."]
+script = ExtResource("11_trail")
