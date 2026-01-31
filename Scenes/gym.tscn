@@ -10,4 +10,4 @@ tile_map_data = PackedByteArray("AAD//w4AAQADAAMAAAAAAA4AAQAGAAIAAAAAAA8AAQABAAM
 tile_set = ExtResource("1_wuvem")
 
 [node name="Player" parent="." unique_id=1327567935 instance=ExtResource("2_wuvem")]
-position = Vector2(107, 429)
+position = Vector2(163, 495)
