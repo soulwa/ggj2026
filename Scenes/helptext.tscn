@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://7jq4lqv8pdmy"]
+
+[ext_resource type="Script" uid="uid://cup3sq37rfor3" path="res://Scripts/helptext.gd" id="1_m7e6f"]
+[ext_resource type="FontFile" uid="uid://51nuconqua4h" path="res://Assets/Fonts/Fabled_Font.ttf" id="1_pm41b"]
+
+[node name="Helptext" type="Label" unique_id=1654642092]
+theme_override_fonts/font = ExtResource("1_pm41b")
+script = ExtResource("1_m7e6f")
