@@ -70,19 +70,6 @@ text = "move: arrows, WASD, dpad
 jump: Z, space, A button"
 
 [connection signal="body_entered" from="TileMapLayer/LevelTransition" to="TileMapLayer/LevelTransition" method="_on_body_entered"]
-<<<<<<< HEAD
-[connection signal="body_entered" from="TileMapLayer/@Area2D@214754" to="TileMapLayer/@Area2D@214754" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@214755" to="TileMapLayer/@Area2D@214755" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@214756" to="TileMapLayer/@Area2D@214756" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@214767" to="TileMapLayer/@Area2D@214767" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@214768" to="TileMapLayer/@Area2D@214768" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@214769" to="TileMapLayer/@Area2D@214769" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@214770" to="TileMapLayer/@Area2D@214770" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@214771" to="TileMapLayer/@Area2D@214771" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@214772" to="TileMapLayer/@Area2D@214772" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@214773" to="TileMapLayer/@Area2D@214773" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@214774" to="TileMapLayer/@Area2D@214774" method="_on_body_entered"]
-=======
 [connection signal="body_entered" from="TileMapLayer/@Area2D@41247" to="TileMapLayer/@Area2D@41247" method="_on_body_entered"]
 [connection signal="body_entered" from="TileMapLayer/@Area2D@41248" to="TileMapLayer/@Area2D@41248" method="_on_body_entered"]
 [connection signal="body_entered" from="TileMapLayer/@Area2D@41249" to="TileMapLayer/@Area2D@41249" method="_on_body_entered"]
@@ -94,6 +81,5 @@ jump: Z, space, A button"
 [connection signal="body_entered" from="TileMapLayer/@Area2D@41265" to="TileMapLayer/@Area2D@41265" method="_on_body_entered"]
 [connection signal="body_entered" from="TileMapLayer/@Area2D@41266" to="TileMapLayer/@Area2D@41266" method="_on_body_entered"]
 [connection signal="body_entered" from="TileMapLayer/@Area2D@41267" to="TileMapLayer/@Area2D@41267" method="_on_body_entered"]
->>>>>>> b56d0ac5305c4284c7c7f6b177550239e41a90b0
 
 [editable path="CheckpointTall"]
