@@ -91,7 +91,7 @@ var double_jump_power: float
 
 @export_subgroup("Thrust Frog")
 @export var frog_bounce_force_x := 700.0
-@export var frog_bounce_height := 8 * 8
+@export var frog_bounce_height := 16 * 8
 var frog_bounce_force_y: float
 
 enum MoveState {
