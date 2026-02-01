@@ -145,8 +145,13 @@ func play_shoot() -> void:
 func play_shroomscream() -> void:
 	$SFX_Shroomscream.play()
 
-func play_maskget() -> void:
+func play_maskget(is_final: bool = false) -> void:
 	$SFX_Maskget.play()
+	music.volume_linear = 0.0
+	if !is_final:
+		var tween = create_tween()
+		tween.tween_interval(3.0)
+		tween.tween_property(music, "volume_linear", 1.0, 5.0)
 
 func play_cry() -> void:
 	var tween = create_tween()

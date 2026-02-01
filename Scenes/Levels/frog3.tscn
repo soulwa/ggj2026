@@ -5,11 +5,11 @@
 [ext_resource type="TileSet" uid="uid://cs3dniqm6bgdo" path="res://Scenes/tileset.tres" id="3_21qdc"]
 [ext_resource type="Texture2D" uid="uid://dhch22tc1caqq" path="res://Assets/Sprites/decals-xl.png" id="3_gugf4"]
 [ext_resource type="PackedScene" uid="uid://bsfa1tlsh7fwr" path="res://Scenes/player.tscn" id="4_y5euq"]
-[ext_resource type="Shader" path="res://Shaders/brightness-contrast.gdshader" id="4_ylxfi"]
+[ext_resource type="Shader" uid="uid://cl7vmth0yv5m8" path="res://Shaders/brightness-contrast.gdshader" id="4_ylxfi"]
 [ext_resource type="TileSet" uid="uid://ce86g6go5rhye" path="res://Scenes/bg_tileset.tres" id="5_gugf4"]
 [ext_resource type="PackedScene" uid="uid://p8si7hu4ur8y" path="res://Scenes/player_spawn.tscn" id="5_ylxfi"]
 [ext_resource type="TileSet" uid="uid://51pf6litgg2x" path="res://Scenes/fg_tileset.tres" id="6_y5euq"]
-[ext_resource type="PackedScene" path="res://Scenes/helptext.tscn" id="9_ylxfi"]
+[ext_resource type="PackedScene" uid="uid://7jq4lqv8pdmy" path="res://Scenes/helptext.tscn" id="9_ylxfi"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_so3f2"]
 shader = ExtResource("4_ylxfi")
@@ -71,7 +71,7 @@ offset_top = -1568.0
 offset_right = 1051.0
 offset_bottom = -1337.0
 theme_override_font_sizes/font_size = 24
-text = "mask menu: shift, LB, RB
+text = "mask menu: shift, LT, RT
 while in menu:
 hold direction to select a mask
 release menu to resume
@@ -82,12 +82,12 @@ after_frogmask = true
 fade_in_time = 2.0
 
 [connection signal="body_entered" from="TileMapLayer/LevelTransition" to="TileMapLayer/LevelTransition" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@53130" to="TileMapLayer/@Area2D@53130" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@53131" to="TileMapLayer/@Area2D@53131" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@53132" to="TileMapLayer/@Area2D@53132" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@53133" to="TileMapLayer/@Area2D@53133" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@53134" to="TileMapLayer/@Area2D@53134" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@53135" to="TileMapLayer/@Area2D@53135" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@53137" to="TileMapLayer/@Area2D@53137" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@53138" to="TileMapLayer/@Area2D@53138" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@53140" to="TileMapLayer/@Area2D@53140" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@126258" to="TileMapLayer/@Area2D@126258" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@126259" to="TileMapLayer/@Area2D@126259" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@126260" to="TileMapLayer/@Area2D@126260" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@126261" to="TileMapLayer/@Area2D@126261" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@126262" to="TileMapLayer/@Area2D@126262" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@126263" to="TileMapLayer/@Area2D@126263" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@126265" to="TileMapLayer/@Area2D@126265" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@126266" to="TileMapLayer/@Area2D@126266" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@126268" to="TileMapLayer/@Area2D@126268" method="_on_body_entered"]

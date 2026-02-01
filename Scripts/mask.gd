@@ -43,9 +43,8 @@ func _on_body_entered(body: Node2D) -> void:
 			queue_free()
 		if is_crying:
 			Globals.has_crying = true
-			MusicManager.play_maskget()
+			MusicManager.play_maskget(true)
 			Globals.currently_selected_action = Globals.Action.Cry
-			MusicManager.fade_out_music()
 			MusicManager.stop_sound_footstep()
 			queue_free()
 		

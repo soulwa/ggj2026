@@ -35,6 +35,7 @@
 [ext_resource type="AudioStream" uid="uid://bnwmy5gg62edx" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_verb_shoot_v01_-6dB.wav" id="33_e0oj2"]
 [ext_resource type="AudioStream" uid="uid://bkqvjf1qdmg2q" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_verb_shroomScream_v01_-4dB.wav" id="34_313iq"]
 [ext_resource type="AudioStream" uid="uid://cmahacup12uds" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_verb_cry_v01_-7dB.wav" id="35_bggwv"]
+[ext_resource type="AudioStream" uid="uid://s4yqa5mqpm5t" path="res://Assets/Sfx/GGJ2026_STG_Fenrick_maskPickup_v01_-4dB.wav" id="36_u6hki"]
 
 [sub_resource type="AudioStreamSynchronized" id="AudioStreamSynchronized_me85s"]
 stream_count = 3
@@ -165,7 +166,7 @@ stream = ExtResource("35_bggwv")
 volume_db = -5.0
 
 [node name="SFX_Maskget" type="AudioStreamPlayer" parent="." unique_id=2077321075]
-stream = ExtResource("23_3wvko")
+stream = ExtResource("36_u6hki")
 bus = &"SFX"
 
 [connection signal="timeout" from="Timer_Footstep" to="." method="_on_timer_footstep_timeout"]
