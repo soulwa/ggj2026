@@ -10,13 +10,42 @@ var player: Player
 @export var deadzone := Vector2(24.0, 32.0)
 @export var follow_speed := Vector2(10.0, 8.0)
 
+@export_group("Screen Shake")
+@export var hit_shake_intensity := 8.0
+@export var hit_shake_duration := 0.15
+@export var death_shake_intensity := 16.0
+@export var death_shake_duration := 0.4
+@export var shake_decay_rate := 5.0
 
 var _prev_target_pos: Vector2
 var _lookahead_x := 0.0
 # var _lookahead_y := 0.0
 
+# Screen shake state
+var _shake_intensity := 0.0
+var _shake_duration := 0.0
+var _shake_timer := 0.0
+var _shake_offset := Vector2.ZERO
+
 func _ready() -> void:
 	pass
+
+
+## Trigger screen shake with specified intensity and duration
+func shake(intensity: float, duration: float) -> void:
+	_shake_intensity = intensity
+	_shake_duration = duration
+	_shake_timer = duration
+
+
+## Trigger screen shake for player hit
+func shake_hit() -> void:
+	shake(hit_shake_intensity, hit_shake_duration)
+
+
+## Trigger screen shake for player death
+func shake_death() -> void:
+	shake(death_shake_intensity, death_shake_duration)
 
 func force_initial_position_stable(pos: Vector2, vel: Vector2) -> void:
 	var player_pos := pos
@@ -50,3 +79,29 @@ func _process(delta: float) -> void:
 	
 	global_position.x = lerp(global_position.x, desired_position.x, follow_speed.x * delta)
 	global_position.y = lerp(global_position.y, desired_position.y, follow_speed.y * delta)
+	
+	# Apply screen shake
+	_update_shake(delta)
+
+
+func _update_shake(delta: float) -> void:
+	if _shake_timer > 0:
+		_shake_timer -= delta
+		
+		# Calculate shake progress (1.0 at start, 0.0 at end)
+		var shake_progress := _shake_timer / _shake_duration
+		# Apply decay for smooth falloff
+		var current_intensity := _shake_intensity * shake_progress
+		
+		# Generate random offset
+		_shake_offset = Vector2(
+			randf_range(-current_intensity, current_intensity),
+			randf_range(-current_intensity, current_intensity)
+		)
+		
+		offset = _shake_offset
+	else:
+		# Smoothly return to zero offset
+		offset = offset.lerp(Vector2.ZERO, shake_decay_rate * delta)
+		if offset.length() < 0.1:
+			offset = Vector2.ZERO

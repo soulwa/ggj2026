@@ -742,6 +742,9 @@ func take_hit(kb: bool) -> void:
 		velocity.x = kb_force_x
 		velocity.y = kb_force_y
 		# TODO (sam): flickering on sprite for invuln.
+		
+		# Screen shake on hit
+		_trigger_camera_shake_hit()
 	
 
 func die() -> void:
@@ -749,6 +752,9 @@ func die() -> void:
 		return
 	
 	dead = true
+	
+	# Screen shake on death
+	_trigger_camera_shake_death()
 		
 	print("Player died!")
 	if current_state == MoveState.SWAPMASK:
@@ -785,4 +791,25 @@ func die() -> void:
 
 func set_spawn(pos: Vector2) -> void:
 	spawnpoint = pos
+
+
+func _get_camera() -> NiceCamera:
+	var parent = get_parent()
+	if parent:
+		for child in parent.get_children():
+			if child is NiceCamera:
+				return child
+	return null
+
+
+func _trigger_camera_shake_hit() -> void:
+	var camera = _get_camera()
+	if camera:
+		camera.shake_hit()
+
+
+func _trigger_camera_shake_death() -> void:
+	var camera = _get_camera()
+	if camera:
+		camera.shake_death()
 #endregion
