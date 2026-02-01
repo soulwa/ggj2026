@@ -146,6 +146,170 @@ func emit_towards(emit_position: Vector2, emit_direction: Vector2) -> void:
 	emit_burst(emit_position, emit_direction.normalized())
 
 
+## Emit a burst with a custom color (for enemy hits)
+## [param emit_position] - World position to emit from
+## [param surface_normal] - Normal of the surface hit (particles fly away from this)
+## [param impact_velocity] - Optional: velocity at impact for more dynamic spread
+## [param custom_color] - Color to use for this burst (overrides base_color temporarily)
+func emit_burst_colored(emit_position: Vector2, surface_normal: Vector2, impact_velocity: Vector2, custom_color: Color) -> void:
+	# Temporarily set the color for this burst
+	var original_color = base_color
+	base_color = custom_color
+	color = custom_color
+	
+	# Emit the burst
+	emit_burst(emit_position, surface_normal, impact_velocity)
+	
+	# Restore original color for future bursts
+	base_color = original_color
+
+
+## Emit a burst with weighted colors - particles are distributed across colors based on weights
+## [param emit_position] - World position to emit from
+## [param surface_normal] - Normal of the surface hit
+## [param impact_velocity] - Velocity at impact
+## [param color_palette] - Array of colors
+## [param weights] - Array of weights (0.0-1.0) for each color. Should sum to 1.0. If empty, equal weights used.
+func emit_burst_weighted(emit_position: Vector2, surface_normal: Vector2, impact_velocity: Vector2, color_palette: Array[Color], weights: Array[float] = []) -> void:
+	if color_palette.is_empty():
+		emit_burst(emit_position, surface_normal, impact_velocity)
+		return
+	
+	var total_particles = particles_per_burst
+	
+	# Normalize weights or use equal weights
+	var normalized_weights: Array[float] = []
+	if weights.size() == color_palette.size():
+		var weight_sum = 0.0
+		for w in weights:
+			weight_sum += w
+		for w in weights:
+			normalized_weights.append(w / weight_sum if weight_sum > 0 else 1.0 / weights.size())
+	else:
+		# Equal weights if not provided or mismatched
+		var equal_weight = 1.0 / color_palette.size()
+		for i in color_palette.size():
+			normalized_weights.append(equal_weight)
+	
+	# Calculate particle counts for each color
+	var particle_counts: Array[int] = []
+	var assigned_particles = 0
+	for i in range(normalized_weights.size()):
+		var count = roundi(normalized_weights[i] * total_particles)
+		particle_counts.append(count)
+		assigned_particles += count
+	
+	# Distribute any remaining particles to the highest weighted color
+	var remainder = total_particles - assigned_particles
+	if remainder != 0 and particle_counts.size() > 0:
+		var max_idx = 0
+		for i in range(normalized_weights.size()):
+			if normalized_weights[i] > normalized_weights[max_idx]:
+				max_idx = i
+		particle_counts[max_idx] += remainder
+	
+	# Pre-calculate direction and speed (shared across all mini-bursts)
+	var downward_bias := Vector2(0, 0.1)
+	var biased_normal = (surface_normal + downward_bias).normalized()
+	var emit_direction = biased_normal
+	
+	var speed_min = min_speed
+	var speed_max = max_speed
+	if impact_velocity.length() > 10:
+		var impact_dir = impact_velocity.normalized()
+		emit_direction = (biased_normal * 0.6 + impact_dir * 0.4).normalized()
+		var speed_mult = clamp(impact_velocity.length() / 300.0, 1.0, 1.8)
+		speed_min = min_speed * speed_mult
+		speed_max = max_speed * speed_mult
+	
+	# Spawn temporary particle emitters for each color (since one CPUParticles2D can only emit one color at a time)
+	for i in range(color_palette.size()):
+		if particle_counts[i] <= 0:
+			continue
+		
+		# Apply color with slight variation
+		var emit_color = color_palette[i]
+		if color_variation > 0:
+			var variation = randf_range(-color_variation, color_variation)
+			emit_color = Color(
+				emit_color.r + variation * 0.3,
+				emit_color.g + variation * 0.3,
+				emit_color.b + variation * 0.3,
+				emit_color.a
+			)
+		
+		# Create a temporary particle emitter for this color
+		_spawn_temp_emitter(emit_position, emit_direction, speed_min, speed_max, emit_color, particle_counts[i])
+
+
+## Spawns a temporary CPUParticles2D that auto-deletes after emission
+func _spawn_temp_emitter(pos: Vector2, dir: Vector2, speed_min_val: float, speed_max_val: float, emit_color: Color, particle_count: int) -> void:
+	var temp_particles = CPUParticles2D.new()
+	get_parent().add_child(temp_particles)
+	
+	# Position and basic settings
+	temp_particles.global_position = pos
+	temp_particles.emitting = false
+	temp_particles.one_shot = true
+	temp_particles.explosiveness = 1.0
+	temp_particles.amount = particle_count
+	temp_particles.lifetime = particle_lifetime
+	temp_particles.lifetime_randomness = lifetime_randomness_amount
+	
+	# Emission shape
+	temp_particles.emission_shape = CPUParticles2D.EMISSION_SHAPE_POINT
+	
+	# Direction and spread
+	temp_particles.direction = dir
+	temp_particles.spread = burst_spread
+	
+	# Velocity
+	temp_particles.initial_velocity_min = speed_min_val
+	temp_particles.initial_velocity_max = speed_max_val
+	
+	# Gravity
+	temp_particles.gravity = Vector2(0, gravity_strength)
+	
+	# Angular velocity
+	temp_particles.angular_velocity_min = -360.0
+	temp_particles.angular_velocity_max = 360.0
+	
+	# Size
+	temp_particles.scale_amount_min = min_size / 8.0
+	temp_particles.scale_amount_max = max_size / 8.0
+	
+	# Color
+	temp_particles.color = emit_color
+	if fade_out:
+		temp_particles.color_ramp = _create_color_ramp()
+	
+	# Damping
+	temp_particles.damping_min = 0.0
+	temp_particles.damping_max = 8.0
+	
+	# Texture
+	temp_particles.texture = _get_shared_particle_texture()
+	
+	# Start emission
+	temp_particles.emitting = true
+	
+	# Auto-delete after particles are done (lifetime + small buffer)
+	var delete_timer = get_tree().create_timer(particle_lifetime + 0.5)
+	delete_timer.timeout.connect(func(): 
+		if is_instance_valid(temp_particles):
+			temp_particles.queue_free()
+	)
+
+
+## Emit a burst with multiple colors using equal weights
+## [param emit_position] - World position to emit from
+## [param surface_normal] - Normal of the surface hit
+## [param impact_velocity] - Velocity at impact
+## [param color_palette] - Array of colors to distribute particles across
+func emit_burst_palette(emit_position: Vector2, surface_normal: Vector2, impact_velocity: Vector2, color_palette: Array[Color]) -> void:
+	emit_burst_weighted(emit_position, surface_normal, impact_velocity, color_palette, [])
+
+
 ## Update particle settings at runtime
 func set_particle_color(new_color: Color) -> void:
 	base_color = new_color

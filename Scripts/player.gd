@@ -390,6 +390,7 @@ func _physics_process(delta: float) -> void:
 			if body is TileMapLayer:
 				dive_bounce()
 			if body is EnemyFrog:
+				_emit_enemy_particles(body, body.global_position, Vector2.UP)
 				body.die()
 			if body is MushroomGuy:
 				body.die()
@@ -486,6 +487,26 @@ func _emit_dive_impact_dent() -> void:
 	_add_wall_dent(dent_pos, Vector2.DOWN, 1.5)
 
 
+## Get emit position for thrust attacks (weapon tip + 16px inward toward enemy)
+func _get_thrust_emit_pos() -> Vector2:
+	var tip_offset = weapon_tip.position
+	if facedir == -1:
+		tip_offset.x = -tip_offset.x
+	return global_position + tip_offset + Vector2(facedir * 16, 0)
+
+
+## Emit particles when hitting an enemy. Uses enemy's color palette if available.
+func _emit_enemy_particles(enemy: Node2D, emit_pos: Vector2, emit_direction: Vector2) -> void:
+	if not smash_particles:
+		return
+	# Use enemy's colors if they have them, otherwise default
+	if "particle_colors" in enemy and "particle_weights" in enemy:
+		if enemy.particle_colors.size() > 0:
+			smash_particles.emit_burst_weighted(emit_pos, emit_direction, velocity, enemy.particle_colors, enemy.particle_weights)
+			return
+	smash_particles.emit_burst(emit_pos, emit_direction, velocity)
+
+
 func _add_wall_dent(hit_pos: Vector2, hit_direction: Vector2, strength_multiplier: float = 1.0) -> void:
 	# Find the dent manager in the level
 	var parent = get_parent()
@@ -540,10 +561,10 @@ func check_thrust_hits() -> void:
 			if body is TileMapLayer:
 				bounce_off_wall()
 			if body is EnemyFrog:
-				bounce_off_frog()
+				bounce_off_frog(body)
 			if body is MushroomGuy:
 				body.die()
-				bounce_off_mushroom()
+				bounce_off_mushroom(body)
 
 func bounce_off_wall() -> void:
 	# if we hit wall, bounce off
@@ -554,35 +575,23 @@ func bounce_off_wall() -> void:
 	disable_jump_cancel = true
 	MusicManager.play_sound_wallbounce()
 
-func bounce_off_frog() -> void:
+func bounce_off_frog(frog: EnemyFrog) -> void:
 	velocity.x = -facedir * frog_bounce_force_x
 	velocity.y = frog_bounce_force_y
 	
-	# NOTE (sam): modified not to make a dent
-	var tip_offset = weapon_tip.position
-	if facedir == -1:
-		tip_offset.x = -tip_offset.x
-	var emit_pos = global_position + tip_offset
-	if smash_particles:
-		smash_particles.emit_burst(emit_pos, Vector2.RIGHT * -facedir, velocity)
+	var _enable_frog_thrust_particles := false  # Toggle to enable/disable frog thrust hit particles
+	if _enable_frog_thrust_particles:
+		_emit_enemy_particles(frog, _get_thrust_emit_pos(), Vector2.RIGHT * -facedir)
 	
 	end_thrust()
 	disable_jump_cancel = true
-	
-	# refund if you hit an enemy
-	thrusts_remaining = 1
+	thrusts_remaining = 1  # refund if you hit an enemy
 
-func bounce_off_mushroom() -> void:
+func bounce_off_mushroom(mushroom: MushroomGuy) -> void:
 	velocity.x = -facedir * mushroom_bounce_force_x
 	velocity.y = mushroom_bounce_force_y
 	
-	# NOTE (sam): modified not to make a dent
-	var tip_offset = weapon_tip.position
-	if facedir == -1:
-		tip_offset.x = -tip_offset.x
-	var emit_pos = global_position + tip_offset
-	if smash_particles:
-		smash_particles.emit_burst(emit_pos, Vector2.RIGHT * -facedir, velocity)
+	_emit_enemy_particles(mushroom, _get_thrust_emit_pos(), Vector2.RIGHT * -facedir)
 	
 	end_thrust()
 	disable_jump_cancel = true
