@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://utx1cv7juuf5" path="res://Scripts/player.gd" id="1_cvnsp"]
 [ext_resource type="Texture2D" uid="uid://bhnlook8ti2qb" path="res://Assets/Sprites/player-neutral-body.png" id="2_fkybt"]
 [ext_resource type="Texture2D" uid="uid://dpd6pff5dtsme" path="res://Assets/Sprites/player-dive-body.png" id="2_igrcy"]
+[ext_resource type="Texture2D" uid="uid://b6iwr0murwk6w" path="res://Assets/Sprites/player-doublejump.png" id="3_p1odr"]
 [ext_resource type="Texture2D" uid="uid://bi8jyaveywfuq" path="res://Assets/Sprites/player-jump-body.png" id="3_ukyrk"]
 [ext_resource type="Texture2D" uid="uid://b5nyo2ajajnaw" path="res://Assets/Sprites/player-running-body.png" id="3_x3wgy"]
 [ext_resource type="Texture2D" uid="uid://mwoxk3x1yvq7" path="res://Assets/Sprites/player-thrust-body.png" id="4_tx1dd"]
@@ -35,6 +36,38 @@ region = Rect2(0, 0, 192, 192)
 [sub_resource type="AtlasTexture" id="AtlasTexture_7ldla"]
 atlas = ExtResource("2_igrcy")
 region = Rect2(192, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3uvy8"]
+atlas = ExtResource("3_p1odr")
+region = Rect2(0, 0, 65, 65)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ss172"]
+atlas = ExtResource("3_p1odr")
+region = Rect2(65, 0, 65, 65)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jmelf"]
+atlas = ExtResource("3_p1odr")
+region = Rect2(130, 0, 65, 65)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bjdqd"]
+atlas = ExtResource("3_p1odr")
+region = Rect2(195, 0, 65, 65)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_feq18"]
+atlas = ExtResource("3_p1odr")
+region = Rect2(260, 0, 65, 65)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wcnj3"]
+atlas = ExtResource("3_p1odr")
+region = Rect2(325, 0, 65, 65)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jsob3"]
+atlas = ExtResource("3_p1odr")
+region = Rect2(390, 0, 65, 65)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pg0gw"]
+atlas = ExtResource("3_p1odr")
+region = Rect2(455, 0, 65, 65)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_83xs0"]
 atlas = ExtResource("3_ukyrk")
@@ -92,6 +125,35 @@ animations = [{
 "loop": false,
 "name": &"dive",
 "speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3uvy8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ss172")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jmelf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bjdqd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_feq18")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wcnj3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jsob3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pg0gw")
+}],
+"loop": true,
+"name": &"doublejump",
+"speed": 25.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -229,6 +291,14 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": null
+}],
+"loop": true,
+"name": &"doublejump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("4_x3wgy")
 }],
 "loop": true,
@@ -343,6 +413,14 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": null
+}],
+"loop": true,
+"name": &"doublejump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("12_bi64h")
 }],
 "loop": true,
@@ -454,6 +532,14 @@ animations = [{
 "loop": false,
 "name": &"dive",
 "speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}],
+"loop": true,
+"name": &"doublejump",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -579,6 +665,14 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": null
+}],
+"loop": true,
+"name": &"doublejump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("5_3smsa")
 }],
 "loop": true,
@@ -675,27 +769,28 @@ shape = SubResource("RectangleShape2D_f3sb7")
 [node name="Body" type="AnimatedSprite2D" parent="." unique_id=955490563]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_036b0")
-animation = &"idle"
+animation = &"doublejump"
+frame_progress = 0.1573222
 flip_h = true
 
 [node name="ThrustMask" type="AnimatedSprite2D" parent="." unique_id=973414495]
 visible = false
 sprite_frames = SubResource("SpriteFrames_lisdf")
-animation = &"idle"
+animation = &"doublejump"
 
 [node name="DiveMask" type="AnimatedSprite2D" parent="." unique_id=1613367690]
 visible = false
 sprite_frames = SubResource("SpriteFrames_f5f5t")
-animation = &"idle"
+animation = &"doublejump"
 
 [node name="DoublejumpMask" type="AnimatedSprite2D" parent="." unique_id=265848805]
 visible = false
 sprite_frames = SubResource("SpriteFrames_8erm5")
-animation = &"land"
+animation = &"doublejump"
 
 [node name="Spear" type="AnimatedSprite2D" parent="." unique_id=2118708115]
 sprite_frames = SubResource("SpriteFrames_f1ek2")
-animation = &"dive"
+animation = &"doublejump"
 
 [node name="SpearHitbox" type="Area2D" parent="." unique_id=1815314269]
 collision_layer = 0

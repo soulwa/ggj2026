@@ -109,6 +109,9 @@ var was_in_air_last_frame: bool = false
 var disable_jump_cancel: bool = false
 var latest_direction := Vector2i.ZERO
 
+var is_jump_animation: bool = false
+var is_doublejump_animation: bool = false
+
 var thrust_timer: float
 var thrust_direction: int
 var thrusts_remaining: int
@@ -235,8 +238,6 @@ func _physics_process(delta: float) -> void:
 	
 	if input_swapmask_pressed:
 		enter_swapmask()
-	if input_swapmask_released:
-		exit_swapmask()
 	
 	
 	#region MOVEMENT
@@ -259,6 +260,10 @@ func _physics_process(delta: float) -> void:
 		else:
 			velocity.x = move_toward(velocity.x, 0, effective_friction * delta)
 		
+		if hmove != 0 and is_on_floor():
+			MusicManager.start_sound_footstep()
+		else:
+			MusicManager.stop_sound_footstep()
 		
 		if current_state == MoveState.NORMAL:
 			# jump from the floor
@@ -267,9 +272,7 @@ func _physics_process(delta: float) -> void:
 				jump_buffer_timer = jump_buffer
 			# jump is buffered and on the floor, or just left it.
 			if jump_buffer_timer > 0 and coyote_timer >= 0 and is_on_floor():
-				disable_jump_cancel = false
-				velocity.y = jump_power
-				jump_buffer_timer = 0
+				jump()
 			# wall jump
 			#elif jump_buffer_timer > 0 and is_on_wall():
 				#var walldir = get_wall_normal()
@@ -317,8 +320,6 @@ func _physics_process(delta: float) -> void:
 					facedir = 1
 					show_swapmask_visual()
 					swapmask_target = Globals.Action.Thrust
-			
-			
 			
 			# exit menu
 			if input_action_pressed:
@@ -402,7 +403,8 @@ func _physics_process(delta: float) -> void:
 				if was_in_air_last_frame:
 					sprite.play("land")
 			else:
-				if sprite.animation != "jump": sprite.play("jump")
+				if is_doublejump_animation and sprite.animation != "doublejump": sprite.play("doublejump")
+				if is_jump_animation and sprite.animation != "jump": sprite.play("jump")
 		elif current_state == MoveState.THRUST or current_state == MoveState.THRUST_ACTIONABLE and sprite.animation != "thrust":
 			sprite.play("thrust")
 		elif current_state == MoveState.DIVE:
@@ -412,6 +414,8 @@ func _physics_process(delta: float) -> void:
 		was_in_air_last_frame = true
 	else:
 		was_in_air_last_frame = false
+		is_jump_animation = false
+		is_doublejump_animation = false
 	
 	#endregion
 
@@ -466,6 +470,14 @@ func switch_level(direction: Level.Direction):
 	current_level.switch_level(direction)
 
 
+
+func jump() -> void:
+	disable_jump_cancel = false
+	velocity.y = jump_power
+	jump_buffer_timer = 0
+	is_jump_animation = true
+	MusicManager.play_sound_jump()
+
 func begin_thrust() -> void:
 	current_state = MoveState.THRUST
 	thrust_timer = thrust_time
@@ -478,6 +490,7 @@ func begin_thrust() -> void:
 	else:
 		shape_right.disabled = false
 		shape_left.disabled = true
+	MusicManager.play_sound_thrust()
 
 func end_thrust() -> void:
 	spear_hitbox.monitoring = false
@@ -492,6 +505,7 @@ func bounce_off_wall() -> void:
 	_emit_wall_smash_particles()
 	end_thrust()
 	disable_jump_cancel = true
+	MusicManager.play_sound_wallbounce()
 
 func enter_swapmask() -> void:
 	current_state = MoveState.SWAPMASK
@@ -508,6 +522,7 @@ func enter_swapmask() -> void:
 			swapmask_target = Globals.currently_selected_action
 	Engine.time_scale = 0.05
 	show_swapmask_visual()
+	MusicManager.slow_music()
 
 func show_swapmask_visual() -> void:
 	if facedir < 0:
@@ -547,6 +562,7 @@ func exit_swapmask() -> void:
 	Engine.time_scale = 1.0
 	swapmask_ui_left.hide()
 	swapmask_ui_right.hide()
+	MusicManager.normal_music()
 
 func begin_dive() -> void:
 	current_state = MoveState.DIVE
@@ -560,6 +576,7 @@ func begin_dive() -> void:
 	else:
 		spear_hitbox_dive_shape_right.disabled = false
 		spear_hitbox_dive_shape_left.disabled = true
+	MusicManager.play_sound_dive()
 
 func dive_bounce() -> void:
 	print("dive bouncing from a fall of ", dive_height_fallen, " (", round(dive_height_fallen/16.0), " tiles)")
@@ -572,6 +589,8 @@ func dive_bounce() -> void:
 	spear_hitbox_dive_shape_right.disabled = true
 	spear_hitbox_dive_shape_left.disabled = true
 	disable_jump_cancel = true
+	is_doublejump_animation = true
+	MusicManager.play_sound_divebounce()
 	
 	# Add wall dent at impact position with 2x strength
 	_emit_dive_impact_dent()
@@ -584,3 +603,7 @@ func double_jump() -> void:
 	print("double ump!")
 	velocity.y = double_jump_power
 	disable_jump_cancel = true
+	is_jump_animation = false
+	is_doublejump_animation = true
+	MusicManager.play_sound_doublejump()
+	
