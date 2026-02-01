@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="ggj2026"
-run/main_scene="uid://co3g4wul2d857"
+run/main_scene="uid://bflapeb8ribyq"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 
