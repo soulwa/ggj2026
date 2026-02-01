@@ -3,9 +3,9 @@
 [ext_resource type="Script" uid="uid://f5yuarame0wc" path="res://Scripts/level.gd" id="1_ei0jd"]
 [ext_resource type="Script" uid="uid://drrpfettr5xr5" path="res://Scripts/camera.gd" id="2_p43o3"]
 [ext_resource type="TileSet" uid="uid://cs3dniqm6bgdo" path="res://Scenes/tileset.tres" id="3_pdpr1"]
-[ext_resource type="Shader" path="res://Shaders/brightness-contrast.gdshader" id="4_bff13"]
+[ext_resource type="Shader" uid="uid://cl7vmth0yv5m8" path="res://Shaders/brightness-contrast.gdshader" id="4_bff13"]
 [ext_resource type="PackedScene" uid="uid://bsfa1tlsh7fwr" path="res://Scenes/player.tscn" id="4_xwmjj"]
-[ext_resource type="TileSet" uid="uid://cmid47n5pca2d" path="res://Scenes/bg_tileset.tres" id="5_06v3b"]
+[ext_resource type="TileSet" uid="uid://ce86g6go5rhye" path="res://Scenes/bg_tileset.tres" id="5_06v3b"]
 [ext_resource type="PackedScene" uid="uid://p8si7hu4ur8y" path="res://Scenes/player_spawn.tscn" id="5_bff13"]
 [ext_resource type="Texture2D" uid="uid://be3uh4vksindp" path="res://Assets/Sprites/decals-sm.png" id="6_wxmci"]
 
@@ -144,12 +144,12 @@ position = Vector2(-564, 38)
 position = Vector2(1459, -468)
 direction = 1
 
-[connection signal="body_entered" from="TileMapLayer/LevelTransition" to="TileMapLayer/LevelTransition" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@103495" to="TileMapLayer/@Area2D@103495" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@103496" to="TileMapLayer/@Area2D@103496" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@103497" to="TileMapLayer/@Area2D@103497" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@103498" to="TileMapLayer/@Area2D@103498" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@103499" to="TileMapLayer/@Area2D@103499" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@103500" to="TileMapLayer/@Area2D@103500" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@103501" to="TileMapLayer/@Area2D@103501" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@103502" to="TileMapLayer/@Area2D@103502" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@191451" to="TileMapLayer/@Area2D@191451" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@191452" to="TileMapLayer/@Area2D@191452" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@191453" to="TileMapLayer/@Area2D@191453" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@191454" to="TileMapLayer/@Area2D@191454" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@191455" to="TileMapLayer/@Area2D@191455" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@191456" to="TileMapLayer/@Area2D@191456" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@191457" to="TileMapLayer/@Area2D@191457" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@191458" to="TileMapLayer/@Area2D@191458" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@191459" to="TileMapLayer/@Area2D@191459" method="_on_body_entered"]
