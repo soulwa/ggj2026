@@ -748,6 +748,7 @@ func take_hit(kb: bool) -> void:
 	if hp <= 0:
 		die()
 	else:
+		MusicManager.play_playerhurt()
 		# TODO (sam): update HP UI here.
 		iframe_timer = iframes
 		velocity.x = kb_force_x
@@ -762,6 +763,7 @@ func die() -> void:
 	if dead:
 		return
 	
+	MusicManager.play_die()
 	dead = true
 	
 	# Screen shake on death
