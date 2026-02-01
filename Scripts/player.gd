@@ -211,10 +211,10 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("right"):
 		dir_stack.erase(Vector2i.RIGHT)
 		dir_stack.push_back(Vector2i.RIGHT)
-	if Input.is_action_just_pressed("up"):
+	if Input.is_action_just_pressed("up") and Globals.has_double_jump:
 		dir_stack.erase(Vector2i.UP)
 		dir_stack.push_back(Vector2i.UP)
-	if Input.is_action_just_pressed("down"):
+	if Input.is_action_just_pressed("down") and Globals.has_downdash:
 		dir_stack.erase(Vector2i.DOWN)
 		dir_stack.push_back(Vector2i.DOWN)
 	# releases
@@ -358,12 +358,7 @@ func _physics_process(delta: float) -> void:
 		thrust_timer -= delta
 		if thrust_timer < 0:
 			current_state = MoveState.THRUST_ACTIONABLE
-		# check for hits
-		for body in spear_hitbox.get_overlapping_bodies():
-			if body is TileMapLayer:
-				bounce_off_wall()
-			if body is EnemyFrog:
-				bounce_off_frog()
+		check_thrust_hits()
 	
 	# thrust can be cancelled, gravity applies now
 	elif current_state == MoveState.THRUST_ACTIONABLE:
@@ -371,6 +366,7 @@ func _physics_process(delta: float) -> void:
 		velocity.y += gravity * delta
 		if sign(hmove) == -sign(velocity.x) or is_on_floor() or is_on_wall():
 			end_thrust()
+		check_thrust_hits()
 	
 	elif current_state == MoveState.DIVE:
 		# apply gravity
@@ -522,6 +518,15 @@ func end_thrust() -> void:
 	shape_left.disabled = true
 	current_state = MoveState.NORMAL
 
+func check_thrust_hits() -> void:
+	if spear_hitbox.monitoring:
+		# check for hits
+		for body in spear_hitbox.get_overlapping_bodies():
+			if body is TileMapLayer:
+				bounce_off_wall()
+			if body is EnemyFrog:
+				bounce_off_frog()
+
 func bounce_off_wall() -> void:
 	# if we hit wall, bounce off
 	velocity.x = -facedir * wall_bounce_force_x
@@ -597,6 +602,19 @@ func show_swapmask_visual() -> void:
 			swapmask_ui_right.get_node("ThrustMask").modulate = disabled_mask_modulate
 			swapmask_ui_right.get_node("DiveMask").modulate = disabled_mask_modulate
 			swapmask_ui_right.get_node("DoubleJumpMask").modulate = enabled_mask_modulate
+	if Globals.has_downdash:
+		swapmask_ui_left.get_node("DiveMask").show()
+		swapmask_ui_right.get_node("DiveMask").show()
+	else:
+		swapmask_ui_left.get_node("DiveMask").hide()
+		swapmask_ui_right.get_node("DiveMask").hide()
+	if Globals.has_double_jump:
+		swapmask_ui_left.get_node("DoubleJumpMask").show()
+		swapmask_ui_right.get_node("DoubleJumpMask").show()
+	else:
+		swapmask_ui_left.get_node("DoubleJumpMask").hide()
+		swapmask_ui_right.get_node("DoubleJumpMask").hide()
+
 
 func exit_swapmask() -> void:
 	Globals.currently_selected_action = swapmask_target
@@ -642,7 +660,6 @@ func end_dive() -> void:
 
 func double_jump() -> void:
 	doublejumps_remaining -= 1
-	print("double ump!")
 	velocity.y = double_jump_power
 	disable_jump_cancel = true
 	is_jump_animation = false
