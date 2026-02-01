@@ -371,9 +371,6 @@ func _physics_process(delta: float) -> void:
 	#endregion
 
 func _emit_wall_smash_particles() -> void:
-	if not smash_particles:
-		return
-	
 	# Get the weapon tip position (flipped based on face direction)
 	var tip_offset = weapon_tip.position
 	if facedir == -1:
@@ -384,7 +381,24 @@ func _emit_wall_smash_particles() -> void:
 	var wall_normal = get_wall_normal()
 	
 	# Emit particles away from the wall
-	smash_particles.emit_burst(emit_pos, wall_normal, velocity)
+	if smash_particles:
+		smash_particles.emit_burst(emit_pos, wall_normal, velocity)
+	
+	# Add wall dent at impact position - use facedir for hit direction
+	var hit_direction = Vector2(facedir, 0).normalized()
+	_add_wall_dent(emit_pos, hit_direction)
+
+
+func _add_wall_dent(hit_pos: Vector2, hit_direction: Vector2) -> void:
+	# Find the dent manager in the level
+	var parent = get_parent()
+	if parent:
+		for child in parent.get_children():
+			if child.has_method("add_dent_directed"):
+				# Position the dent slightly into the wall
+				var dent_pos = hit_pos + hit_direction * 12.0
+				child.add_dent_directed(dent_pos, hit_direction)
+				return
 
 
 func switch_level(direction: Level.Direction):
