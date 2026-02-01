@@ -385,15 +385,24 @@ func _physics_process(delta: float) -> void:
 		# apply gravity
 		velocity.y += gravity * delta * dive_gravity_multiplier
 		dive_height_fallen += velocity.y * delta
-		# check to hit ground
-		for body in spear_hitbox_dive.get_overlapping_bodies():
-			if body is TileMapLayer:
-				dive_bounce()
+		
+		# Collect all overlapping bodies first
+		var overlapping_bodies = spear_hitbox_dive.get_overlapping_bodies()
+		var hit_tilemap := false
+		
+		# Pierce-kill ALL mushrooms first (before bounce processing)
+		for body in overlapping_bodies:
+			if body is MushroomGuy:
+				body.die()
 			if body is EnemyFrog:
 				_emit_enemy_particles(body, body.global_position, Vector2.UP)
 				body.die()
-			if body is MushroomGuy:
-				body.die()
+			if body is TileMapLayer:
+				hit_tilemap = true
+		
+		# Process tilemap bounce after all enemies are killed
+		if hit_tilemap:
+			dive_bounce()
 	elif current_state == MoveState.DIVE_BOUNCE:
 		end_dive() # TODO
 	
