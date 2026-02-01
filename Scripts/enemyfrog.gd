@@ -9,6 +9,14 @@ var player: Player
 # - if player is still close enough, jump towards it
 # - during arc, shoot bubbles on a timer
 
+## Colors used for impact particles when hitting this enemy
+@export var particle_colors: Array[Color] = [
+	Color(0.75, 0.35, 0.30, 1.0),  # Reddish (dominant)
+	Color(0.35, 0.55, 0.28, 1.0),  # Darker green
+]
+## Weight for each color (should match particle_colors length). Higher = more particles of that color.
+@export var particle_weights: Array[float] = [0.90, 0.10]
+
 const DT := 0.016
 const DOWN_DEGREES = 90.0
 @export var player_detection_range := 1000
