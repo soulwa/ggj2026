@@ -8,8 +8,12 @@ signal transition_complete
 
 @onready var transition_rect: ColorRect = $ColorRect
 
+## Shader variants
+var _shader_horizontal: Shader = preload("res://Shaders/screen_transition_horizontal.gdshader")
+var _shader_vertical: Shader = preload("res://Shaders/screen_transition_vertical.gdshader")
+
 ## Duration of the full transition in seconds
-@export var transition_duration: float = 4.2  # 3x slower for debugging
+@export var transition_duration: float = 1.0
 
 ## Whether a transition is currently playing
 var is_transitioning: bool = false
@@ -25,24 +29,26 @@ func _ready() -> void:
 	_set_progress(0.0)
 
 
-func _input(event: InputEvent) -> void:
-	# Debug trigger with T key
-	if event is InputEventKey and event.pressed and not event.echo:
-		if event.keycode == KEY_T:
-			if not is_transitioning:
-				play_transition()
+## Sets the shader to horizontal (left-right to center) sweep
+func set_shader_horizontal() -> void:
+	if transition_rect and transition_rect.material:
+		transition_rect.material.shader = _shader_horizontal
+
+
+## Sets the shader to vertical (top-bottom to center) sweep
+func set_shader_vertical() -> void:
+	if transition_rect and transition_rect.material:
+		transition_rect.material.shader = _shader_vertical
 
 
 ## Plays the full transition animation (in and out)
+## If a transition is already running, it will be interrupted and restarted
 func play_transition() -> void:
-	if is_transitioning:
-		return
-	
-	is_transitioning = true
-	
-	# Kill any existing tween
+	# Kill any existing tween and reset state
 	if _tween and _tween.is_valid():
 		_tween.kill()
+	
+	is_transitioning = true
 	
 	_tween = create_tween()
 	_tween.set_ease(Tween.EASE_IN_OUT)

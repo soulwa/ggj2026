@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dkr8yw2t6l1p5"]
 
 [ext_resource type="Script" path="res://Scripts/transition_manager.gd" id="1_script"]
-[ext_resource type="Shader" path="res://Shaders/screen_transition.gdshader" id="2_shader"]
+[ext_resource type="Shader" path="res://Shaders/screen_transition_horizontal.gdshader" id="2_shader"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_trans"]
 shader = ExtResource("2_shader")
@@ -11,8 +11,8 @@ shader_parameter/rhombus_size = 0.38
 shader_parameter/rhombus_height_ratio = 1.6
 shader_parameter/wave_spread = 0.55
 shader_parameter/outline_wave_spread = 0.2
-shader_parameter/color_orange = Vector3(0.78, 0.38, 0.18)
-shader_parameter/color_yellow = Vector3(0.82, 0.68, 0.22)
+shader_parameter/color_purple = Vector3(0.38, 0.14, 0.52)
+shader_parameter/color_blue = Vector3(0.12, 0.18, 0.45)
 shader_parameter/color_rhombus_bg = Vector3(0.16, 0.22, 0.2)
 shader_parameter/color_screen_bg = Vector3(0.18, 0.22, 0.28)
 shader_parameter/outline_thickness = 0.02

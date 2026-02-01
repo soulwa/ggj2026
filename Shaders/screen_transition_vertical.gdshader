@@ -13,8 +13,8 @@ uniform float wave_spread = 0.55;
 uniform float outline_wave_spread = 0.20;  // Faster/tighter wave for outline appearance
 
 // Colors
-uniform vec3 color_orange : source_color = vec3(0.78, 0.38, 0.18);
-uniform vec3 color_yellow : source_color = vec3(0.82, 0.68, 0.22);
+uniform vec3 color_purple : source_color = vec3(0.38, 0.14, 0.52);
+uniform vec3 color_blue : source_color = vec3(0.12, 0.18, 0.45);
 uniform vec3 color_rhombus_bg : source_color = vec3(0.16, 0.22, 0.20);
 uniform vec3 color_screen_bg : source_color = vec3(0.18, 0.22, 0.28);
 uniform float outline_thickness = 0.018;
@@ -45,16 +45,16 @@ float ease_with_slow_finish(float t) {
 	return 1.0 - pow(1.0 - t, 5.0);
 }
 
-// SDF for rhombus with aspect ratio
+// SDF for rhombus with aspect ratio (horizontal orientation - wider than tall)
 float diamond_sdf(vec2 p, float size, float aspect) {
-	p.y /= aspect;
+	p.x /= aspect;  // Apply aspect to X for horizontal rhombus
 	p = abs(p);
 	return (p.x + p.y - size) / 1.41421356;
 }
 
-// Calculate wave-offset progress for a given cell position
-float get_wave_progress(float cell_x, float center_x, float wave_sprd, float prog) {
-	float cell_dist = abs(cell_x - center_x) / center_x;
+// Calculate wave-offset progress for a given cell position (vertical sweep: top/bottom to center)
+float get_wave_progress(float cell_y, float center_y, float wave_sprd, float prog) {
+	float cell_dist = abs(cell_y - center_y) / center_y;
 	cell_dist = clamp(cell_dist, 0.0, 1.0);
 	
 	// Apply easing to the wave spread for smoother motion
@@ -99,11 +99,11 @@ vec4 render_rhombus(vec2 local_uv, float outline_wave_progress, float wave_progr
 	// ============================================
 	// FILLS - Use wave_progress (edges first, center last)
 	// Single continuous animation with strong ease-out (slows dramatically at end)
-	// Extended to 0.92 to time with background fadeout
+	// Stretched 30% longer (endpoints at 1.3) so fills animate while fading
 	// ============================================
 	
-	// White fill: 0.0-0.92 with heavy ease-out
-	float white_progress = smoothstep(0.0, 0.92, wave_progress);
+	// White fill: 0.0-1.3 with heavy ease-out (stretched 30%)
+	float white_progress = smoothstep(0.0, 1.3, wave_progress);
 	float white_appear = ease_with_slow_finish(white_progress);
 	
 	if (white_appear > 0.0 && bg_fade > 0.0) {
@@ -113,20 +113,20 @@ vec4 render_rhombus(vec2 local_uv, float outline_wave_progress, float wave_progr
 		rhombus_color = mix(rhombus_color, vec4(1.0, 1.0, 1.0, bg_fade), white_fill);
 	}
 	
-	// Gradient fill: 0.15-0.92 with heavy ease-out
-	float grad_progress = smoothstep(0.15, 0.92, wave_progress);
+	// Gradient fill: 0.15-1.3 with heavy ease-out (stretched 30%)
+	float grad_progress = smoothstep(0.15, 1.3, wave_progress);
 	float grad_appear = ease_with_slow_finish(grad_progress);
 	
 	if (grad_appear > 0.0 && bg_fade > 0.0) {
 		float grad_size = grad_appear * (rhombus_size - 0.025);
 		float grad_d = diamond_sdf(local_uv, grad_size, rhombus_height_ratio);
 		float grad_fill = 1.0 - smoothstep(-aa, aa, grad_d);
-		vec3 gradient_color = mix(color_yellow, color_orange, screen_uv.y);
+		vec3 gradient_color = mix(color_blue, color_purple, screen_uv.y);
 		rhombus_color = mix(rhombus_color, vec4(gradient_color, bg_fade), grad_fill);
 	}
 	
-	// Inner fill: 0.35-0.92 with heavy ease-out
-	float inner_progress = smoothstep(0.35, 0.92, wave_progress);
+	// Inner fill: 0.35-1.3 with heavy ease-out (stretched 30%)
+	float inner_progress = smoothstep(0.35, 1.3, wave_progress);
 	float inner_appear = ease_with_slow_finish(inner_progress);
 	
 	if (inner_appear > 0.0 && bg_fade > 0.0) {
@@ -145,17 +145,17 @@ void fragment() {
 	float aa = 0.01;
 	
 	// ============================================
-	// BACKGROUND LAYER - Smooth wave, holds longer
+	// BACKGROUND LAYER - Smooth wave (top/bottom to center), holds longer
 	// ============================================
-	float smooth_dist = abs(uv.x - 0.5) * 2.0;
+	float smooth_dist = abs(uv.y - 0.5) * 2.0;  // Vertical distance from center
 	float bg_wave_offset = ease_in_out_quad(1.0 - smooth_dist) * wave_spread;
 	float bg_scaled_progress = progress * (1.0 + wave_spread);
 	float bg_local_progress = bg_scaled_progress - bg_wave_offset;
 	bg_local_progress = clamp(bg_local_progress, 0.0, 1.0);
 	
-	// Background fades in quickly, holds, then fades out after rhombus animation completes
+	// Background fades in quickly, holds, then fades out fast and snappy
 	float bg_fade_in = ease_out_cubic(smoothstep(0.0, 0.15, bg_local_progress));
-	float bg_fade_out = 1.0 - ease_in_quad(smoothstep(0.82, 1.0, bg_local_progress));
+	float bg_fade_out = 1.0 - ease_out_cubic(smoothstep(0.72, 0.92, bg_local_progress));
 	float bg_alpha = bg_fade_in * bg_fade_out;
 	
 	vec4 final_color = vec4(color_screen_bg, bg_alpha);
@@ -164,7 +164,7 @@ void fragment() {
 	// RHOMBUS GRID - Check multiple cells for overlap
 	// ============================================
 	vec2 base_scaled_uv = uv * grid_size;
-	float center_x = grid_size.x * 0.5;
+	float center_y = grid_size.y * 0.5;  // Use Y center for vertical sweep
 	
 	// Check current cell and neighbors for overlapping rhombuses
 	vec2 base_cell = floor(base_scaled_uv);
@@ -174,26 +174,26 @@ void fragment() {
 		for (float dx = -1.0; dx <= 1.0; dx += 1.0) {
 			vec2 check_cell = base_cell + vec2(dx, dy);
 			
-			// Calculate the row offset for this cell (stagger pattern)
-			float row_offset = mod(check_cell.y, 2.0) * 0.5;
+			// Calculate the column offset for this cell (stagger pattern - offset Y based on column)
+			float col_offset = mod(check_cell.x, 2.0) * 0.5;
 			
 			// Calculate local UV with stagger applied
 			vec2 staggered_uv = base_scaled_uv;
-			staggered_uv.x += row_offset;
+			staggered_uv.y += col_offset;  // Stagger Y instead of X
 			vec2 local_uv = staggered_uv - (check_cell + vec2(0.5, 0.5));
 			
-			// Get the visual center X position for wave calculation
-			// Cell center is at check_cell.x + 0.5, but stagger shifts it visually
-			float visual_center_x = check_cell.x + 0.5 - row_offset;
+			// Get the visual center Y position for wave calculation
+			// Cell center is at check_cell.y + 0.5, but stagger shifts it visually
+			float visual_center_y = check_cell.y + 0.5 - col_offset;
 			
-			// Get fast wave progress for outline (quick sweep from edges)
-			float outline_prog = get_wave_progress(visual_center_x, center_x, outline_wave_spread, progress);
+			// Get fast wave progress for outline (quick sweep from top/bottom edges)
+			float outline_prog = get_wave_progress(visual_center_y, center_y, outline_wave_spread, progress);
 			
 			// Get slower wave progress for fills
-			float wave_progress = get_wave_progress(visual_center_x, center_x, wave_spread, progress);
+			float wave_progress = get_wave_progress(visual_center_y, center_y, wave_spread, progress);
 			
-			// Calculate per-cell background fade - starts slightly earlier than background to avoid clipping
-			float cell_bg_fade_out = 1.0 - ease_in_quad(smoothstep(0.78, 0.98, wave_progress));
+			// Calculate per-cell background fade - fast and snappy fade out
+			float cell_bg_fade_out = 1.0 - ease_out_cubic(smoothstep(0.68, 0.88, wave_progress));
 			
 			// Render rhombus with outline wave, fill wave, and background fade
 			vec4 rhombus_color = render_rhombus(local_uv, outline_prog, wave_progress, cell_bg_fade_out, uv, aa);

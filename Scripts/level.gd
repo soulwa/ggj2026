@@ -49,9 +49,14 @@ func _setup_dent_manager() -> void:
 	_dent_manager.name = "WallDentManager"
 	add_child(_dent_manager)
 
-# TODO: wipe screen
+var _is_switching_level: bool = false
 
 func switch_level(transition_dir: Direction):
+	# Prevent triggering multiple transitions from this level
+	if _is_switching_level:
+		return
+	_is_switching_level = true
+	
 	var opposite = opposite_dir(transition_dir)
 	var scene: String
 	match transition_dir:
@@ -60,6 +65,30 @@ func switch_level(transition_dir: Direction):
 		Direction.Up: scene = up
 		Direction.Down: scene = down
 		_: scene = left
+	
+	# Choose shader based on transition direction
+	# Left/Right = horizontal sweep, Up/Down = vertical sweep
+	if transition_dir == Direction.Left or transition_dir == Direction.Right:
+		TransitionOverlay.set_shader_horizontal()
+	else:
+		TransitionOverlay.set_shader_vertical()
+	
+	# Store opposite direction for spawn positioning in new scene
 	Globals.opposite_direction_from = opposite
-	get_tree().change_scene_to_file(scene)
-	# TODO (sam): check if this makes sense.
+	
+	# Start the transition and change scene at midpoint
+	_do_transition(scene)
+
+
+func _do_transition(scene_path: String) -> void:
+	# Play the full transition
+	TransitionOverlay.play_transition()
+	
+	# Wait for the midpoint (screen fully covered)
+	await TransitionOverlay.transition_midpoint
+	
+	# Small delay to ensure screen is fully covered before scene switch
+	await get_tree().create_timer(0.1).timeout
+	
+	# Change the scene while covered
+	get_tree().change_scene_to_file(scene_path)
