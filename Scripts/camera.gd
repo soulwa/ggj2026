@@ -18,6 +18,13 @@ var _lookahead_x := 0.0
 func _ready() -> void:
 	pass
 
+func force_initial_position_stable(pos: Vector2, vel: Vector2) -> void:
+	var player_pos := pos
+	var player_vel := vel
+	var desired_position := Vector2(player_pos.x, player_pos.y - vertical_offset)
+	
+	global_position = desired_position
+
 # TODO (sam): better lerp speed smoothing (on top of lookahead x smoothing)
 func _process(delta: float) -> void:
 	if player == null:

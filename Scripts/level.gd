@@ -50,7 +50,8 @@ func _ready() -> void:
 				print("[SPAWN] %s" % child.position)
 				$Player.position = child.position
 				$Player.spawnpoint = child.position
-
+	
+	$Camera2D.force_initial_position_stable($Player.position, $Player.velocity)
 
 func _setup_dent_manager() -> void:
 	# Check if dent manager already exists
