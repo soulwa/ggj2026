@@ -8,6 +8,8 @@
 [ext_resource type="TileSet" uid="uid://ce86g6go5rhye" path="res://Scenes/bg_tileset.tres" id="5_gugf4"]
 [ext_resource type="PackedScene" uid="uid://p8si7hu4ur8y" path="res://Scenes/player_spawn.tscn" id="5_ylxfi"]
 [ext_resource type="TileSet" uid="uid://51pf6litgg2x" path="res://Scenes/fg_tileset.tres" id="6_y5euq"]
+[ext_resource type="Texture2D" uid="uid://be3uh4vksindp" path="res://Assets/Sprites/decals-sm.png" id="6_pfpjc"]
+[ext_resource type="PackedScene" uid="uid://7jq4lqv8pdmy" path="res://Scenes/helptext.tscn" id="9_ylxfi"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_so3f2"]
 shader = ExtResource("4_ylxfi")
@@ -46,6 +48,22 @@ position = Vector2(-592, 40)
 [node name="RightSpawn" parent="." unique_id=471625365 instance=ExtResource("5_ylxfi")]
 position = Vector2(991, -1700)
 direction = 1
+
+[node name="Helptext" parent="." unique_id=1654642092 instance=ExtResource("9_ylxfi")]
+offset_left = 544.0
+offset_top = -1568.0
+offset_right = 1051.0
+offset_bottom = -1337.0
+theme_override_font_sizes/font_size = 24
+text = "mask menu: shift, LB, RB
+while in menu:
+hold direction to select a mask
+release menu to resume
+press \"action\" in the menu to 
+use a mask instantly."
+horizontal_alignment = 0
+after_frogmask = true
+fade_in_time = 2.0
 
 [connection signal="body_entered" from="TileMapLayer/LevelTransition" to="TileMapLayer/LevelTransition" method="_on_body_entered"]
 [connection signal="body_entered" from="TileMapLayer/@Area2D@229633" to="TileMapLayer/@Area2D@229633" method="_on_body_entered"]
