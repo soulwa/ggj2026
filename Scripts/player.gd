@@ -73,9 +73,9 @@ var thrust_up_force: float
 var wall_bounce_force_y: float
 
 @export_subgroup("Double Jump")
-@export var dj_startup_time := DT * 3
-@export var double_jump_power := -400.0
-@export var double_jump_arc := 0 # TODO (sam): i dont know how to model this yet.
+@export var double_jump_pixels := 32*4
+var double_jump_power: float
+#@export var double_jump_arc := 0 # TODO (sam): i dont know how to model this yet.
 
 @export_subgroup("Downdash")
 @export var dive_startup_time := DT * 2
@@ -126,6 +126,7 @@ func _ready() -> void:
 	thrust_forward_force = thrust_forward_pixels / thrust_time
 	thrust_up_force = thrust_height_pixels / thrust_time
 	wall_bounce_force_y = -sqrt(2 * gravity * wall_bounce_height_pixels)
+	double_jump_power = -sqrt(2 * gravity * double_jump_pixels)
 	swapmask_ui_left.hide()
 	swapmask_ui_right.hide()
 
@@ -282,15 +283,13 @@ func _physics_process(delta: float) -> void:
 			if input_initial_move_up:
 				swapmask_target = Globals.Action.DoubleJump
 			if input_initial_move_left:
-				if facedir < 0:
-					swapmask_target = Globals.Action.Thrust
-				else:
-					swapmask_target = Globals.Action.Cry
+				facedir = -1
+				show_swapmask_visual()
+				swapmask_target = Globals.Action.Thrust
 			if input_initial_move_right:
-				if facedir < 0:
-					swapmask_target = Globals.Action.Cry
-				else:
-					swapmask_target = Globals.Action.Thrust
+				facedir = 1
+				show_swapmask_visual()
+				swapmask_target = Globals.Action.Thrust
 			# exit menu
 			if input_action_pressed:
 				action_buffer_timer = action_buffer
@@ -441,22 +440,21 @@ func enter_swapmask() -> void:
 		Vector2i.DOWN:
 			swapmask_target = Globals.Action.Dive
 		Vector2i.LEFT:
-			if facedir < 0:
-				swapmask_target = Globals.Action.Thrust
-			else:
-				swapmask_target = Globals.Action.Cry
+			swapmask_target = Globals.Action.Thrust
 		Vector2i.RIGHT:
-			if facedir < 0:
-				swapmask_target = Globals.Action.Cry
-			else:
-				swapmask_target = Globals.Action.Thrust
+			swapmask_target = Globals.Action.Thrust
 		Vector2i.ZERO:
 			swapmask_target = Globals.currently_selected_action
 	Engine.time_scale = 0.05
+	show_swapmask_visual()
+
+func show_swapmask_visual() -> void:
 	if facedir < 0:
 		swapmask_ui_left.show()
+		swapmask_ui_right.hide()
 	else:
 		swapmask_ui_right.show()
+		swapmask_ui_left.hide()
 
 func exit_swapmask() -> void:
 	Globals.currently_selected_action = swapmask_target
@@ -496,3 +494,4 @@ func end_dive() -> void:
 func double_jump() -> void:
 	doublejumps_remaining -= 1
 	print("double ump!")
+	velocity.y = double_jump_power
