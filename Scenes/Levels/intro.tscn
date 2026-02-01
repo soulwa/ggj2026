@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bsfa1tlsh7fwr" path="res://Scenes/player.tscn" id="3_0p7ue"]
 [ext_resource type="Texture2D" uid="uid://dhch22tc1caqq" path="res://Assets/Sprites/decals-xl.png" id="3_6deqw"]
 [ext_resource type="TileSet" uid="uid://ce86g6go5rhye" path="res://Scenes/bg_tileset.tres" id="3_8swui"]
-[ext_resource type="Shader" path="res://Shaders/brightness-contrast.gdshader" id="3_ms30g"]
+[ext_resource type="Shader" uid="uid://cl7vmth0yv5m8" path="res://Shaders/brightness-contrast.gdshader" id="3_ms30g"]
 [ext_resource type="PackedScene" uid="uid://p8si7hu4ur8y" path="res://Scenes/player_spawn.tscn" id="4_8swui"]
 [ext_resource type="PackedScene" uid="uid://dt70bejmpyt2p" path="res://Scenes/checkpoint_tall.tscn" id="6_0p7ue"]
 [ext_resource type="Texture2D" uid="uid://be3uh4vksindp" path="res://Assets/Sprites/decals-sm.png" id="7_us6ty"]
@@ -166,6 +166,12 @@ position = Vector2(3408, 0)
 [node name="Marker2D" parent="CheckpointTall" index="0" unique_id=399668683]
 position = Vector2(80, 104)
 
+[node name="CheckpointTall2" parent="." unique_id=1158915475 instance=ExtResource("6_0p7ue")]
+position = Vector2(334, 0)
+
+[node name="Marker2D" parent="CheckpointTall2" index="0" unique_id=399668683]
+position = Vector2(0, 29)
+
 [node name="Helptext" parent="." unique_id=1654642092 instance=ExtResource("10_6deqw")]
 offset_left = -504.0
 offset_top = 288.0
@@ -184,16 +190,17 @@ text = "action: X, B button
 press action to THRUST."
 
 [connection signal="body_entered" from="TileMapLayer/LevelTransition" to="TileMapLayer/LevelTransition" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@205682" to="TileMapLayer/@Area2D@205682" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@205683" to="TileMapLayer/@Area2D@205683" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@205684" to="TileMapLayer/@Area2D@205684" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@205695" to="TileMapLayer/@Area2D@205695" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@205696" to="TileMapLayer/@Area2D@205696" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@205697" to="TileMapLayer/@Area2D@205697" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@205698" to="TileMapLayer/@Area2D@205698" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@205699" to="TileMapLayer/@Area2D@205699" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@205700" to="TileMapLayer/@Area2D@205700" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@205701" to="TileMapLayer/@Area2D@205701" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@205702" to="TileMapLayer/@Area2D@205702" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@25171" to="TileMapLayer/@Area2D@25171" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@25172" to="TileMapLayer/@Area2D@25172" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@25173" to="TileMapLayer/@Area2D@25173" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@25184" to="TileMapLayer/@Area2D@25184" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@25185" to="TileMapLayer/@Area2D@25185" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@25186" to="TileMapLayer/@Area2D@25186" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@25187" to="TileMapLayer/@Area2D@25187" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@25188" to="TileMapLayer/@Area2D@25188" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@25189" to="TileMapLayer/@Area2D@25189" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@25190" to="TileMapLayer/@Area2D@25190" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@25191" to="TileMapLayer/@Area2D@25191" method="_on_body_entered"]
 
 [editable path="CheckpointTall"]
+[editable path="CheckpointTall2"]
