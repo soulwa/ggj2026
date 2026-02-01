@@ -7,6 +7,8 @@ const WallDentManagerScript = preload("res://Scripts/wall_dent_manager.gd")
 @export_file var up: String
 @export_file var down: String
 
+@export var override_dont_use_spawn := false
+
 enum Direction {
 	Left,
 	Right,
@@ -39,11 +41,11 @@ func _ready() -> void:
 	
 	print($Camera2D.limit_right)
 	
-	
-	for child in get_children():
-		if child is PlayerSpawn and child.direction == Globals.opposite_direction_from:
-			print("[SPAWN] %s" % child.position)
-			$Player.position = child.position
+	if not override_dont_use_spawn:
+		for child in get_children():
+			if child is PlayerSpawn and child.direction == Globals.opposite_direction_from:
+				print("[SPAWN] %s" % child.position)
+				$Player.position = child.position
 
 
 func _setup_dent_manager() -> void:
