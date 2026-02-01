@@ -109,3 +109,6 @@ func die() -> void:
 	sprite.play("death")
 	await sprite.animation_finished
 	hide()
+
+func reset() -> void:
+	queue_free()

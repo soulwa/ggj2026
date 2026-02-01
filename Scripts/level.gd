@@ -77,6 +77,10 @@ func reset_enemies() -> void:
 	for entity in $TileMapLayer.get_children():
 		if entity is EnemyFrog:
 			entity.reset()
+		elif entity is MushroomGuy:
+			entity.reset()
+		elif entity is MushroomTrap:
+			entity.reset()
 
 func switch_level(transition_dir: Direction):
 	# Prevent triggering multiple transitions from this level

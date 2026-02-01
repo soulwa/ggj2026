@@ -7,7 +7,7 @@ var ignore_spawn_direction := false
 var opposite_direction_from := Level.Direction.Left
 
 var has_double_jump := false
-var has_downdash := false
+var has_downdash := true
 var has_crying := false
 
 # 0 to 1 to fill screen, "cutscene" maybe.

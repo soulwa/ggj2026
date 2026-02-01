@@ -6,7 +6,7 @@ class_name MushroomTrap extends Node2D
 var mushroom_guy_scene: PackedScene = preload("res://Scenes/mushroom_guy.tscn")
 
 var min_guys: int = 5
-var max_guys: int = 7
+var max_guys: int = 6
 
 var activated: bool = false
 
@@ -23,3 +23,7 @@ func activate() -> void:
 			new_guy.global_position = guy_spawn_point.global_position
 			call_deferred("add_sibling", new_guy)
 		hide()
+
+func reset() -> void:
+	show()
+	activated = false
