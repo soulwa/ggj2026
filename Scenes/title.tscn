@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bhx6c63fy8q3u" path="res://Scripts/title.gd" id="1_ekrfg"]
 [ext_resource type="FontFile" uid="uid://51nuconqua4h" path="res://Assets/Fonts/Fabled_Font.ttf" id="1_w31pl"]
-[ext_resource type="Texture2D" uid="uid://cfx2an7w88eht" path="res://Assets/Sprites/mask-selectors.png" id="3_fp2oq"]
+[ext_resource type="Texture2D" uid="uid://b22n208724ehb" path="res://Assets/Sprites/maskbig.png" id="3_fp2oq"]
 [ext_resource type="Texture2D" uid="uid://dh1u5isft4u0s" path="res://Assets/Sprites/title-graphic.png" id="4_q2qps"]
 
 [node name="Title" type="Node2D" unique_id=1958692985]
