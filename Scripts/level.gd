@@ -46,6 +46,7 @@ func _ready() -> void:
 			if child is PlayerSpawn and child.direction == Globals.opposite_direction_from:
 				print("[SPAWN] %s" % child.position)
 				$Player.position = child.position
+				$Player.spawnpoint = child.position
 
 
 func _setup_dent_manager() -> void:
@@ -62,6 +63,11 @@ func _setup_dent_manager() -> void:
 	add_child(_dent_manager)
 
 var _is_switching_level: bool = false
+
+func reset_enemies() -> void:
+	for entity in $TileMapLayer.get_children():
+		if entity is EnemyFrog:
+			entity.reset()
 
 func switch_level(transition_dir: Direction):
 	# Prevent triggering multiple transitions from this level
@@ -104,3 +110,5 @@ func _do_transition(scene_path: String) -> void:
 	
 	# Change the scene while covered
 	get_tree().change_scene_to_file(scene_path)
+	
+	await TransitionOverlay.transition_complete

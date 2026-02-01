@@ -30,7 +30,6 @@ func _process(delta: float) -> void:
 	
 	var current_position := position
 	var desired_position := Vector2(player_pos.x, player_pos.y - vertical_offset)
-	#print(desired_position)
 	if abs(desired_position.x - current_position.x) < deadzone.x:
 		desired_position.x = current_position.x
 	if abs(desired_position.y - current_position.y) < deadzone.y:

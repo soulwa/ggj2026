@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dkr8yw2t6l1p5"]
 
-[ext_resource type="Script" path="res://Scripts/transition_manager.gd" id="1_script"]
-[ext_resource type="Shader" path="res://Shaders/screen_transition_horizontal.gdshader" id="2_shader"]
+[ext_resource type="Script" uid="uid://b72jprky86hxa" path="res://Scripts/transition_manager.gd" id="1_script"]
+[ext_resource type="Shader" uid="uid://bxygdmu0d351h" path="res://Shaders/screen_transition_horizontal.gdshader" id="2_shader"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_trans"]
 shader = ExtResource("2_shader")
@@ -11,21 +11,21 @@ shader_parameter/rhombus_size = 0.38
 shader_parameter/rhombus_height_ratio = 1.6
 shader_parameter/wave_spread = 0.55
 shader_parameter/outline_wave_spread = 0.2
-shader_parameter/color_purple = Vector3(0.38, 0.14, 0.52)
-shader_parameter/color_blue = Vector3(0.12, 0.18, 0.45)
-shader_parameter/color_rhombus_bg = Vector3(0.16, 0.22, 0.2)
-shader_parameter/color_screen_bg = Vector3(0.18, 0.22, 0.28)
+shader_parameter/color_purple = Color(0.38, 0.14, 0.52, 1)
+shader_parameter/color_blue = Color(0.12, 0.18, 0.45, 1)
+shader_parameter/color_rhombus_bg = Color(0.16, 0.22, 0.2, 1)
+shader_parameter/color_screen_bg = Color(0.18, 0.22, 0.28, 1)
 shader_parameter/outline_thickness = 0.02
 
-[node name="TransitionOverlay" type="CanvasLayer"]
+[node name="TransitionOverlay" type="CanvasLayer" unique_id=1828052740]
 layer = 100
 script = ExtResource("1_script")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="ColorRect" type="ColorRect" parent="." unique_id=482085930]
+material = SubResource("ShaderMaterial_trans")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-material = SubResource("ShaderMaterial_trans")

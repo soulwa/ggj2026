@@ -8,10 +8,8 @@
 
 [node name="Frog3" type="Node2D" unique_id=360288603]
 script = ExtResource("1_yk2mn")
-left = "uid://dya4rbs1jhbps"
-right = "uid://ci6s0x5xn2oxt"
-up = "uid://rilq2vhj3wlc"
-down = "uid://che7frndk1v1x"
+left = "uid://bnky6x1h0x5c6"
+right = "uid://bcehpvt84mgjq"
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1346476378]
 script = ExtResource("2_e5iyh")
@@ -31,9 +29,9 @@ position = Vector2(600, 40)
 direction = 1
 
 [connection signal="body_entered" from="TileMapLayer/LevelTransition" to="TileMapLayer/LevelTransition" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@67302" to="TileMapLayer/@Area2D@67302" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@67303" to="TileMapLayer/@Area2D@67303" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@67304" to="TileMapLayer/@Area2D@67304" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@67305" to="TileMapLayer/@Area2D@67305" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@67306" to="TileMapLayer/@Area2D@67306" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@67307" to="TileMapLayer/@Area2D@67307" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@52335" to="TileMapLayer/@Area2D@52335" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@52336" to="TileMapLayer/@Area2D@52336" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@52337" to="TileMapLayer/@Area2D@52337" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@52338" to="TileMapLayer/@Area2D@52338" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@52339" to="TileMapLayer/@Area2D@52339" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@52340" to="TileMapLayer/@Area2D@52340" method="_on_body_entered"]

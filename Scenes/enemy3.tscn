@@ -1,12 +1,19 @@
 [gd_scene format=3 uid="uid://vowtmkpnur4v"]
 
-[ext_resource type="Texture2D" uid="uid://bc5ucxfgt8xk7" path="res://Assets/Sprites/entitiesplaceholder.png" id="1_hvxaj"]
+[ext_resource type="Texture2D" uid="uid://r3pw2wybijnj" path="res://Assets/Sprites/spikes.png" id="1_hvxaj"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_t205n"]
-atlas = ExtResource("1_hvxaj")
-region = Rect2(96, 0, 32, 32)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hvxaj"]
+size = Vector2(46, 10)
 
-[node name="Enemy3" type="Node2D" unique_id=1274098991]
+[node name="EnemySpikes" type="StaticBody2D" unique_id=415451843]
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=671327044]
-texture = SubResource("AtlasTexture_t205n")
+z_index = -1
+position = Vector2(16, 17)
+texture = ExtResource("1_hvxaj")
+region_enabled = true
+region_rect = Rect2(0, 0, 48.169006, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=467948735]
+position = Vector2(16, 20)
+shape = SubResource("RectangleShape2D_hvxaj")
