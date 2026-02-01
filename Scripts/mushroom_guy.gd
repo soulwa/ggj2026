@@ -34,8 +34,8 @@ func _ready() -> void:
 	update_pivot_visual()
 	pivot_timer.wait_time = randf_range(0.08, 0.12)
 	position.x += randf_range(-8, 8)
-	max_speed = randf_range(80, 220)
-	acceleration = randf_range(2000, 3500)
+	max_speed = randf_range(100, 400)
+	acceleration = randf_range(100, 400)
 	jump_timer = randf_range(jump_timer_seconds_min, jump_timer_seconds_max)
 
 func _physics_process(delta: float) -> void:
@@ -103,7 +103,9 @@ func update_pivot_visual() -> void:
 
 
 func die() -> void:
-	visible = false
 	dead = true
 	$DamageRegion.monitoring = false
 	$CollisionShape2D.disabled = true
+	sprite.play("death")
+	await sprite.animation_finished
+	hide()

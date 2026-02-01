@@ -1,8 +1,33 @@
 [gd_scene format=3 uid="uid://c564a211r30kc"]
 
+[ext_resource type="Texture2D" uid="uid://ca4k6sd7wuw6x" path="res://Assets/Sprites/shrooms.png" id="1_5odvm"]
+[ext_resource type="Script" uid="uid://b51mpo5gg6vtv" path="res://Scripts/mushroom_trap.gd" id="1_g6ed3"]
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_ugryi"]
+atlas = ExtResource("1_5odvm")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5odvm"]
+radius = 250.0
 
 [node name="Enemy2" type="Node2D" unique_id=1969491813]
+script = ExtResource("1_g6ed3")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=85145220]
+position = Vector2(0, 23)
+scale = Vector2(1.5, 1.5)
 texture = SubResource("AtlasTexture_ugryi")
+offset = Vector2(-4, -30)
+
+[node name="PlayerDetectArea" type="Area2D" parent="." unique_id=1987756277]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetectArea" unique_id=437001619]
+position = Vector2(0, -17)
+shape = SubResource("CircleShape2D_5odvm")
+debug_color = Color(0, 0.6, 0.69803923, 0.09019608)
+
+[node name="GuySpawnPoint" type="Node2D" parent="." unique_id=358077674]
+position = Vector2(0, -7)
+
+[connection signal="body_entered" from="PlayerDetectArea" to="." method="_on_player_detect_area_body_entered"]

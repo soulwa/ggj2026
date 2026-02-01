@@ -15,6 +15,22 @@ region = Rect2(576, 0, 192, 192)
 atlas = ExtResource("2_dfy2u")
 region = Rect2(768, 0, 192, 192)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_dfy2u"]
+atlas = ExtResource("2_dfy2u")
+region = Rect2(960, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d46df"]
+atlas = ExtResource("2_dfy2u")
+region = Rect2(1152, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l3odi"]
+atlas = ExtResource("2_dfy2u")
+region = Rect2(1344, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l5o4n"]
+atlas = ExtResource("2_dfy2u")
+region = Rect2(1536, 0, 192, 192)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_d46df"]
 animations = [{
 "frames": [{
@@ -40,13 +56,33 @@ animations = [{
 "loop": true,
 "name": &"3",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dfy2u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d46df")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l3odi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l5o4n")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"death",
+"speed": 15.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l3odi"]
-size = Vector2(12, 51)
+size = Vector2(18, 80)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dfy2u"]
-size = Vector2(10, 44)
+size = Vector2(16, 68)
 
 [node name="MushroomGuy" type="CharacterBody2D" unique_id=1913379462]
 collision_layer = 16
@@ -55,12 +91,15 @@ script = ExtResource("1_ghvsm")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=318614463]
 position = Vector2(0, 30)
+scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_d46df")
-animation = &"1"
+animation = &"death"
+frame = 4
+frame_progress = 1.0
 offset = Vector2(0, -30)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1452951053]
-position = Vector2(0, 4.5)
+position = Vector2(0, -10)
 shape = SubResource("RectangleShape2D_l3odi")
 
 [node name="DamageRegion" type="Area2D" parent="." unique_id=1822373019]
@@ -68,7 +107,7 @@ position = Vector2(0, -33)
 collision_layer = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DamageRegion" unique_id=1461126320]
-position = Vector2(0, 41)
+position = Vector2(0, 29)
 shape = SubResource("RectangleShape2D_dfy2u")
 
 [node name="PivotTimer" type="Timer" parent="." unique_id=767465204]

@@ -695,7 +695,7 @@ func dive_bounce() -> void:
 	spear_hitbox_dive_shape_right.disabled = true
 	spear_hitbox_dive_shape_left.disabled = true
 	disable_jump_cancel = true
-	is_doublejump_animation = true
+	is_doublejump_animation = false
 	MusicManager.play_sound_divebounce()
 	
 	# Add wall dent at impact position with 2x strength

@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://f5yuarame0wc" path="res://Scripts/level.gd" id="1_ei0jd"]
 [ext_resource type="Script" uid="uid://drrpfettr5xr5" path="res://Scripts/camera.gd" id="2_p43o3"]
 [ext_resource type="TileSet" uid="uid://cs3dniqm6bgdo" path="res://Scenes/tileset.tres" id="3_pdpr1"]
-[ext_resource type="Shader" path="res://Shaders/brightness-contrast.gdshader" id="4_bff13"]
+[ext_resource type="Shader" uid="uid://cl7vmth0yv5m8" path="res://Shaders/brightness-contrast.gdshader" id="4_bff13"]
 [ext_resource type="PackedScene" uid="uid://bsfa1tlsh7fwr" path="res://Scenes/player.tscn" id="4_xwmjj"]
 [ext_resource type="TileSet" uid="uid://ce86g6go5rhye" path="res://Scenes/bg_tileset.tres" id="5_06v3b"]
 [ext_resource type="PackedScene" uid="uid://p8si7hu4ur8y" path="res://Scenes/player_spawn.tscn" id="5_bff13"]
