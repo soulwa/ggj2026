@@ -228,7 +228,7 @@ func _add_ground_dent() -> void:
 				if child.has_method("add_temporary_dent"):
 					# Position the dent at the frog's feet, slightly into the ground
 					var dent_pos = position + Vector2(0, 16)
-					child.add_temporary_dent(dent_pos, Vector2.DOWN, 48.0, 1.0)
+					child.add_temporary_dent(dent_pos, Vector2.DOWN, 48.0, 2.0)
 					return
 
 
