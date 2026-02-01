@@ -3,6 +3,7 @@ extends Node
 var death_count := 0
 var time_spent := 0.0
 
+var begin_fade_out: bool = false
 
 func _ready() -> void:
 	# Pre-warm mushroom spore shader by emitting particles during startup

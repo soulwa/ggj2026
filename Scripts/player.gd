@@ -275,8 +275,10 @@ func _physics_process(delta: float) -> void:
 		velocity.x = 0
 		velocity.y += gravity
 		
-		if input_action_pressed:
+		if input_action_pressed and !started_crying:
 			started_crying = true
+			MusicManager.play_cry()
+			Globals.begin_fade_out = true
 		
 	elif current_state == MoveState.NORMAL or current_state == MoveState.SWAPMASK:
 		if current_state == MoveState.NORMAL:
@@ -456,13 +458,13 @@ func _physics_process(delta: float) -> void:
 			doublejump_mask.show()
 	
 	if Globals.currently_selected_action == Globals.Action.Cry:
+		for sprite in sprites:
+			sprite.hide()
+		sprites[0].show()
 		if started_crying:
-			for sprite in sprites:
-				sprite.hide()
-			sprites[0].show()
 			sprites[0].play("cry")
 		else:
-			sprites[0].play("idle")
+			sprites[0].play("cry_idle")
 	else:
 		for sprite in sprites:
 			sprite.flip_h = facedir == -1

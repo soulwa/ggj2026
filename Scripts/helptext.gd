@@ -4,6 +4,7 @@ class_name Helptext extends Label
 @export var after_mushmask := false
 @export var after_cry := false
 @export var fade_in_time := 0.25
+@export var pre_timer := 0.0
 
 # gpt slop
 var _show_tween: Tween
@@ -19,7 +20,11 @@ func show_fade_in(time) -> void:
 
 	visible = true
 	modulate.a = 0.0
-
+	
+	var tween = create_tween()
+	tween.tween_interval(pre_timer)
+	await tween.finished
+	
 	_show_tween = create_tween()
 	_show_tween.tween_property(self, "modulate:a", 1.0, time) \
 		.set_trans(Tween.TRANS_SINE) \

@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://4fdlg7wgj87w"]
+[gd_scene format=3 uid="uid://4fdlg7wgj87w"]
 
 [ext_resource type="Script" uid="uid://c8wsr1j84y1sk" path="res://Scripts/music_manager.gd" id="1_1u5ih"]
 [ext_resource type="AudioStream" uid="uid://c52prxvvmstig" path="res://Assets/Music/GGJ2026_MX_Fenrick_bassMinusLead_v02_-7dB.wav" id="1_a0g8o"]
@@ -81,89 +81,90 @@ stream_0/stream = ExtResource("21_bggwv")
 stream_1/stream = ExtResource("22_u6hki")
 stream_2/stream = ExtResource("23_no07j")
 
-[node name="MusicManager" type="Node"]
+[node name="MusicManager" type="Node" unique_id=1093222500]
 process_mode = 3
 script = ExtResource("1_1u5ih")
 
-[node name="MusicOpt1" type="AudioStreamPlayer" parent="."]
+[node name="MusicOpt1" type="AudioStreamPlayer" parent="." unique_id=1320970906]
 stream = SubResource("AudioStreamSynchronized_me85s")
 bus = &"Music"
 
-[node name="MusicOpt2" type="AudioStreamPlayer" parent="."]
+[node name="MusicOpt2" type="AudioStreamPlayer" parent="." unique_id=1030474064]
 stream = SubResource("AudioStreamSynchronized_57cfc")
 bus = &"Music"
 
-[node name="SFX_Footstep" type="AudioStreamPlayer" parent="."]
+[node name="SFX_Footstep" type="AudioStreamPlayer" parent="." unique_id=923971093]
 stream = SubResource("AudioStreamRandomizer_5lhga")
 volume_db = -5.0
 bus = &"SFX"
 
-[node name="Timer_Footstep" type="Timer" parent="."]
+[node name="Timer_Footstep" type="Timer" parent="." unique_id=1269871351]
 wait_time = 0.2
 
-[node name="SFX_Jump" type="AudioStreamPlayer" parent="."]
+[node name="SFX_Jump" type="AudioStreamPlayer" parent="." unique_id=2109775109]
 stream = SubResource("AudioStreamRandomizer_b5y6m")
 bus = &"SFX"
 
-[node name="SFX_Thrust" type="AudioStreamPlayer" parent="."]
+[node name="SFX_Thrust" type="AudioStreamPlayer" parent="." unique_id=1260243181]
 stream = SubResource("AudioStreamRandomizer_4f6od")
 bus = &"SFX"
 
-[node name="SFX_Wallbounce" type="AudioStreamPlayer" parent="."]
+[node name="SFX_Wallbounce" type="AudioStreamPlayer" parent="." unique_id=1335342484]
 stream = ExtResource("16_5lhga")
 bus = &"SFX"
 
-[node name="SFX_Doublejump" type="AudioStreamPlayer" parent="."]
+[node name="SFX_Doublejump" type="AudioStreamPlayer" parent="." unique_id=354899505]
 stream = ExtResource("19_jtpmq")
 bus = &"SFX"
 
-[node name="SFX_Dive" type="AudioStreamPlayer" parent="."]
+[node name="SFX_Dive" type="AudioStreamPlayer" parent="." unique_id=1623284115]
 stream = ExtResource("18_wnqgx")
 bus = &"SFX"
 
-[node name="SFX_Divebounce" type="AudioStreamPlayer" parent="."]
+[node name="SFX_Divebounce" type="AudioStreamPlayer" parent="." unique_id=1846079055]
 stream = SubResource("AudioStreamRandomizer_fmjw1")
 bus = &"SFX"
 
-[node name="SFX_Openmenu" type="AudioStreamPlayer" parent="."]
+[node name="SFX_Openmenu" type="AudioStreamPlayer" parent="." unique_id=1865139977]
 stream = ExtResource("24_tjvmt")
 
-[node name="SFX_SelectUp" type="AudioStreamPlayer" parent="."]
+[node name="SFX_SelectUp" type="AudioStreamPlayer" parent="." unique_id=374203164]
 stream = ExtResource("23_3wvko")
 
-[node name="SFX_SelectSide" type="AudioStreamPlayer" parent="."]
+[node name="SFX_SelectSide" type="AudioStreamPlayer" parent="." unique_id=1015555200]
 stream = ExtResource("24_hfkii")
 
-[node name="SFX_SelectDown" type="AudioStreamPlayer" parent="."]
+[node name="SFX_SelectDown" type="AudioStreamPlayer" parent="." unique_id=1990579471]
 stream = ExtResource("25_cyg2j")
 
-[node name="SFX_Die" type="AudioStreamPlayer" parent="."]
+[node name="SFX_Die" type="AudioStreamPlayer" parent="." unique_id=2084766366]
 stream = ExtResource("28_01jp5")
 bus = &"SFX"
 
-[node name="SFX_Frogbounce" type="AudioStreamPlayer" parent="."]
+[node name="SFX_Frogbounce" type="AudioStreamPlayer" parent="." unique_id=1899204569]
 stream = ExtResource("29_71hgo")
 
-[node name="SFX_Frogcroak" type="AudioStreamPlayer" parent="."]
+[node name="SFX_Frogcroak" type="AudioStreamPlayer" parent="." unique_id=1468076938]
 stream = ExtResource("30_pqmke")
 volume_db = -1.938
 
-[node name="SFX_Playerhurt" type="AudioStreamPlayer" parent="."]
+[node name="SFX_Playerhurt" type="AudioStreamPlayer" parent="." unique_id=1521974017]
 stream = ExtResource("31_wg1jy")
 
-[node name="SFX_Killenemy" type="AudioStreamPlayer" parent="."]
+[node name="SFX_Killenemy" type="AudioStreamPlayer" parent="." unique_id=444390864]
 stream = ExtResource("32_mfpbl")
 
-[node name="SFX_Shoot" type="AudioStreamPlayer" parent="."]
+[node name="SFX_Shoot" type="AudioStreamPlayer" parent="." unique_id=312562822]
 stream = ExtResource("33_e0oj2")
 
-[node name="SFX_Shroomscream" type="AudioStreamPlayer" parent="."]
+[node name="SFX_Shroomscream" type="AudioStreamPlayer" parent="." unique_id=186055587]
 stream = ExtResource("34_313iq")
 
-[node name="SFX_Cry" type="AudioStreamPlayer" parent="."]
+[node name="SFX_Cry" type="AudioStreamPlayer" parent="." unique_id=1052273176]
 stream = ExtResource("35_bggwv")
+volume_db = -5.0
 
-[node name="SFX_Maskget" type="AudioStreamPlayer" parent="."]
+[node name="SFX_Maskget" type="AudioStreamPlayer" parent="." unique_id=2077321075]
 stream = ExtResource("23_3wvko")
 bus = &"SFX"
 
