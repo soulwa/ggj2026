@@ -16,6 +16,7 @@ var _lookahead_x := 0.0
 func _ready() -> void:
 	pass
 
+# TODO (sam): better lerp speed smoothing (on top of lookahead x smoothing)
 func _process(delta: float) -> void:
 	if player == null:
 		player = get_parent().find_child("Player")
