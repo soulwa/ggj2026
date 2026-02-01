@@ -4,14 +4,14 @@ class_name MushroomSpores extends GPUParticles2D
 ## Call emit_burst() to trigger a poofy burst of spores.
 
 @export_group("Burst Settings")
-@export var particles_per_burst := 16  ## Gentle puff of spores
+@export var particles_per_burst := 28  ## Larger puff of spores
 @export var burst_spread := 85.0  ## Wide, soft cloud spread
 
 @export_group("Particle Physics")
 @export var min_speed := 20.0  ## Lazy drift speed
 @export var max_speed := 45.0  ## Gentle float
 @export var gravity_strength := 25.0  ## Very light, floaty
-@export var particle_lifetime := 2.5  ## Long, lingering fade
+@export var particle_lifetime := 1.8  ## Shorter fade
 
 @export_group("Particle Appearance")
 @export var min_scale := 0.3  ## Spore size
@@ -66,20 +66,20 @@ static func _init_cached_materials() -> void:
 	_cached_process_material.emission_shape = ParticleProcessMaterial.EMISSION_SHAPE_SPHERE
 	_cached_process_material.emission_sphere_radius = 0.5
 	
-	# Direction - upward with wide spread for poofy effect
+	# Direction - upward with moderate spread
 	_cached_process_material.direction = Vector3(0, -1, 0)  # Up in 2D
-	_cached_process_material.spread = 85.0
+	_cached_process_material.spread = 52.0  # Balanced vertical/horizontal spread
 	
-	# Initial velocity
-	_cached_process_material.initial_velocity_min = 20.0
-	_cached_process_material.initial_velocity_max = 45.0
+	# Initial velocity - wider range for more vertical spread
+	_cached_process_material.initial_velocity_min = 60.0
+	_cached_process_material.initial_velocity_max = 180.0
 	
-	# Gravity - light for floaty spores
-	_cached_process_material.gravity = Vector3(0, 25.0, 0)
+	# Gravity - very light for floaty vertical travel
+	_cached_process_material.gravity = Vector3(0, 8.0, 0)
 	
-	# Angular velocity (very gentle rotation)
-	_cached_process_material.angular_velocity_min = -30.0
-	_cached_process_material.angular_velocity_max = 30.0
+	# Angular velocity - more variation for visual diversity
+	_cached_process_material.angular_velocity_min = -1180.0
+	_cached_process_material.angular_velocity_max = 1180.0
 	
 	# Scale with variation
 	_cached_process_material.scale_min = 0.3
@@ -98,19 +98,20 @@ static func _init_cached_materials() -> void:
 	# Color and alpha
 	_cached_process_material.color = Color(1.0, 1.0, 1.0, 0.75)
 	
-	# Alpha fade curve
+	# Alpha fade curve - smooth gradual fade
 	var alpha_curve = CurveTexture.new()
 	var alpha = Curve.new()
 	alpha.add_point(Vector2(0.0, 0.0))   # Fade in
-	alpha.add_point(Vector2(0.1, 1.0))   # Full opacity
-	alpha.add_point(Vector2(0.6, 0.8))   # Slight fade
+	alpha.add_point(Vector2(0.15, 1.0))  # Full opacity
+	alpha.add_point(Vector2(0.5, 0.9))   # Hold longer
+	alpha.add_point(Vector2(0.75, 0.5))  # Gradual fade
 	alpha.add_point(Vector2(1.0, 0.0))   # Fade out
 	alpha_curve.curve = alpha
 	_cached_process_material.alpha_curve = alpha_curve
 	
-	# Damping for quick slowdown to gentle drift
-	_cached_process_material.damping_min = 40.0
-	_cached_process_material.damping_max = 70.0
+	# Damping - lower for more sustained explosive movement
+	_cached_process_material.damping_min = 15.0
+	_cached_process_material.damping_max = 30.0
 	
 	# Create ShaderMaterial with wiggle/warble/dissipation effects (shared)
 	_cached_shader_material = ShaderMaterial.new()
@@ -121,7 +122,11 @@ static func _init_cached_materials() -> void:
 	_cached_shader_material.set_shader_parameter("v_frames", 2)
 	_cached_shader_material.set_shader_parameter("wiggle_speed", 2.0)
 	_cached_shader_material.set_shader_parameter("wiggle_amount", 3.0)
-	_cached_shader_material.set_shader_parameter("warble_amount", 0.08)
+	_cached_shader_material.set_shader_parameter("warble_amount", 0.12)
+	# Spread and late-life variation
+	_cached_shader_material.set_shader_parameter("spread_over_time", 25.0)
+	_cached_shader_material.set_shader_parameter("late_rotation", 1.5)
+	_cached_shader_material.set_shader_parameter("late_noise_strength", 0.4)
 
 
 func _setup_particles() -> void:
@@ -131,7 +136,7 @@ func _setup_particles() -> void:
 	# Configure the GPUParticles2D node
 	emitting = false
 	one_shot = true
-	explosiveness = 0.85  # Burst together, slight stagger
+	explosiveness = 1.0  # All particles burst at once
 	amount = particles_per_burst
 	lifetime = particle_lifetime
 	
