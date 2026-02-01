@@ -139,6 +139,9 @@ var dir_stack: Array[Vector2i] = []
 
 var swapmask_target: Globals.Action
 
+var spike_recoil_time := 10 * DT
+var spike_recoil_timer := 0.0
+
 
 func _ready() -> void:
 	jump_power = -sqrt(2 * gravity * jump_pixels)
@@ -159,7 +162,7 @@ func _process(delta: float) -> void:
 	pass
 
 func _physics_process(delta: float) -> void:
-	if hp < 0:
+	if hp < 0 or dead:
 		return
 	
 	#region INPUT
@@ -254,6 +257,8 @@ func _physics_process(delta: float) -> void:
 		
 	if iframe_timer > 0:
 		iframe_timer -= delta
+	
+	spike_recoil_timer -= delta
 	#endregion
 	
 	if input_swapmask_pressed and current_state != MoveState.DIVE:
@@ -407,6 +412,7 @@ func _physics_process(delta: float) -> void:
 		if hit_tilemap:
 			dive_bounce()
 	elif current_state == MoveState.DIVE_BOUNCE:
+		spike_recoil_timer = spike_recoil_time
 		end_dive() # TODO
 	
 	move_and_slide()
@@ -416,7 +422,10 @@ func _physics_process(delta: float) -> void:
 		# TODO (sam): do relevant stuff here if we need, like enemies, walls, spike
 		var body = collision.get_collider()
 		if body is EnemySpike:
-			die()
+			if (spike_recoil_timer < 0 or (current_state == MoveState.DIVE and collision.get_normal().y < 0)):
+				print("avoided spike death")
+			if not (spike_recoil_timer >= 0 or (current_state == MoveState.DIVE and collision.get_normal().y < 0)):
+				die()
 	#endregion
 	
 	#region ANIMATION
@@ -806,6 +815,8 @@ func die() -> void:
 	
 	iframe_timer = 0
 	coyote_timer = 0
+	
+	spike_recoil_timer = -1.0
 	
 	# TODO (sam): @zane more state to reset here? or maybe its okay.
 	
