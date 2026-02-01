@@ -118,3 +118,21 @@ func play_sound_select_side() -> void:
 
 func play_sound_select_down() -> void:
 	$SFX_SelectDown.play()
+
+func play_die() -> void:
+	$SFX_Die.play()
+
+func play_frogbounce() -> void:
+	$SFX_Frogbounce.play()
+
+func play_frogcroak() -> void:
+	$SFX_Frogcroak.play()
+
+func play_playerhurt() -> void:
+	$SFX_Playerhurt.play()
+
+func play_shoot() -> void:
+	$SFX_Shoot.play()
+
+func play_shroomscream() -> void:
+	$SFX_Shroomscream.play()

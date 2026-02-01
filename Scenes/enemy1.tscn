@@ -9,6 +9,14 @@ size = Vector2(128.66667, 89)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4qy08"]
 size = Vector2(104, 72)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_mxdow"]
+atlas = ExtResource("3_4qy08")
+region = Rect2(384, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4qy08"]
+atlas = ExtResource("3_4qy08")
+region = Rect2(0, 384, 192, 192)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_apx2k"]
 atlas = ExtResource("3_4qy08")
 region = Rect2(0, 0, 192, 192)
@@ -27,6 +35,17 @@ region = Rect2(192, 0, 192, 192)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_mxdow"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mxdow")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4qy08")
+}],
+"loop": false,
+"name": &"die",
+"speed": 15.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_apx2k")
@@ -78,4 +97,6 @@ shape = SubResource("RectangleShape2D_4qy08")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=299828257]
 position = Vector2(0, -23)
 sprite_frames = SubResource("SpriteFrames_mxdow")
-animation = &"idle"
+animation = &"die"
+frame = 1
+frame_progress = 1.0

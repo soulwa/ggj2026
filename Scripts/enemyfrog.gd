@@ -233,10 +233,14 @@ func _add_ground_dent() -> void:
 
 
 func die() -> void:
-	visible = false
 	dead = true
 	$DamageRegion.monitoring = false
 	$CollisionShape2D.disabled = true
+	$AnimatedSprite2D.play("die")
+	
+	await $AnimatedSprite2D.animation_finished
+	
+	visible = false
 
 func reset() -> void:
 	visible = true

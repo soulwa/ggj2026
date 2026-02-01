@@ -255,7 +255,7 @@ func _physics_process(delta: float) -> void:
 		iframe_timer -= delta
 	#endregion
 	
-	if input_swapmask_pressed:
+	if input_swapmask_pressed and current_state != MoveState.THRUST and current_state != MoveState.DIVE:
 		enter_swapmask()
 	
 	
@@ -344,7 +344,7 @@ func _physics_process(delta: float) -> void:
 					swapmask_target = Globals.Action.Thrust
 					if latest_direction != last_latest_direction: MusicManager.play_sound_select_side()
 			
-			
+			Globals.currently_selected_action = swapmask_target
 			
 			# exit menu
 			if input_action_pressed:
@@ -673,7 +673,7 @@ func show_swapmask_visual() -> void:
 
 
 func exit_swapmask() -> void:
-	Globals.currently_selected_action = swapmask_target
+	#Globals.currently_selected_action = swapmask_target
 	if current_state == MoveState.SWAPMASK: current_state = MoveState.NORMAL
 	Engine.time_scale = 1.0
 	swapmask_ui_left.hide()

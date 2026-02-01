@@ -8,7 +8,7 @@ var mushroom_spores_scene: PackedScene = preload("res://Scenes/mushroom_spores.t
 var squash_stretch_shader: Shader = preload("res://Shaders/squash_stretch.gdshader")
 
 var min_guys: int = 5
-var max_guys: int = 7
+var max_guys: int = 6
 
 var spore_delay: float = 0.1  ## Delay between spore burst and mushroom spawn
 var spore_y_offset: float = 24.0  ## Lower offset for spore emission (positive = down)
@@ -61,6 +61,11 @@ func activate() -> void:
 			new_guy.global_position = guy_spawn_point.global_position
 			new_guy.spawn_delay = i * 0.03  # Stagger spawn animations
 			call_deferred("add_sibling", new_guy)
+		hide()
+
+func reset() -> void:
+	show()
+	activated = false
 
 func _emit_explosion() -> void:
 	var spores: MushroomSpores = mushroom_spores_scene.instantiate()
