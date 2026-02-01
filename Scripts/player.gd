@@ -389,7 +389,20 @@ func _emit_wall_smash_particles() -> void:
 	_add_wall_dent(emit_pos, hit_direction)
 
 
-func _add_wall_dent(hit_pos: Vector2, hit_direction: Vector2) -> void:
+func _emit_dive_impact_dent() -> void:
+	# For dive, the spear points down - use position below player at floor level
+	var dent_pos = global_position + Vector2(0, 24)
+	var particle_pos = global_position + Vector2(0, 60)
+	
+	# Emit particles upward (away from the ground)
+	if smash_particles:
+		smash_particles.emit_burst(particle_pos, Vector2.UP, velocity)
+	
+	# Add wall dent at impact position - downward direction with 2x strength
+	_add_wall_dent(dent_pos, Vector2.DOWN, 1.5)
+
+
+func _add_wall_dent(hit_pos: Vector2, hit_direction: Vector2, strength_multiplier: float = 1.0) -> void:
 	# Find the dent manager in the level
 	var parent = get_parent()
 	if parent:
@@ -397,7 +410,9 @@ func _add_wall_dent(hit_pos: Vector2, hit_direction: Vector2) -> void:
 			if child.has_method("add_dent_directed"):
 				# Position the dent slightly into the wall
 				var dent_pos = hit_pos + hit_direction * 12.0
-				child.add_dent_directed(dent_pos, hit_direction)
+				# Pass -1.0 for radius (use default), calculate strength with multiplier
+				var strength = child.default_strength * strength_multiplier if strength_multiplier != 1.0 else -1.0
+				child.add_dent_directed(dent_pos, hit_direction, -1.0, strength)
 				return
 
 
@@ -489,6 +504,9 @@ func dive_bounce() -> void:
 	spear_hitbox_dive_shape_right.disabled = true
 	spear_hitbox_dive_shape_left.disabled = true
 	disable_jump_cancel = true
+	
+	# Add wall dent at impact position with 2x strength
+	_emit_dive_impact_dent()
 
 func end_dive() -> void:
 	current_state = MoveState.NORMAL
