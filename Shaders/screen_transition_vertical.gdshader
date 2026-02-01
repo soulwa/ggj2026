@@ -1,208 +1,108 @@
 shader_type canvas_item;
 
-// Main animation progress (0 = hidden, 1 = fully transitioned and faded out)
+// Main animation progress (0 = start, 0.5 = fully black, 1 = fully revealed)
 uniform float progress : hint_range(0.0, 1.0) = 0.0;
 
-// Grid configuration
-uniform vec2 grid_size = vec2(9.0, 6.0);
-uniform float rhombus_size = 0.42;
-uniform float rhombus_height_ratio = 1.6;
+// Direction: 1.0 = top to bottom, -1.0 = bottom to top
+uniform float direction : hint_range(-1.0, 1.0) = 1.0;
 
-// Wave configuration
-uniform float wave_spread = 0.55;
-uniform float outline_wave_spread = 0.20;  // Faster/tighter wave for outline appearance
+// Dither pattern configuration
+uniform float dither_size : hint_range(1.0, 16.0) = 4.0;  // Size of dither pixels
+uniform float edge_softness : hint_range(0.0, 0.5) = 0.15;  // How soft the transition edge is
 
 // Colors
-uniform vec3 color_purple : source_color = vec3(0.38, 0.14, 0.52);
-uniform vec3 color_blue : source_color = vec3(0.12, 0.18, 0.45);
-uniform vec3 color_rhombus_bg : source_color = vec3(0.16, 0.22, 0.20);
-uniform vec3 color_screen_bg : source_color = vec3(0.18, 0.22, 0.28);
-uniform float outline_thickness = 0.018;
+uniform vec3 color_black : source_color = vec3(0.0, 0.0, 0.0);
 
-// Easing functions for more organic motion
-float ease_out_cubic(float t) {
-	return 1.0 - pow(1.0 - t, 3.0);
-}
-
-float ease_in_out_quad(float t) {
-	return t < 0.5 ? 2.0 * t * t : 1.0 - pow(-2.0 * t + 2.0, 2.0) / 2.0;
-}
-
-float ease_in_quad(float t) {
-	return t * t;
-}
-
-float ease_out_quad(float t) {
-	return 1.0 - (1.0 - t) * (1.0 - t);
-}
-
-// Single continuous easing that slows dramatically for the final portion
-// t: 0-1 progress, slow_start: when to start slowing (e.g. 0.7 = slow last 30%)
-float ease_with_slow_finish(float t) {
-	t = clamp(t, 0.0, 1.0);
-	// Use a high-power ease-out that really slows at the end
-	// ease_out_quint: 1 - (1-t)^5 - very slow finish
-	return 1.0 - pow(1.0 - t, 5.0);
-}
-
-// SDF for rhombus with aspect ratio (horizontal orientation - wider than tall)
-float diamond_sdf(vec2 p, float size, float aspect) {
-	p.x /= aspect;  // Apply aspect to X for horizontal rhombus
-	p = abs(p);
-	return (p.x + p.y - size) / 1.41421356;
-}
-
-// Calculate wave-offset progress for a given cell position (vertical sweep: top/bottom to center)
-float get_wave_progress(float cell_y, float center_y, float wave_sprd, float prog) {
-	float cell_dist = abs(cell_y - center_y) / center_y;
-	cell_dist = clamp(cell_dist, 0.0, 1.0);
+// 8x8 Bayer matrix for ordered dithering
+float bayer8x8(vec2 pos) {
+	int x = int(mod(pos.x, 8.0));
+	int y = int(mod(pos.y, 8.0));
 	
-	// Apply easing to the wave spread for smoother motion
-	float wave_offset = ease_in_out_quad(1.0 - cell_dist) * wave_sprd;
-	float scaled_prog = prog * (1.0 + wave_sprd);
-	float local_prog = scaled_prog - wave_offset;
-	return clamp(local_prog, 0.0, 1.0);
-}
-
-// Render a single rhombus and return its color contribution
-// outline_wave_progress: fast wave for outline appearance (edges first, quick sweep)
-// wave_progress: slower wave for fills (edges first, center last)
-// bg_fade: background fade value to sync inner fill with background
-vec4 render_rhombus(vec2 local_uv, float outline_wave_progress, float wave_progress, float bg_fade, vec2 screen_uv, float aa) {
-	// Skip if completely outside animation range (use 0.99 to avoid floating point issues)
-	if (outline_wave_progress <= 0.0 || wave_progress >= 0.99) {
-		return vec4(0.0);
-	}
+	// 8x8 Bayer matrix
+	int bayer[64] = int[64](
+		 0, 32,  8, 40,  2, 34, 10, 42,
+		48, 16, 56, 24, 50, 18, 58, 26,
+		12, 44,  4, 36, 14, 46,  6, 38,
+		60, 28, 52, 20, 62, 30, 54, 22,
+		 3, 35, 11, 43,  1, 33,  9, 41,
+		51, 19, 59, 27, 49, 17, 57, 25,
+		15, 47,  7, 39, 13, 45,  5, 37,
+		63, 31, 55, 23, 61, 29, 53, 21
+	);
 	
-	float d = diamond_sdf(local_uv, rhombus_size, rhombus_height_ratio);
-	
-	// Skip if outside rhombus bounds
-	if (d > rhombus_size + outline_thickness + 0.05) {
-		return vec4(0.0);
-	}
-	
-	vec4 rhombus_color = vec4(0.0);
-	
-	// ============================================
-	// OUTLINE - Uses fast wave (quick sweep from edges)
-	// ============================================
-	float outline_appear = ease_out_cubic(smoothstep(0.0, 0.35, outline_wave_progress));
-	
-	if (outline_appear > 0.0 && bg_fade > 0.0) {
-		// Start from near-zero so it grows smoothly into existence
-		float outline_pos = mix(0.01, rhombus_size, outline_appear);
-		float outline_d = diamond_sdf(local_uv, outline_pos, rhombus_height_ratio);
-		float outline = 1.0 - smoothstep(0.0, outline_thickness + aa, abs(outline_d));
-		rhombus_color = mix(rhombus_color, vec4(1.0, 1.0, 1.0, bg_fade), outline);
-	}
-	
-	// ============================================
-	// FILLS - Use wave_progress (edges first, center last)
-	// Single continuous animation with strong ease-out (slows dramatically at end)
-	// Stretched 30% longer (endpoints at 1.3) so fills animate while fading
-	// ============================================
-	
-	// White fill: 0.0-1.3 with heavy ease-out (stretched 30%)
-	float white_progress = smoothstep(0.0, 1.3, wave_progress);
-	float white_appear = ease_with_slow_finish(white_progress);
-	
-	if (white_appear > 0.0 && bg_fade > 0.0) {
-		float white_size = white_appear * rhombus_size;
-		float white_d = diamond_sdf(local_uv, white_size, rhombus_height_ratio);
-		float white_fill = 1.0 - smoothstep(-aa, aa, white_d);
-		rhombus_color = mix(rhombus_color, vec4(1.0, 1.0, 1.0, bg_fade), white_fill);
-	}
-	
-	// Gradient fill: 0.15-1.3 with heavy ease-out (stretched 30%)
-	float grad_progress = smoothstep(0.15, 1.3, wave_progress);
-	float grad_appear = ease_with_slow_finish(grad_progress);
-	
-	if (grad_appear > 0.0 && bg_fade > 0.0) {
-		float grad_size = grad_appear * (rhombus_size - 0.025);
-		float grad_d = diamond_sdf(local_uv, grad_size, rhombus_height_ratio);
-		float grad_fill = 1.0 - smoothstep(-aa, aa, grad_d);
-		vec3 gradient_color = mix(color_blue, color_purple, screen_uv.y);
-		rhombus_color = mix(rhombus_color, vec4(gradient_color, bg_fade), grad_fill);
-	}
-	
-	// Inner fill: 0.35-1.3 with heavy ease-out (stretched 30%)
-	float inner_progress = smoothstep(0.35, 1.3, wave_progress);
-	float inner_appear = ease_with_slow_finish(inner_progress);
-	
-	if (inner_appear > 0.0 && bg_fade > 0.0) {
-		// Inner fill grows to full rhombus size
-		float inner_size = inner_appear * rhombus_size;
-		float inner_d = diamond_sdf(local_uv, inner_size, rhombus_height_ratio);
-		float inner_fill = 1.0 - smoothstep(-aa, aa, inner_d);
-		rhombus_color = mix(rhombus_color, vec4(color_screen_bg, bg_fade), inner_fill);
-	}
-	
-	return rhombus_color;
+	return float(bayer[y * 8 + x]) / 64.0;
 }
 
 void fragment() {
 	vec2 uv = UV;
-	float aa = 0.01;
+	vec2 screen_size = 1.0 / SCREEN_PIXEL_SIZE;
 	
-	// ============================================
-	// BACKGROUND LAYER - Smooth wave (top/bottom to center), holds longer
-	// ============================================
-	float smooth_dist = abs(uv.y - 0.5) * 2.0;  // Vertical distance from center
-	float bg_wave_offset = ease_in_out_quad(1.0 - smooth_dist) * wave_spread;
-	float bg_scaled_progress = progress * (1.0 + wave_spread);
-	float bg_local_progress = bg_scaled_progress - bg_wave_offset;
-	bg_local_progress = clamp(bg_local_progress, 0.0, 1.0);
+	// Get pixel position for dithering
+	vec2 pixel_pos = floor(uv * screen_size / dither_size);
 	
-	// Background fades in quickly, holds, then fades out fast and snappy
-	float bg_fade_in = ease_out_cubic(smoothstep(0.0, 0.15, bg_local_progress));
-	float bg_fade_out = 1.0 - ease_out_cubic(smoothstep(0.72, 0.92, bg_local_progress));
-	float bg_alpha = bg_fade_in * bg_fade_out;
+	// Get dither threshold for this pixel
+	float dither_threshold = bayer8x8(pixel_pos);
 	
-	vec4 final_color = vec4(color_screen_bg, bg_alpha);
+	// Calculate sweep position based on direction
+	float sweep_pos;
+	if (direction > 0.0) {
+		// Top to bottom
+		sweep_pos = uv.y;
+	} else {
+		// Bottom to top
+		sweep_pos = 1.0 - uv.y;
+	}
 	
-	// ============================================
-	// RHOMBUS GRID - Check multiple cells for overlap
-	// ============================================
-	vec2 base_scaled_uv = uv * grid_size;
-	float center_y = grid_size.y * 0.5;  // Use Y center for vertical sweep
+	// Phase 1 (progress 0 to 0.5): Black sweeps in
+	// Phase 2 (progress 0.5 to 1): Black sweeps out (revealing screen)
 	
-	// Check current cell and neighbors for overlapping rhombuses
-	vec2 base_cell = floor(base_scaled_uv);
+	float alpha = 0.0;
 	
-	// We need to check neighboring cells because rhombuses can overlap
-	for (float dy = -1.0; dy <= 1.0; dy += 1.0) {
-		for (float dx = -1.0; dx <= 1.0; dx += 1.0) {
-			vec2 check_cell = base_cell + vec2(dx, dy);
-			
-			// Calculate the column offset for this cell (stagger pattern - offset Y based on column)
-			float col_offset = mod(check_cell.x, 2.0) * 0.5;
-			
-			// Calculate local UV with stagger applied
-			vec2 staggered_uv = base_scaled_uv;
-			staggered_uv.y += col_offset;  // Stagger Y instead of X
-			vec2 local_uv = staggered_uv - (check_cell + vec2(0.5, 0.5));
-			
-			// Get the visual center Y position for wave calculation
-			// Cell center is at check_cell.y + 0.5, but stagger shifts it visually
-			float visual_center_y = check_cell.y + 0.5 - col_offset;
-			
-			// Get fast wave progress for outline (quick sweep from top/bottom edges)
-			float outline_prog = get_wave_progress(visual_center_y, center_y, outline_wave_spread, progress);
-			
-			// Get slower wave progress for fills
-			float wave_progress = get_wave_progress(visual_center_y, center_y, wave_spread, progress);
-			
-			// Calculate per-cell background fade - fast and snappy fade out
-			float cell_bg_fade_out = 1.0 - ease_out_cubic(smoothstep(0.68, 0.88, wave_progress));
-			
-			// Render rhombus with outline wave, fill wave, and background fade
-			vec4 rhombus_color = render_rhombus(local_uv, outline_prog, wave_progress, cell_bg_fade_out, uv, aa);
-			
-			if (rhombus_color.a > 0.0) {
-				final_color = mix(final_color, rhombus_color, rhombus_color.a);
-			}
+	if (progress <= 0.5) {
+		// Sweeping in: black covers screen from one side
+		float sweep_progress = progress * 2.0;  // Normalize to 0-1
+		
+		// Calculate the sweep edge position (extends past 1.0 to ensure full coverage)
+		float edge_pos = sweep_progress * (1.0 + edge_softness * 2.0) - edge_softness;
+		
+		// Distance from the sweep edge
+		float dist_from_edge = sweep_pos - edge_pos;
+		
+		// Normalize distance to 0-1 range for dithering
+		float normalized_dist = clamp(-dist_from_edge / edge_softness, 0.0, 1.0);
+		
+		// Apply dithering: pixel is black if dither threshold is less than coverage
+		if (dither_threshold < normalized_dist) {
+			alpha = 1.0;
+		}
+		
+		// Fully covered area (behind the dither edge)
+		if (dist_from_edge < -edge_softness) {
+			alpha = 1.0;
+		}
+	} else {
+		// Sweeping out: black reveals screen from the SAME side (continues the motion)
+		float sweep_progress = (progress - 0.5) * 2.0;  // Normalize to 0-1
+		
+		// The reveal edge starts at the beginning and sweeps across
+		float edge_pos = sweep_progress * (1.0 + edge_softness * 2.0) - edge_softness;
+		
+		// Distance from the reveal edge
+		float dist_from_edge = sweep_pos - edge_pos;
+		
+		// Normalize distance to 0-1 range for dithering
+		float normalized_dist = clamp(dist_from_edge / edge_softness, 0.0, 1.0);
+		
+		// Apply dithering: pixel is black if dither threshold is less than remaining coverage
+		if (dither_threshold < normalized_dist) {
+			alpha = 1.0;
+		}
+		
+		// Still covered area (ahead of the reveal edge)
+		if (dist_from_edge > edge_softness) {
+			alpha = 1.0;
 		}
 	}
 	
-	COLOR = final_color;
+	COLOR = vec4(color_black, alpha);
 }
