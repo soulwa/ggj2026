@@ -24,7 +24,7 @@ right = "uid://delo0npmms5e5"
 script = ExtResource("2_ltlgd")
 
 [node name="DecalsXl" type="Sprite2D" parent="." unique_id=217409303]
-position = Vector2(734, -2.0000002)
+position = Vector2(892, -2.0000002)
 rotation = 1.5707964
 scale = Vector2(1.9668894, 1.8531631)
 texture = ExtResource("10_7nd03")
@@ -60,6 +60,6 @@ position = Vector2(0, 574)
 scale = Vector2(2, 2)
 
 [connection signal="body_entered" from="TileMapLayer/LevelTransition" to="TileMapLayer/LevelTransition" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@59689" to="TileMapLayer/@Area2D@59689" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@59690" to="TileMapLayer/@Area2D@59690" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@59691" to="TileMapLayer/@Area2D@59691" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@22003" to="TileMapLayer/@Area2D@22003" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@22004" to="TileMapLayer/@Area2D@22004" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@22005" to="TileMapLayer/@Area2D@22005" method="_on_body_entered"]

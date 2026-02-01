@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://drrpfettr5xr5" path="res://Scripts/camera.gd" id="2_xidc5"]
 [ext_resource type="Texture2D" uid="uid://dhch22tc1caqq" path="res://Assets/Sprites/decals-xl.png" id="3_3qmnx"]
 [ext_resource type="TileSet" uid="uid://cs3dniqm6bgdo" path="res://Scenes/tileset.tres" id="3_w8pg1"]
-[ext_resource type="Shader" path="res://Shaders/brightness-contrast.gdshader" id="4_3qmnx"]
+[ext_resource type="Shader" uid="uid://cl7vmth0yv5m8" path="res://Shaders/brightness-contrast.gdshader" id="4_3qmnx"]
 [ext_resource type="PackedScene" uid="uid://bsfa1tlsh7fwr" path="res://Scenes/player.tscn" id="4_7w2gu"]
 [ext_resource type="PackedScene" uid="uid://p8si7hu4ur8y" path="res://Scenes/player_spawn.tscn" id="5_3qmnx"]
 [ext_resource type="TileSet" uid="uid://ce86g6go5rhye" path="res://Scenes/bg_tileset.tres" id="5_bxvu0"]
@@ -36,7 +36,7 @@ region_enabled = true
 region_rect = Rect2(508.0727, 0, 131.5971, 106.14356)
 
 [node name="DecalsXl" type="Sprite2D" parent="." unique_id=1933355081]
-position = Vector2(562, -2.0000026)
+position = Vector2(2685, -60)
 rotation = -1.5707964
 scale = Vector2(1.9668894, 1.8531631)
 texture = ExtResource("3_3qmnx")
@@ -69,12 +69,12 @@ position = Vector2(2694, -8)
 direction = 1
 
 [connection signal="body_entered" from="TileMapLayer/LevelTransition" to="TileMapLayer/LevelTransition" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@51080" to="TileMapLayer/@Area2D@51080" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@51081" to="TileMapLayer/@Area2D@51081" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@51082" to="TileMapLayer/@Area2D@51082" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@51083" to="TileMapLayer/@Area2D@51083" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@51084" to="TileMapLayer/@Area2D@51084" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@51917" to="TileMapLayer/@Area2D@51917" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@51918" to="TileMapLayer/@Area2D@51918" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@51919" to="TileMapLayer/@Area2D@51919" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@51920" to="TileMapLayer/@Area2D@51920" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@19405" to="TileMapLayer/@Area2D@19405" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@19406" to="TileMapLayer/@Area2D@19406" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@19407" to="TileMapLayer/@Area2D@19407" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@19408" to="TileMapLayer/@Area2D@19408" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@19409" to="TileMapLayer/@Area2D@19409" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@19521" to="TileMapLayer/@Area2D@19521" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@19522" to="TileMapLayer/@Area2D@19522" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@19523" to="TileMapLayer/@Area2D@19523" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@19524" to="TileMapLayer/@Area2D@19524" method="_on_body_entered"]
