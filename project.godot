@@ -8,10 +8,14 @@
 
 config_version=5
 
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
 [application]
 
 config/name="ggj2026"
-run/main_scene="uid://bflapeb8ribyq"
+run/main_scene="uid://d3irggn77ffof"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 
@@ -147,4 +151,4 @@ textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
-environment/defaults/default_clear_color=Color(0.152941, 0.192157, 0.247059, 1)
+environment/defaults/default_clear_color=Color(0.078814976, 0.07881499, 0.078814976, 1)
