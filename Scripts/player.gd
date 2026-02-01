@@ -79,9 +79,8 @@ var thrust_up_force: float
 var wall_bounce_force_y: float
 
 @export_subgroup("Double Jump")
-@export var double_jump_pixels := 32*4
+@export var double_jump_pixels := 32*6
 var double_jump_power: float
-#@export var double_jump_arc := 0 # TODO (sam): i dont know how to model this yet.
 
 @export_subgroup("Downdash")
 @export var dive_startup_time := DT * 2

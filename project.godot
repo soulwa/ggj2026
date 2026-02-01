@@ -24,6 +24,7 @@ buses/default_bus_layout="uid://brkwp064felre"
 Globals="*uid://bedjkd7mes0le"
 TransitionOverlay="*res://Scenes/transition_overlay.tscn"
 MusicManager="*uid://4fdlg7wgj87w"
+DustManager="*res://Scripts/dust_manager.gd"
 
 [display]
 
@@ -146,3 +147,4 @@ textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+environment/defaults/default_clear_color=Color(0.15294118, 0.19215687, 0.24705882, 1)

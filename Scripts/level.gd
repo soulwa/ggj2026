@@ -39,6 +39,9 @@ func _ready() -> void:
 	$Camera2D.limit_top = worldspace_topleft.y + 32
 	$Camera2D.limit_bottom = worldspace_topleft.y + level_bounds.size.y * 32 - 32
 	
+	# Setup background dust particles
+	_setup_background_dust()
+	
 	#print($Camera2D.limit_right)
 	
 	if not override_dont_use_spawn:
@@ -62,6 +65,11 @@ func _setup_dent_manager() -> void:
 	_dent_manager.name = "WallDentManager"
 	add_child(_dent_manager)
 
+
+func _setup_background_dust() -> void:
+	# Use the cached DustManager instead of creating new emitters each time
+	DustManager.setup_for_level($Camera2D)
+	
 var _is_switching_level: bool = false
 
 func reset_enemies() -> void:

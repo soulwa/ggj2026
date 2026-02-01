@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://ccpyqqbc83irg"]
+
+[ext_resource type="Script" path="res://Scripts/mushroom_spores.gd" id="1_spores"]
+
+[node name="MushroomSpores" type="GPUParticles2D"]
+script = ExtResource("1_spores")
