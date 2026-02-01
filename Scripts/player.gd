@@ -586,6 +586,7 @@ func bounce_off_wall() -> void:
 	MusicManager.play_sound_wallbounce()
 
 func bounce_off_frog(frog: EnemyFrog) -> void:
+	MusicManager.play_frogbounce()
 	velocity.x = -facedir * frog_bounce_force_x
 	velocity.y = frog_bounce_force_y
 	
