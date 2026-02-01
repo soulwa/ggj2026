@@ -7,110 +7,12 @@
 [ext_resource type="PackedScene" uid="uid://bsfa1tlsh7fwr" path="res://Scenes/player.tscn" id="4_s7xsl"]
 [ext_resource type="PackedScene" uid="uid://p8si7hu4ur8y" path="res://Scenes/player_spawn.tscn" id="5_fmu06"]
 [ext_resource type="TileSet" uid="uid://ce86g6go5rhye" path="res://Scenes/bg_tileset.tres" id="5_h7lo4"]
-[ext_resource type="Texture2D" uid="uid://be3uh4vksindp" path="res://Assets/Sprites/decals-sm.png" id="6_fi4r3"]
+[ext_resource type="TileSet" uid="uid://51pf6litgg2x" path="res://Scenes/fg_tileset.tres" id="6_s7xsl"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_expw3"]
 shader = ExtResource("4_fmu06")
 shader_parameter/brightness = -0.7409998451975
 shader_parameter/contrast = 0.3370000160075
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_s8sj4"]
-texture = ExtResource("6_fi4r3")
-texture_region_size = Vector2i(32, 32)
-1:0/0 = 0
-1:0/0/texture_origin = Vector2i(8, -8)
-2:0/0 = 0
-2:0/0/texture_origin = Vector2i(8, -8)
-3:0/0 = 0
-3:0/0/texture_origin = Vector2i(8, -8)
-4:0/0 = 0
-4:0/0/texture_origin = Vector2i(8, -8)
-5:0/0 = 0
-5:0/0/texture_origin = Vector2i(8, -8)
-6:0/0 = 0
-6:0/0/texture_origin = Vector2i(8, -8)
-7:0/0 = 0
-7:0/0/texture_origin = Vector2i(8, -8)
-0:1/0 = 0
-0:1/0/texture_origin = Vector2i(8, -8)
-1:1/0 = 0
-1:1/0/texture_origin = Vector2i(8, -8)
-2:1/0 = 0
-2:1/0/texture_origin = Vector2i(8, -8)
-3:1/0 = 0
-3:1/0/texture_origin = Vector2i(8, -8)
-4:1/0 = 0
-4:1/0/texture_origin = Vector2i(8, -8)
-5:1/0 = 0
-5:1/0/texture_origin = Vector2i(8, -8)
-6:1/0 = 0
-6:1/0/texture_origin = Vector2i(8, -8)
-0:2/0 = 0
-0:2/0/texture_origin = Vector2i(8, -8)
-1:2/0 = 0
-1:2/0/texture_origin = Vector2i(8, -8)
-2:2/0 = 0
-2:2/0/texture_origin = Vector2i(8, -8)
-3:2/0 = 0
-3:2/0/texture_origin = Vector2i(8, -8)
-4:2/0 = 0
-4:2/0/texture_origin = Vector2i(8, -8)
-5:2/0 = 0
-5:2/0/texture_origin = Vector2i(8, -8)
-6:2/0 = 0
-6:2/0/texture_origin = Vector2i(8, -8)
-0:3/0 = 0
-0:3/0/texture_origin = Vector2i(8, -8)
-1:3/0 = 0
-1:3/0/texture_origin = Vector2i(8, -8)
-2:3/0 = 0
-2:3/0/texture_origin = Vector2i(8, -8)
-3:3/0 = 0
-3:3/0/texture_origin = Vector2i(8, -8)
-4:3/0 = 0
-4:3/0/texture_origin = Vector2i(8, -8)
-5:3/0 = 0
-5:3/0/texture_origin = Vector2i(8, -8)
-6:3/0 = 0
-6:3/0/texture_origin = Vector2i(8, -8)
-7:3/0 = 0
-7:3/0/texture_origin = Vector2i(8, -8)
-0:4/0 = 0
-0:4/0/texture_origin = Vector2i(8, -8)
-1:4/0 = 0
-1:4/0/texture_origin = Vector2i(8, -8)
-2:4/0 = 0
-2:4/0/texture_origin = Vector2i(8, -8)
-6:4/0 = 0
-6:4/0/texture_origin = Vector2i(8, -8)
-7:4/0 = 0
-7:4/0/texture_origin = Vector2i(8, -8)
-0:5/0 = 0
-0:5/0/texture_origin = Vector2i(8, -8)
-1:5/0 = 0
-1:5/0/texture_origin = Vector2i(8, -8)
-2:5/0 = 0
-2:5/0/texture_origin = Vector2i(8, -8)
-6:5/0 = 0
-6:5/0/texture_origin = Vector2i(8, -8)
-7:5/0 = 0
-7:5/0/texture_origin = Vector2i(8, -8)
-6:6/0 = 0
-6:6/0/texture_origin = Vector2i(8, -8)
-7:6/0 = 0
-7:6/0/texture_origin = Vector2i(8, -8)
-6:7/0 = 0
-6:7/0/texture_origin = Vector2i(8, -8)
-7:7/0 = 0
-7:7/0/texture_origin = Vector2i(8, -8)
-5:4/0 = 0
-5:4/0/texture_origin = Vector2i(8, -8)
-0:0/0 = 0
-0:0/0/texture_origin = Vector2i(8, -8)
-
-[sub_resource type="TileSet" id="TileSet_lg4eo"]
-tile_size = Vector2i(32, 32)
-sources/0 = SubResource("TileSetAtlasSource_s8sj4")
 
 [node name="Intro" type="Node2D" unique_id=360288603]
 script = ExtResource("1_6mrcf")
@@ -131,7 +33,7 @@ tile_set = ExtResource("5_h7lo4")
 
 [node name="ForegroundTiles" type="TileMapLayer" parent="." unique_id=1941805934]
 z_index = 1
-tile_set = SubResource("TileSet_lg4eo")
+tile_set = ExtResource("6_s7xsl")
 
 [node name="Player" parent="." unique_id=1327567935 instance=ExtResource("4_s7xsl")]
 position = Vector2(-273, 225)
@@ -148,7 +50,7 @@ direction = 2
 position = Vector2(3448, 232)
 direction = 3
 
-[connection signal="body_entered" from="TileMapLayer/@Area2D@163973" to="TileMapLayer/@Area2D@163973" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@163974" to="TileMapLayer/@Area2D@163974" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@163975" to="TileMapLayer/@Area2D@163975" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@163976" to="TileMapLayer/@Area2D@163976" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/LevelTransition" to="TileMapLayer/LevelTransition" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@225668" to="TileMapLayer/@Area2D@225668" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@225669" to="TileMapLayer/@Area2D@225669" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@225670" to="TileMapLayer/@Area2D@225670" method="_on_body_entered"]
