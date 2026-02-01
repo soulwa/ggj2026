@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://d3irggn77ffof"]
+
+[ext_resource type="Script" uid="uid://bhx6c63fy8q3u" path="res://Scripts/title.gd" id="1_ekrfg"]
+[ext_resource type="FontFile" uid="uid://51nuconqua4h" path="res://Assets/Fonts/Fabled_Font.ttf" id="1_w31pl"]
+
+[node name="Title" type="Node2D" unique_id=1958692985]
+script = ExtResource("1_ekrfg")
+
+[node name="Label" type="Label" parent="." unique_id=925113519]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 407.0
+offset_top = 69.0
+offset_right = 873.0
+offset_bottom = 291.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("1_w31pl")
+theme_override_font_sizes/font_size = 48
+text = "FOUR FACES 
+of
+FENRICK"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="." unique_id=1270667498]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 383.0
+offset_top = 592.0
+offset_right = 897.0
+offset_bottom = 814.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("1_w31pl")
+theme_override_font_sizes/font_size = 48
+text = "press any button"
+horizontal_alignment = 1
