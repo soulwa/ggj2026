@@ -67,6 +67,7 @@ var bounced_off_ceiling := false
 func _ready() -> void:
 	# enemy position should be set when it's instantiated as a scene tile
 	spawn = position
+	$AnimatedSprite2D.play("idle")
 
 func _physics_process(delta: float) -> void:
 	if player == null:
@@ -245,7 +246,12 @@ func die() -> void:
 	
 	await $AnimatedSprite2D.animation_finished
 	
-	visible = false
+	var tween = create_tween()
+	tween.tween_property(self, "modulate:a", 0.0, 2.0)
+	tween.tween_callback(func():
+		visible = false
+		self.modulate.a = 1.0
+	)
 
 func reset() -> void:
 	visible = true
