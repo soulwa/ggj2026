@@ -1,7 +1,9 @@
-[gd_scene format=3 uid="uid://diw1i4pe570qa"]
+[gd_scene format=3 uid="uid://br5ed3uatc8lm"]
 
-[ext_resource type="Script" uid="uid://b1f32tjv1i38" path="res://Scripts/maskui.gd" id="1_mulbs"]
+[ext_resource type="Script" path="res://Scripts/maskui.gd" id="1_mulbs"]
 [ext_resource type="Texture2D" uid="uid://cfx2an7w88eht" path="res://Assets/Sprites/mask-selectors.png" id="2_gb6u5"]
+[ext_resource type="Script" uid="uid://fg7cxylesuyg" path="res://Scenes/Levels/fade_to_black.gd" id="3_cig8l"]
+[ext_resource type="FontFile" uid="uid://51nuconqua4h" path="res://Assets/Fonts/Fabled_Font.ttf" id="4_gb6u5"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5itr1"]
 atlas = ExtResource("2_gb6u5")
@@ -46,3 +48,27 @@ offset_right = -168.0
 offset_bottom = 40.0
 scale = Vector2(2, 2)
 texture = SubResource("AtlasTexture_rpjah")
+
+[node name="FadeToBlack" type="ColorRect" parent="." unique_id=374565158]
+modulate = Color(1, 1, 1, 0)
+z_index = 5
+layout_mode = 0
+offset_left = -1813.0
+offset_top = -387.0
+offset_right = 555.77954
+offset_bottom = 1038.3467
+color = Color(0, 0, 0, 1)
+script = ExtResource("3_cig8l")
+
+[node name="Endtext" type="Label" parent="FadeToBlack" unique_id=1654642092]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 533.0
+offset_top = 387.0
+offset_right = 1813.0
+offset_bottom = 1107.0
+theme_override_fonts/font = ExtResource("4_gb6u5")
+theme_override_font_sizes/font_size = 32
+text = "the end"
+horizontal_alignment = 1
+vertical_alignment = 1

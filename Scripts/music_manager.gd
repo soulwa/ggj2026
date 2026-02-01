@@ -4,7 +4,7 @@ extends Node
 @onready var music_opt_2: AudioStreamPlayer = $MusicOpt2
 var music: AudioStreamPlayer
 @export var crossfade_time: float = 2
-@export var music_slow_time: float = 0.2
+@export var music_slow_time: float = 0.5
 
 var battlers: int = 0
 
@@ -41,18 +41,23 @@ func crossfade_to_explore_music(instant: bool = false) -> void:
 	else:
 		switch_song_track(2)
 
+func fade_out_music() -> void:
+	var tween = create_tween()
+	tween.tween_property(music, "volume_linear", 0.0, 5.0)
+
+
 var slowdown_tween: Tween
 
 func slow_music() -> void:
 	if slowdown_tween:
 		slowdown_tween.kill
-	slowdown_tween = create_tween()
-	slowdown_tween.tween_property(music, "pitch_scale", 0.05, music_slow_time)
+	slowdown_tween = create_tween().set_ignore_time_scale(true)
+	slowdown_tween.tween_property(music, "pitch_scale", 0.4, music_slow_time)
 
 func normal_music() -> void:
 	if slowdown_tween:
 		slowdown_tween.kill
-	slowdown_tween = create_tween()
+	slowdown_tween = create_tween().set_ignore_time_scale(true)
 	slowdown_tween.tween_property(music, "pitch_scale", 1.0, music_slow_time)
 
 func switch_song_track_instant(idx: int) -> void:
@@ -142,3 +147,9 @@ func play_shroomscream() -> void:
 
 func play_maskget() -> void:
 	$SFX_Maskget.play()
+
+func play_cry() -> void:
+	var tween = create_tween()
+	tween.tween_interval(3)
+	await tween.finished
+	$SFX_Cry.play()
