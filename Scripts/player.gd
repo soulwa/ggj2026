@@ -765,6 +765,7 @@ func die() -> void:
 		return
 	
 	MusicManager.play_die()
+	
 	dead = true
 	
 	# Clear all afterimage trails immediately
