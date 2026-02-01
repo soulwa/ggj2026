@@ -17,5 +17,6 @@ enum Action {
 	Thrust,
 	DoubleJump,
 	Dive,
+	Cry,
 }
 var currently_selected_action: Action = Action.Thrust

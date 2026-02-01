@@ -30,6 +30,16 @@ func _ready() -> void:
 	# Setup wall dent manager
 	_setup_dent_manager()
 	
+	var level_bounds: Rect2i = $TileMapLayer.get_used_rect()
+	var worldspace_topleft = $TileMapLayer.map_to_local(level_bounds.position) - Vector2(16, 16)
+	$Camera2D.limit_left = worldspace_topleft.x + 32
+	$Camera2D.limit_right = worldspace_topleft.x + level_bounds.size.x * 32 - 32
+	$Camera2D.limit_top = worldspace_topleft.y + 32
+	$Camera2D.limit_bottom = worldspace_topleft.y + level_bounds.size.y * 32 - 32
+	
+	print($Camera2D.limit_right)
+	
+	
 	for child in get_children():
 		if child is PlayerSpawn and child.direction == Globals.opposite_direction_from:
 			print("[SPAWN] %s" % child.position)
