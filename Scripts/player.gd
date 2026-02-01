@@ -255,7 +255,7 @@ func _physics_process(delta: float) -> void:
 		iframe_timer -= delta
 	#endregion
 	
-	if input_swapmask_pressed and current_state != MoveState.THRUST and current_state != MoveState.DIVE:
+	if input_swapmask_pressed and current_state != MoveState.DIVE:
 		enter_swapmask()
 	
 	
@@ -371,6 +371,8 @@ func _physics_process(delta: float) -> void:
 		thrust_timer -= delta
 		if thrust_timer < 0:
 			current_state = MoveState.THRUST_ACTIONABLE
+			#if Input.is_action_pressed("switch_mask"):
+				#enter_swapmask()
 		check_thrust_hits()
 	
 	# thrust can be cancelled, gravity applies now
@@ -553,6 +555,7 @@ func end_thrust() -> void:
 	shape_right.disabled = true
 	shape_left.disabled = true
 	current_state = MoveState.NORMAL
+	
 
 func check_thrust_hits() -> void:
 	if spear_hitbox.monitoring:
@@ -698,6 +701,9 @@ func dive_bounce() -> void:
 	disable_jump_cancel = true
 	is_doublejump_animation = false
 	MusicManager.play_sound_divebounce()
+	
+	#if Input.is_action_pressed("switch_mask"):
+		#enter_swapmask()
 	
 	# Add wall dent at impact position with 2x strength
 	_emit_dive_impact_dent()
