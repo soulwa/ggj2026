@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://bx7lphir4m7p6"]
+
+[ext_resource type="Script" uid="uid://dvo73p7ohvi03" path="res://Scripts/hp_ui.gd" id="1_rpjah"]
+[ext_resource type="Texture2D" uid="uid://b5chmmnotp12m" path="res://Assets/Sprites/decals_xs.png" id="1_sfp2b"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_rpjah"]
+load_path = "res://.godot/imported/decals_xs.png-a080678a7164c8b5873259022cefa002.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5itr1"]
+atlas = SubResource("CompressedTexture2D_rpjah")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ouori"]
+load_path = "res://.godot/imported/decals_xs.png-a080678a7164c8b5873259022cefa002.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hetre"]
+atlas = SubResource("CompressedTexture2D_ouori")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rpjah"]
+atlas = ExtResource("1_sfp2b")
+region = Rect2(0, 0, 16, 16)
+
+[node name="HpUi" type="Control" unique_id=761875988]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_rpjah")
+
+[node name="HP1" type="TextureRect" parent="." unique_id=330157717]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 8.0
+offset_right = 64.0
+offset_bottom = 48.0
+scale = Vector2(1.5, 1.5)
+texture = SubResource("AtlasTexture_5itr1")
+
+[node name="HP2" type="TextureRect" parent="." unique_id=716569600]
+layout_mode = 0
+offset_left = 88.0
+offset_top = 8.0
+offset_right = 128.0
+offset_bottom = 48.0
+scale = Vector2(1.5, 1.5)
+texture = SubResource("AtlasTexture_hetre")
+
+[node name="HP3" type="TextureRect" parent="." unique_id=821017282]
+layout_mode = 0
+offset_left = 152.0
+offset_top = 8.0
+offset_right = 192.0
+offset_bottom = 48.0
+scale = Vector2(1.5, 1.5)
+texture = SubResource("AtlasTexture_rpjah")
