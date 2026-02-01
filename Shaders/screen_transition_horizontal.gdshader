@@ -1,6 +1,6 @@
 shader_type canvas_item;
 
-// Main animation progress (0 = start, 0.5 = fully black, 1 = fully revealed)
+// Main animation progress (0 = start, ~0.5 = fully black, 1 = fully revealed)
 uniform float progress : hint_range(0.0, 1.0) = 0.0;
 
 // Direction: 1.0 = left to right, -1.0 = right to left
@@ -10,27 +10,13 @@ uniform float direction : hint_range(-1.0, 1.0) = 1.0;
 uniform float dither_size : hint_range(1.0, 16.0) = 4.0;  // Size of dither pixels
 uniform float edge_softness : hint_range(0.0, 0.5) = 0.15;  // How soft the transition edge is
 
+// Timing configuration - how long to hold at full black (0.0 to 0.5)
+uniform float hold_duration : hint_range(0.0, 0.5) = 0.35;
+
 // Colors
 uniform vec3 color_black : source_color = vec3(0.0, 0.0, 0.0);
 
-// 4x4 Bayer dithering matrix for ordered dithering
-float bayer4x4(vec2 pos) {
-	// Classic 4x4 Bayer matrix values (0-15, normalized to 0-1)
-	int x = int(mod(pos.x, 4.0));
-	int y = int(mod(pos.y, 4.0));
-	
-	// Bayer matrix values
-	int bayer[16] = int[16](
-		 0,  8,  2, 10,
-		12,  4, 14,  6,
-		 3, 11,  1,  9,
-		15,  7, 13,  5
-	);
-	
-	return float(bayer[y * 4 + x]) / 16.0;
-}
-
-// 8x8 Bayer matrix for finer dithering
+// 8x8 Bayer matrix for ordered dithering
 float bayer8x8(vec2 pos) {
 	int x = int(mod(pos.x, 8.0));
 	int y = int(mod(pos.y, 8.0));
@@ -70,14 +56,18 @@ void fragment() {
 		sweep_pos = 1.0 - uv.x;
 	}
 	
-	// Phase 1 (progress 0 to 0.5): Black sweeps in
-	// Phase 2 (progress 0.5 to 1): Black sweeps out (revealing screen)
+	// Calculate phase boundaries based on hold_duration
+	// Phase 1: 0 to sweep_end (black sweeps in)
+	// Phase 2: sweep_end to hold_end (hold at full black)
+	// Phase 3: hold_end to 1.0 (black reveals out)
+	float sweep_end = (1.0 - hold_duration) * 0.5;  // End of sweep-in phase
+	float hold_end = sweep_end + hold_duration;      // End of hold phase
 	
 	float alpha = 0.0;
 	
-	if (progress <= 0.5) {
-		// Sweeping in: black covers screen from one side
-		float sweep_progress = progress * 2.0;  // Normalize to 0-1
+	if (progress <= sweep_end) {
+		// Phase 1: Sweeping in - black covers screen from one side
+		float sweep_progress = progress / sweep_end;  // Normalize to 0-1
 		
 		// Calculate the sweep edge position (extends past 1.0 to ensure full coverage)
 		float edge_pos = sweep_progress * (1.0 + edge_softness * 2.0) - edge_softness;
@@ -97,9 +87,12 @@ void fragment() {
 		if (dist_from_edge < -edge_softness) {
 			alpha = 1.0;
 		}
+	} else if (progress <= hold_end) {
+		// Phase 2: Hold at full black
+		alpha = 1.0;
 	} else {
-		// Sweeping out: black reveals screen from the SAME side (continues the motion)
-		float sweep_progress = (progress - 0.5) * 2.0;  // Normalize to 0-1
+		// Phase 3: Sweeping out - black reveals screen from the SAME side (continues the motion)
+		float sweep_progress = (progress - hold_end) / (1.0 - hold_end);  // Normalize to 0-1
 		
 		// The reveal edge starts at the beginning and sweeps across
 		float edge_pos = sweep_progress * (1.0 + edge_softness * 2.0) - edge_softness;

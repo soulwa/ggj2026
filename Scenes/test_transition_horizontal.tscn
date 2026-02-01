@@ -9,6 +9,7 @@ shader_parameter/progress = 0.0
 shader_parameter/direction = 1.0
 shader_parameter/dither_size = 4.0
 shader_parameter/edge_softness = 0.15
+shader_parameter/hold_duration = 0.35
 shader_parameter/color_black = Vector3(0, 0, 0)
 
 [node name="TestTransitionHorizontal" type="ColorRect"]
