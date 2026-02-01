@@ -10,7 +10,7 @@ const MAX_DENTS := 100
 var _dents: Array[Dictionary] = []  ## Array of {position, radius, strength, direction}
 var _data_texture: ImageTexture
 var _data_image: Image
-var _target_tilemap: TileMapLayer
+var _target_tilemaps: Array[TileMapLayer] = []  ## Multiple tilemaps can receive the dent effect
 
 signal dents_updated
 
@@ -18,9 +18,9 @@ signal dents_updated
 func _ready() -> void:
 	_create_data_texture()
 	
-	# Auto-find tilemap in parent if not set
+	# Auto-find tilemaps in parent if not set
 	await get_tree().process_frame
-	_find_tilemap()
+	_find_tilemaps()
 
 
 func _create_data_texture() -> void:
@@ -33,36 +33,49 @@ func _create_data_texture() -> void:
 	_data_texture = ImageTexture.create_from_image(_data_image)
 
 
-func _find_tilemap() -> void:
-	# Look for TileMapLayer in siblings or parent's children
+## Names of tilemaps that should receive the dent effect
+const DENT_TILEMAP_NAMES := ["TileMapLayer", "ForegroundTiles"]
+
+func _find_tilemaps() -> void:
+	# Look for specific TileMapLayers by name in parent's children
 	var parent = get_parent()
+	var found_any := false
 	if parent:
 		for child in parent.get_children():
-			if child is TileMapLayer:
-				set_target_tilemap(child)
-				return
+			if child is TileMapLayer and child.name in DENT_TILEMAP_NAMES:
+				add_target_tilemap(child)
+				found_any = true
 	
-	push_warning("WallDentManager: No TileMapLayer found. Call set_target_tilemap() manually.")
+	if not found_any:
+		push_warning("WallDentManager: No matching TileMapLayer found. Expected: %s" % str(DENT_TILEMAP_NAMES))
 
 
-## Set the tilemap that will receive the dent shader
+## Add a tilemap that will receive the dent shader
+func add_target_tilemap(tilemap: TileMapLayer) -> void:
+	if tilemap in _target_tilemaps:
+		return  # Already added
+	_target_tilemaps.append(tilemap)
+	_apply_shader_to_tilemap(tilemap)
+
+
+## Set a single tilemap (clears existing and adds this one) - for backwards compatibility
 func set_target_tilemap(tilemap: TileMapLayer) -> void:
-	_target_tilemap = tilemap
-	_apply_shader_to_tilemap()
+	_target_tilemaps.clear()
+	add_target_tilemap(tilemap)
 
 
-func _apply_shader_to_tilemap() -> void:
-	if not _target_tilemap:
+func _apply_shader_to_tilemap(tilemap: TileMapLayer) -> void:
+	if not tilemap:
 		return
 	
 	# Create shader material if not already applied
-	var mat = _target_tilemap.material as ShaderMaterial
+	var mat = tilemap.material as ShaderMaterial
 	if not mat:
 		mat = ShaderMaterial.new()
 		mat.shader = preload("res://Shaders/wall_dent.gdshader")
-		_target_tilemap.material = mat
+		tilemap.material = mat
 	
-	# Set the data texture uniform
+	# Set the data texture uniform (shared across all tilemaps)
 	mat.set_shader_parameter("dent_data", _data_texture)
 	mat.set_shader_parameter("dent_count", _dents.size())
 
@@ -136,8 +149,9 @@ func _update_data_texture() -> void:
 	# Update texture
 	_data_texture.update(_data_image)
 	
-	# Update shader uniform for count
-	if _target_tilemap and _target_tilemap.material:
-		var mat = _target_tilemap.material as ShaderMaterial
-		if mat:
-			mat.set_shader_parameter("dent_count", _dents.size())
+	# Update shader uniform for count on all tilemaps
+	for tilemap in _target_tilemaps:
+		if tilemap and tilemap.material:
+			var mat = tilemap.material as ShaderMaterial
+			if mat:
+				mat.set_shader_parameter("dent_count", _dents.size())
