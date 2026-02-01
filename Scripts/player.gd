@@ -89,6 +89,11 @@ var double_jump_power: float
 @export var dive_initial_y_vel := 1000.0
 @export var dive_bounce_boost_height := 32.0 * 4
 
+@export_subgroup("Thrust Frog")
+@export var frog_bounce_force_x := 700.0
+@export var frog_bounce_height := 8 * 8
+var frog_bounce_force_y: float
+
 enum MoveState {
 	NORMAL,
 	THRUST,
@@ -136,6 +141,7 @@ func _ready() -> void:
 	thrust_forward_force = thrust_forward_pixels / thrust_time
 	thrust_up_force = thrust_height_pixels / thrust_time
 	wall_bounce_force_y = -sqrt(2 * gravity * wall_bounce_height_pixels)
+	frog_bounce_force_y = -sqrt(2 * gravity * frog_bounce_height)
 	double_jump_power = -sqrt(2 * gravity * double_jump_pixels)
 	swapmask_ui_left.hide()
 	swapmask_ui_right.hide()
@@ -147,6 +153,9 @@ func _process(delta: float) -> void:
 	pass
 
 func _physics_process(delta: float) -> void:
+	if hp < 0:
+		return
+	
 	#region INPUT
 	var time = Time.get_ticks_msec()
 	
@@ -234,6 +243,9 @@ func _physics_process(delta: float) -> void:
 		jump_buffer_timer -= delta
 	if action_buffer_timer > 0:
 		action_buffer_timer -= delta
+		
+	if iframe_timer > 0:
+		iframe_timer -= delta
 	#endregion
 	
 	if input_swapmask_pressed:
@@ -350,6 +362,8 @@ func _physics_process(delta: float) -> void:
 		for body in spear_hitbox.get_overlapping_bodies():
 			if body is TileMapLayer:
 				bounce_off_wall()
+			if body is EnemyFrog:
+				bounce_off_frog()
 	
 	# thrust can be cancelled, gravity applies now
 	elif current_state == MoveState.THRUST_ACTIONABLE:
@@ -409,7 +423,12 @@ func _physics_process(delta: float) -> void:
 			sprite.play("thrust")
 		elif current_state == MoveState.DIVE:
 			if sprite.animation != "dive": sprite.play("dive")
-	
+		
+		if iframe_timer > 0:
+			sprite.modulate.a = 0.3
+		else:
+			sprite.modulate.a = 1.0
+			
 	if !is_on_floor():
 		was_in_air_last_frame = true
 	else:
@@ -506,6 +525,24 @@ func bounce_off_wall() -> void:
 	end_thrust()
 	disable_jump_cancel = true
 	MusicManager.play_sound_wallbounce()
+
+func bounce_off_frog() -> void:
+	velocity.x = -facedir * frog_bounce_force_x
+	velocity.y = frog_bounce_force_y
+	
+	# NOTE (sam): modified not to make a dent
+	var tip_offset = weapon_tip.position
+	if facedir == -1:
+		tip_offset.x = -tip_offset.x
+	var emit_pos = global_position + tip_offset
+	if smash_particles:
+		smash_particles.emit_burst(emit_pos, Vector2.RIGHT * -facedir, velocity)
+	
+	end_thrust()
+	disable_jump_cancel = true
+	
+	# refund if you hit an enemy
+	thrusts_remaining += 1
 
 func enter_swapmask() -> void:
 	current_state = MoveState.SWAPMASK
@@ -607,3 +644,68 @@ func double_jump() -> void:
 	is_doublejump_animation = true
 	MusicManager.play_sound_doublejump()
 	
+
+#region DEATH AND RESPAWN
+var iframes := DT * 60
+var iframe_timer := 0.0
+
+const START_HP := 3
+var hp := START_HP
+
+var spawnpoint: Vector2
+
+var kb_force_x := 500.0
+var kb_force_y := -sqrt(2 * gravity * 4 * 10) # 32 px height
+
+func take_hit(kb: bool) -> void:
+	if iframe_timer > 0.0:
+		return
+	hp -= 1
+	print("Player HP: ", hp)
+	if hp <= 0:
+		die()
+	else:
+		# TODO (sam): update HP UI here.
+		iframe_timer = iframes
+		velocity.x = kb_force_x
+		velocity.y = kb_force_y
+		# TODO (sam): flickering on sprite for invuln.
+	
+
+func die() -> void:
+	if hp < 0:
+		return # we're already dying.
+		
+	print("Player died!")
+	if current_state == MoveState.SWAPMASK:
+		exit_swapmask()
+		
+	var level: Level = get_parent()
+	
+	visible = false # TODO (sam): animation??
+	
+	TransitionOverlay.play_transition()
+	await TransitionOverlay.transition_midpoint
+	
+	level.reset_enemies()
+	
+	position = spawnpoint
+	velocity = Vector2.ZERO
+	current_state = MoveState.NORMAL
+	hp = START_HP
+	
+	facedir = 1 if Globals.opposite_direction_from == -1 else -1 if Globals.opposite_direction_from == 1 else 1
+	
+	iframe_timer = 0
+	coyote_timer = 0
+	
+	# TODO (sam): @zane more state to reset here? or maybe its okay.
+	
+	# TODO (sam): not sure if this works the way we want, stopping execution until it happens?
+	visible = true
+	
+	await TransitionOverlay.transition_complete
+
+func set_spawn(pos: Vector2) -> void:
+	spawnpoint = pos
+#endregion

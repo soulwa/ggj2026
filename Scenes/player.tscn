@@ -794,7 +794,7 @@ animation = &"doublejump"
 
 [node name="SpearHitbox" type="Area2D" parent="." unique_id=1815314269]
 collision_layer = 0
-collision_mask = 6
+collision_mask = 22
 
 [node name="ShapeRight" type="CollisionShape2D" parent="SpearHitbox" unique_id=1271532211]
 position = Vector2(55, 12)
