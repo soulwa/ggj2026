@@ -105,7 +105,11 @@ enum MoveState {
 	DIVE,
 	DIVE_BOUNCE,
 	SWAPMASK,
+	CRY,
 }
+
+var started_crying: bool = false
+var crying_loop: bool = false
 
 # NOTE (sam): stuff for character state here
 var current_state: MoveState = MoveState.NORMAL
@@ -256,13 +260,20 @@ func _physics_process(delta: float) -> void:
 		iframe_timer -= delta
 	#endregion
 	
-	if input_swapmask_pressed and current_state != MoveState.DIVE:
+	if input_swapmask_pressed and current_state != MoveState.DIVE and Globals.currently_selected_action != Globals.Action.Cry:
 		enter_swapmask()
 	
 	
 	#region MOVEMENT
 	
-	if current_state == MoveState.NORMAL or current_state == MoveState.SWAPMASK:
+	if Globals.currently_selected_action == Globals.Action.Cry:
+		velocity.x = 0
+		velocity.y += gravity
+		
+		if input_action_pressed:
+			started_crying = true
+		
+	elif current_state == MoveState.NORMAL or current_state == MoveState.SWAPMASK:
 		if current_state == MoveState.NORMAL:
 			facedir = x_input_priority if x_input_priority != 0 else facedir
 		
@@ -435,28 +446,37 @@ func _physics_process(delta: float) -> void:
 			dive_mask.hide()
 			doublejump_mask.show()
 	
-	for sprite in sprites:
-		sprite.flip_h = facedir == -1
-		if current_state == MoveState.NORMAL:
-			if is_on_floor():
-				if hmove != 0:
-					sprite.play("run")
-				else:
-					if sprite.animation != "land": sprite.play("idle")
-				if was_in_air_last_frame:
-					sprite.play("land")
-			else:
-				if is_doublejump_animation and sprite.animation != "doublejump": sprite.play("doublejump")
-				if is_jump_animation and sprite.animation != "jump": sprite.play("jump")
-		elif current_state == MoveState.THRUST or current_state == MoveState.THRUST_ACTIONABLE and sprite.animation != "thrust":
-			sprite.play("thrust")
-		elif current_state == MoveState.DIVE:
-			if sprite.animation != "dive": sprite.play("dive")
-		
-		if iframe_timer > 0:
-			sprite.modulate.a = 0.3
+	if Globals.currently_selected_action == Globals.Action.Cry:
+		if started_crying:
+			for sprite in sprites:
+				sprite.hide()
+			sprites[0].show()
+			sprites[0].play("cry")
 		else:
-			sprite.modulate.a = 1.0
+			sprites[0].play("idle")
+	else:
+		for sprite in sprites:
+			sprite.flip_h = facedir == -1
+			if current_state == MoveState.NORMAL:
+				if is_on_floor():
+					if hmove != 0:
+						sprite.play("run")
+					else:
+						if sprite.animation != "land": sprite.play("idle")
+					if was_in_air_last_frame:
+						sprite.play("land")
+				else:
+					if is_doublejump_animation and sprite.animation != "doublejump": sprite.play("doublejump")
+					if is_jump_animation and sprite.animation != "jump": sprite.play("jump")
+			elif current_state == MoveState.THRUST or current_state == MoveState.THRUST_ACTIONABLE and sprite.animation != "thrust":
+				sprite.play("thrust")
+			elif current_state == MoveState.DIVE:
+				if sprite.animation != "dive": sprite.play("dive")
+			
+			if iframe_timer > 0:
+				sprite.modulate.a = 0.3
+			else:
+				sprite.modulate.a = 1.0
 			
 	if !is_on_floor():
 		was_in_air_last_frame = true

@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://dhch22tc1caqq" path="res://Assets/Sprites/decals-xl.png" id="3_juyq2"]
 [ext_resource type="TileSet" uid="uid://cs3dniqm6bgdo" path="res://Scenes/tileset.tres" id="3_y7pt2"]
 [ext_resource type="PackedScene" uid="uid://bsfa1tlsh7fwr" path="res://Scenes/player.tscn" id="4_0xm38"]
-[ext_resource type="Shader" path="res://Shaders/brightness-contrast.gdshader" id="4_juyq2"]
+[ext_resource type="Shader" uid="uid://cl7vmth0yv5m8" path="res://Shaders/brightness-contrast.gdshader" id="4_juyq2"]
 [ext_resource type="PackedScene" uid="uid://p8si7hu4ur8y" path="res://Scenes/player_spawn.tscn" id="5_juyq2"]
 [ext_resource type="TileSet" uid="uid://ce86g6go5rhye" path="res://Scenes/bg_tileset.tres" id="5_ofmk2"]
 [ext_resource type="TileSet" uid="uid://51pf6litgg2x" path="res://Scenes/fg_tileset.tres" id="6_0xm38"]
@@ -25,7 +25,7 @@ left = "uid://bq4va81v4pgd0"
 script = ExtResource("2_dih3r")
 
 [node name="DecalsXl2" type="Sprite2D" parent="." unique_id=1179740351]
-position = Vector2(243.6437, -171.50731)
+position = Vector2(239.6125, -186.49892)
 texture = ExtResource("3_juyq2")
 region_enabled = true
 region_rect = Rect2(0, 128, 128, 128)
@@ -60,3 +60,4 @@ position = Vector2(-504, 40)
 position = Vector2(-590.9384, 30.22951)
 
 [node name="MaskCrying" parent="." unique_id=962368857 instance=ExtResource("10_ofmk2")]
+position = Vector2(238.80807, -92.49704)
