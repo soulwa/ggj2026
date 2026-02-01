@@ -9,7 +9,7 @@ signal transition_complete
 @onready var transition_rect: ColorRect = $ColorRect
 
 ## Duration of the full transition in seconds
-@export var transition_duration: float = 1.4
+@export var transition_duration: float = 4.2  # 3x slower for debugging
 
 ## Whether a transition is currently playing
 var is_transitioning: bool = false

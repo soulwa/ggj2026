@@ -36,6 +36,15 @@ float ease_out_quad(float t) {
 	return 1.0 - (1.0 - t) * (1.0 - t);
 }
 
+// Single continuous easing that slows dramatically for the final portion
+// t: 0-1 progress, slow_start: when to start slowing (e.g. 0.7 = slow last 30%)
+float ease_with_slow_finish(float t) {
+	t = clamp(t, 0.0, 1.0);
+	// Use a high-power ease-out that really slows at the end
+	// ease_out_quint: 1 - (1-t)^5 - very slow finish
+	return 1.0 - pow(1.0 - t, 5.0);
+}
+
 // SDF for rhombus with aspect ratio
 float diamond_sdf(vec2 p, float size, float aspect) {
 	p.y /= aspect;
@@ -80,7 +89,8 @@ vec4 render_rhombus(vec2 local_uv, float outline_wave_progress, float wave_progr
 	float outline_appear = ease_out_cubic(smoothstep(0.0, 0.35, outline_wave_progress));
 	
 	if (outline_appear > 0.0 && bg_fade > 0.0) {
-		float outline_pos = mix(0.06, rhombus_size, outline_appear);
+		// Start from near-zero so it grows smoothly into existence
+		float outline_pos = mix(0.01, rhombus_size, outline_appear);
 		float outline_d = diamond_sdf(local_uv, outline_pos, rhombus_height_ratio);
 		float outline = 1.0 - smoothstep(0.0, outline_thickness + aa, abs(outline_d));
 		rhombus_color = mix(rhombus_color, vec4(1.0, 1.0, 1.0, bg_fade), outline);
@@ -88,11 +98,13 @@ vec4 render_rhombus(vec2 local_uv, float outline_wave_progress, float wave_progr
 	
 	// ============================================
 	// FILLS - Use wave_progress (edges first, center last)
-	// Spread across full range, with internal fades
+	// Single continuous animation with strong ease-out (slows dramatically at end)
+	// Extended to 0.92 to time with background fadeout
 	// ============================================
 	
-	// White fill - appears early, gradient covers it, bg_fade handles final fadeout
-	float white_appear = ease_out_cubic(smoothstep(0.0, 0.30, wave_progress));
+	// White fill: 0.0-0.92 with heavy ease-out
+	float white_progress = smoothstep(0.0, 0.92, wave_progress);
+	float white_appear = ease_with_slow_finish(white_progress);
 	
 	if (white_appear > 0.0 && bg_fade > 0.0) {
 		float white_size = white_appear * rhombus_size;
@@ -101,8 +113,9 @@ vec4 render_rhombus(vec2 local_uv, float outline_wave_progress, float wave_progr
 		rhombus_color = mix(rhombus_color, vec4(1.0, 1.0, 1.0, bg_fade), white_fill);
 	}
 	
-	// Gradient fill - appears at full opacity, inner fill covers it, bg_fade handles final fadeout
-	float grad_appear = ease_out_cubic(smoothstep(0.15, 0.45, wave_progress));
+	// Gradient fill: 0.15-0.92 with heavy ease-out
+	float grad_progress = smoothstep(0.15, 0.92, wave_progress);
+	float grad_appear = ease_with_slow_finish(grad_progress);
 	
 	if (grad_appear > 0.0 && bg_fade > 0.0) {
 		float grad_size = grad_appear * (rhombus_size - 0.025);
@@ -112,8 +125,9 @@ vec4 render_rhombus(vec2 local_uv, float outline_wave_progress, float wave_progr
 		rhombus_color = mix(rhombus_color, vec4(gradient_color, bg_fade), grad_fill);
 	}
 	
-	// Inner fill - matches screen background, expands after gradient is visible
-	float inner_appear = ease_out_cubic(smoothstep(0.50, 0.80, wave_progress));
+	// Inner fill: 0.35-0.92 with heavy ease-out
+	float inner_progress = smoothstep(0.35, 0.92, wave_progress);
+	float inner_appear = ease_with_slow_finish(inner_progress);
 	
 	if (inner_appear > 0.0 && bg_fade > 0.0) {
 		// Inner fill grows to full rhombus size
