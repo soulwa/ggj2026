@@ -70,6 +70,8 @@ func _ready() -> void:
 	# Setup shader and start spawn animation
 	_setup_spawn_shader()
 	_start_spawn_animation()
+	
+	MusicManager.add_battler()
 
 func _setup_spawn_shader() -> void:
 	shader_material = ShaderMaterial.new()
@@ -229,6 +231,9 @@ func update_pivot_visual() -> void:
 
 
 func die() -> void:
+	MusicManager.remove_battler()
+	
+	MusicManager.play_shroomscream()
 	dead = true
 	$DamageRegion.monitoring = false
 	$CollisionShape2D.disabled = true

@@ -67,6 +67,7 @@ var bounced_off_ceiling := false
 func _ready() -> void:
 	# enemy position should be set when it's instantiated as a scene tile
 	spawn = position
+	$AnimatedSprite2D.play("idle")
 
 func _physics_process(delta: float) -> void:
 	if player == null:
@@ -113,6 +114,7 @@ func _physics_process(delta: float) -> void:
 			current_state = State.IDLE
 		
 		if telegraph_timer <= 0.0:
+			MusicManager.play_frogbounce()
 			print("[FROG] READYING -> JUMPING UP")
 			
 			current_state = State.JUMPING_UP
@@ -150,6 +152,9 @@ func _physics_process(delta: float) -> void:
 			velocity.y -= gravity
 		
 		if (jumping_up_timer <= 0) or (is_on_ceiling() and jump_dist_travelled > min_dist_to_heatseek_early):
+			
+			MusicManager.play_frogcroak()
+			
 			var new_player_position = player.position
 			var heatseek_angle: float
 			if new_player_position.y < position.y:
@@ -228,9 +233,8 @@ func _add_ground_dent() -> void:
 				if child.has_method("add_temporary_dent"):
 					# Position the dent at the frog's feet, slightly into the ground
 					var dent_pos = position + Vector2(0, 16)
-					child.add_temporary_dent(dent_pos, Vector2.DOWN, 48.0, 1.0)
+					child.add_temporary_dent(dent_pos, Vector2.DOWN, 48.0, 2.0)
 					return
-
 
 func die() -> void:
 	dead = true
@@ -238,9 +242,16 @@ func die() -> void:
 	$CollisionShape2D.disabled = true
 	$AnimatedSprite2D.play("die")
 	
+	MusicManager.play_killenemy()
+	
 	await $AnimatedSprite2D.animation_finished
 	
-	visible = false
+	var tween = create_tween()
+	tween.tween_property(self, "modulate:a", 0.0, 2.0)
+	tween.tween_callback(func():
+		visible = false
+		self.modulate.a = 1.0
+	)
 
 func reset() -> void:
 	visible = true

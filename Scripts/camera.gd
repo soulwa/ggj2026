@@ -82,7 +82,7 @@ func _process(delta: float) -> void:
 	#_lookahead_y = lerp(_lookahead_y, desired_lookahead_y, 1.0 - exp(-lookahead_smoothing * delta))
 	
 	
-	var current_position := position
+	var current_position := global_position
 	var desired_position := Vector2(player_pos.x, player_pos.y - vertical_offset) #+ _lookahead_y)
 	if abs(desired_position.x - current_position.x) < deadzone.x:
 		desired_position.x = current_position.x

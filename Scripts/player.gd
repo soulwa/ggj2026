@@ -165,26 +165,27 @@ func _physics_process(delta: float) -> void:
 	#region INPUT
 	var time = Time.get_ticks_msec()
 	
-	var input_move_left = Input.is_action_pressed("left")
-	var input_move_right = Input.is_action_pressed("right")
-	var input_move_up = Input.is_action_pressed("up")
-	var input_move_down = Input.is_action_pressed("down")
-	var input_initial_move_left = Input.is_action_just_pressed("left")
-	var input_initial_move_right = Input.is_action_just_pressed("right")
-	var input_initial_move_up = Input.is_action_just_pressed("up")
-	var input_initial_move_down = Input.is_action_just_pressed("down")
+	# Block all inputs when dead
+	var input_move_left = false if dead else Input.is_action_pressed("left")
+	var input_move_right = false if dead else Input.is_action_pressed("right")
+	var input_move_up = false if dead else Input.is_action_pressed("up")
+	var input_move_down = false if dead else Input.is_action_pressed("down")
+	var input_initial_move_left = false if dead else Input.is_action_just_pressed("left")
+	var input_initial_move_right = false if dead else Input.is_action_just_pressed("right")
+	var input_initial_move_up = false if dead else Input.is_action_just_pressed("up")
+	var input_initial_move_down = false if dead else Input.is_action_just_pressed("down")
 	
-	var input_jump_pressed = Input.is_action_just_pressed("jump")
-	var input_jump_held = Input.is_action_pressed("jump")
-	var input_jump_released = Input.is_action_just_released("jump")
+	var input_jump_pressed = false if dead else Input.is_action_just_pressed("jump")
+	var input_jump_held = false if dead else Input.is_action_pressed("jump")
+	var input_jump_released = false if dead else Input.is_action_just_released("jump")
 	
-	var input_action_pressed = Input.is_action_just_pressed("action")
-	var input_action_held = Input.is_action_pressed("action")
-	var input_action_released = Input.is_action_just_released("action")
+	var input_action_pressed = false if dead else Input.is_action_just_pressed("action")
+	var input_action_held = false if dead else Input.is_action_pressed("action")
+	var input_action_released = false if dead else Input.is_action_just_released("action")
 	
-	var input_swapmask_pressed = Input.is_action_just_pressed("switch_mask")
-	var input_swapmask_held = Input.is_action_pressed("switch_mask")
-	var input_swapmask_released = Input.is_action_just_released("switch_mask")
+	var input_swapmask_pressed = false if dead else Input.is_action_just_pressed("switch_mask")
+	var input_swapmask_held = false if dead else Input.is_action_pressed("switch_mask")
+	var input_swapmask_released = false if dead else Input.is_action_just_released("switch_mask")
 	
 	# resolve x move presses
 	last_tick_left = time if input_initial_move_left else last_tick_left
@@ -387,15 +388,24 @@ func _physics_process(delta: float) -> void:
 		# apply gravity
 		velocity.y += gravity * delta * dive_gravity_multiplier
 		dive_height_fallen += velocity.y * delta
-		# check to hit ground
-		for body in spear_hitbox_dive.get_overlapping_bodies():
-			if body is TileMapLayer:
-				dive_bounce()
+		
+		# Collect all overlapping bodies first
+		var overlapping_bodies = spear_hitbox_dive.get_overlapping_bodies()
+		var hit_tilemap := false
+		
+		# Pierce-kill ALL mushrooms first (before bounce processing)
+		for body in overlapping_bodies:
+			if body is MushroomGuy:
+				body.die()
 			if body is EnemyFrog:
 				_emit_enemy_particles(body, body.global_position, Vector2.UP)
 				body.die()
-			if body is MushroomGuy:
-				body.die()
+			if body is TileMapLayer:
+				hit_tilemap = true
+		
+		# Process tilemap bounce after all enemies are killed
+		if hit_tilemap:
+			dive_bounce()
 	elif current_state == MoveState.DIVE_BOUNCE:
 		end_dive() # TODO
 	
@@ -580,6 +590,7 @@ func bounce_off_wall() -> void:
 	MusicManager.play_sound_wallbounce()
 
 func bounce_off_frog(frog: EnemyFrog) -> void:
+	MusicManager.play_frogbounce()
 	velocity.x = -facedir * frog_bounce_force_x
 	velocity.y = frog_bounce_force_y
 	
@@ -744,6 +755,7 @@ func take_hit(kb: bool) -> void:
 	if hp <= 0:
 		die()
 	else:
+		MusicManager.play_playerhurt()
 		# TODO (sam): update HP UI here.
 		iframe_timer = iframes
 		velocity.x = kb_force_x
@@ -758,7 +770,14 @@ func die() -> void:
 	if dead:
 		return
 	
+	MusicManager.play_die()
+	
 	dead = true
+	
+	# Clear all afterimage trails immediately
+	var afterimage_trail = get_node_or_null("AfterimageTrail")
+	if afterimage_trail and afterimage_trail.has_method("clear_all_trails"):
+		afterimage_trail.clear_all_trails()
 	
 	# Screen shake on death
 	_trigger_camera_shake_death()

@@ -66,6 +66,11 @@ func activate() -> void:
 func reset() -> void:
 	show()
 	activated = false
+	# Reset shader parameters to default values
+	if sprite and sprite.material is ShaderMaterial:
+		var mat: ShaderMaterial = sprite.material
+		mat.set_shader_parameter("squash_amount", 0.0)
+		mat.set_shader_parameter("vertical_offset", 0.0)
 
 func _emit_explosion() -> void:
 	var spores: MushroomSpores = mushroom_spores_scene.instantiate()
