@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://4fdlg7wgj87w"]
+[gd_scene load_steps=42 format=3 uid="uid://4fdlg7wgj87w"]
 
 [ext_resource type="Script" uid="uid://c8wsr1j84y1sk" path="res://Scripts/music_manager.gd" id="1_1u5ih"]
 [ext_resource type="AudioStream" uid="uid://c52prxvvmstig" path="res://Assets/Music/GGJ2026_MX_Fenrick_bassMinusLead_v02_-7dB.wav" id="1_a0g8o"]
@@ -34,6 +34,7 @@
 [ext_resource type="AudioStream" uid="uid://8kl76v8r2cwd" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_verb_killEnemy_v02_-4dB.wav" id="32_mfpbl"]
 [ext_resource type="AudioStream" uid="uid://bnwmy5gg62edx" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_verb_shoot_v01_-6dB.wav" id="33_e0oj2"]
 [ext_resource type="AudioStream" uid="uid://bkqvjf1qdmg2q" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_verb_shroomScream_v01_-4dB.wav" id="34_313iq"]
+[ext_resource type="AudioStream" uid="uid://cmahacup12uds" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_verb_cry_v01_-7dB.wav" id="35_bggwv"]
 
 [sub_resource type="AudioStreamSynchronized" id="AudioStreamSynchronized_me85s"]
 stream_count = 3
@@ -158,5 +159,8 @@ stream = ExtResource("33_e0oj2")
 
 [node name="SFX_Shroomscream" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("34_313iq")
+
+[node name="SFX_Cry" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("35_bggwv")
 
 [connection signal="timeout" from="Timer_Footstep" to="." method="_on_timer_footstep_timeout"]
