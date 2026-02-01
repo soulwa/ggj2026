@@ -59,6 +59,9 @@ var jump_dy := 0.0
 
 var aggroed := false
 
+# particles
+@onready var smash_particles: SmashParticles = $SmashParticles
+
 
 # jumping up and jumping down
 var bounced_off_horz_wall := false
@@ -232,6 +235,11 @@ func _physics_process(delta: float) -> void:
 	#endregion
 
 func _add_ground_dent() -> void:
+	# Emit particles upward (away from the ground)
+	if smash_particles:
+		var particle_pos = global_position + Vector2(0, 16)
+		smash_particles.emit_burst(particle_pos, Vector2.UP, velocity)
+	
 	# Find the WallDentManager in the level (parent is TileMapLayer, grandparent is Level)
 	var tilemap = get_parent()
 	if tilemap:

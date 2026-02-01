@@ -141,4 +141,4 @@ func play_shroomscream() -> void:
 	$SFX_Shroomscream.play()
 
 func play_maskget() -> void:
-	$Maskget.play()
+	$SFX_Maskget.play()
