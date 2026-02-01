@@ -68,6 +68,14 @@ func _ready() -> void:
 	# enemy position should be set when it's instantiated as a scene tile
 	spawn = position
 	$AnimatedSprite2D.play("idle")
+	
+	# Randomize animation offset so multiple frogs breathe independently
+	var sprite_frames = $AnimatedSprite2D.sprite_frames
+	if sprite_frames:
+		var frame_count = sprite_frames.get_frame_count("idle")
+		if frame_count > 0:
+			$AnimatedSprite2D.frame = randi() % frame_count
+			$AnimatedSprite2D.frame_progress = randf()
 
 func _physics_process(delta: float) -> void:
 	if player == null:
