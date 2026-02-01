@@ -165,26 +165,27 @@ func _physics_process(delta: float) -> void:
 	#region INPUT
 	var time = Time.get_ticks_msec()
 	
-	var input_move_left = Input.is_action_pressed("left")
-	var input_move_right = Input.is_action_pressed("right")
-	var input_move_up = Input.is_action_pressed("up")
-	var input_move_down = Input.is_action_pressed("down")
-	var input_initial_move_left = Input.is_action_just_pressed("left")
-	var input_initial_move_right = Input.is_action_just_pressed("right")
-	var input_initial_move_up = Input.is_action_just_pressed("up")
-	var input_initial_move_down = Input.is_action_just_pressed("down")
+	# Block all inputs when dead
+	var input_move_left = false if dead else Input.is_action_pressed("left")
+	var input_move_right = false if dead else Input.is_action_pressed("right")
+	var input_move_up = false if dead else Input.is_action_pressed("up")
+	var input_move_down = false if dead else Input.is_action_pressed("down")
+	var input_initial_move_left = false if dead else Input.is_action_just_pressed("left")
+	var input_initial_move_right = false if dead else Input.is_action_just_pressed("right")
+	var input_initial_move_up = false if dead else Input.is_action_just_pressed("up")
+	var input_initial_move_down = false if dead else Input.is_action_just_pressed("down")
 	
-	var input_jump_pressed = Input.is_action_just_pressed("jump")
-	var input_jump_held = Input.is_action_pressed("jump")
-	var input_jump_released = Input.is_action_just_released("jump")
+	var input_jump_pressed = false if dead else Input.is_action_just_pressed("jump")
+	var input_jump_held = false if dead else Input.is_action_pressed("jump")
+	var input_jump_released = false if dead else Input.is_action_just_released("jump")
 	
-	var input_action_pressed = Input.is_action_just_pressed("action")
-	var input_action_held = Input.is_action_pressed("action")
-	var input_action_released = Input.is_action_just_released("action")
+	var input_action_pressed = false if dead else Input.is_action_just_pressed("action")
+	var input_action_held = false if dead else Input.is_action_pressed("action")
+	var input_action_released = false if dead else Input.is_action_just_released("action")
 	
-	var input_swapmask_pressed = Input.is_action_just_pressed("switch_mask")
-	var input_swapmask_held = Input.is_action_pressed("switch_mask")
-	var input_swapmask_released = Input.is_action_just_released("switch_mask")
+	var input_swapmask_pressed = false if dead else Input.is_action_just_pressed("switch_mask")
+	var input_swapmask_held = false if dead else Input.is_action_pressed("switch_mask")
+	var input_swapmask_released = false if dead else Input.is_action_just_released("switch_mask")
 	
 	# resolve x move presses
 	last_tick_left = time if input_initial_move_left else last_tick_left
@@ -765,6 +766,11 @@ func die() -> void:
 	
 	MusicManager.play_die()
 	dead = true
+	
+	# Clear all afterimage trails immediately
+	var afterimage_trail = get_node_or_null("AfterimageTrail")
+	if afterimage_trail and afterimage_trail.has_method("clear_all_trails"):
+		afterimage_trail.clear_all_trails()
 	
 	# Screen shake on death
 	_trigger_camera_shake_death()

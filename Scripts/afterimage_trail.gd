@@ -99,6 +99,20 @@ func _stop_trailing() -> void:
 	_distance_accumulated = 0.0
 
 
+## Public method to immediately clear all trails (e.g., on death)
+func clear_all_trails() -> void:
+	_is_trailing = false
+	_distance_accumulated = 0.0
+	# Immediately free all afterimages without fade animation
+	for afterimage in _active_afterimages:
+		if is_instance_valid(afterimage):
+			var tween = afterimage.get_meta("tween", null)
+			if tween and tween is Tween:
+				tween.kill()
+			afterimage.queue_free()
+	_active_afterimages.clear()
+
+
 func _update_trail() -> void:
 	var current_pos = _player.global_position
 	_distance_accumulated += current_pos.distance_to(_last_spawn_pos)
