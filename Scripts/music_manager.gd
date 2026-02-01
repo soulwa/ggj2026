@@ -128,6 +128,9 @@ func play_frogbounce() -> void:
 func play_frogcroak() -> void:
 	$SFX_Frogcroak.play()
 
+func play_killenemy() -> void:
+	$SFX_Killenemy.play()
+
 func play_playerhurt() -> void:
 	$SFX_Playerhurt.play()
 
