@@ -94,3 +94,15 @@ func play_sound_dive() -> void:
 
 func play_sound_divebounce() -> void:
 	$SFX_Divebounce.play()
+
+func play_sound_openmenu() -> void:
+	$SFX_Openmenu.play()
+
+func play_sound_select_up() -> void:
+	$SFX_SelectUp.play()
+
+func play_sound_select_side() -> void:
+	$SFX_SelectSide.play()
+
+func play_sound_select_down() -> void:
+	$SFX_SelectDown.play()

@@ -14,11 +14,17 @@
 [ext_resource type="AudioStream" uid="uid://7so5cwsuixie" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_verb_jump01_-6dB.wav" id="12_21e4c"]
 [ext_resource type="AudioStream" uid="uid://chq05batqop18" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_verb_jump02_-6dB.wav" id="13_4ebib"]
 [ext_resource type="AudioStream" uid="uid://b4qwdruvuhutn" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_verb_jump03_-6dB.wav" id="14_5lhga"]
-[ext_resource type="AudioStream" uid="uid://du0b2ax1lfhih" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_verb_thrust_v01_-5dB.wav" id="15_4ebib"]
+[ext_resource type="AudioStream" uid="uid://ck64wpqpqt2cy" path="res://Assets/Sfx/GGJ_2026_SFX_Fenrick_verb_thrust01_v02_-5dB.wav" id="15_3a8q5"]
 [ext_resource type="AudioStream" uid="uid://cjwtfbfhc8f35" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_verb_wallBounce_v01_-6dB.wav" id="16_5lhga"]
+[ext_resource type="AudioStream" uid="uid://bv1uasjh2pvrf" path="res://Assets/Sfx/GGJ_2026_SFX_Fenrick_verb_thrust02_v02_-5dB.wav" id="16_hcsv6"]
 [ext_resource type="AudioStream" uid="uid://evxib7xhd3iw" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_verb_doubleJump_v01_-6dB.wav" id="17_b5y6m"]
+[ext_resource type="AudioStream" uid="uid://c3rut5bmlyip7" path="res://Assets/Sfx/GGJ_2026_SFX_Fenrick_verb_thrust03_v02_-5dB.wav" id="17_etocf"]
 [ext_resource type="AudioStream" uid="uid://cnh6mdkf1ksji" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_verb_dive_v01_-5dB.wav" id="18_wnqgx"]
 [ext_resource type="AudioStream" uid="uid://3ae74mgkxvls" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_verb_diveBounce_v01_-6dB.wav" id="19_dgddm"]
+[ext_resource type="AudioStream" uid="uid://benofsxqdwoil" path="res://Assets/Sfx/GGJ_2026_SFX_Fenrick_dry_openMenu_v01_-7dB.wav" id="22_yoy0x"]
+[ext_resource type="AudioStream" uid="uid://p7v7rkyj5j" path="res://Assets/Sfx/GGJ_2026_SFX_Fenrick_dry_maskSelect01_v01_-7dB.wav" id="23_3wvko"]
+[ext_resource type="AudioStream" uid="uid://eu1c0vhxooci" path="res://Assets/Sfx/GGJ_2026_SFX_Fenrick_dry_maskSelect02_v01_-7dB.wav" id="24_hfkii"]
+[ext_resource type="AudioStream" uid="uid://bt8t1a3df5006" path="res://Assets/Sfx/GGJ_2026_SFX_Fenrick_dry_maskSelect03_v01_-7dB.wav" id="25_cyg2j"]
 
 [sub_resource type="AudioStreamSynchronized" id="AudioStreamSynchronized_me85s"]
 stream_count = 3
@@ -52,6 +58,12 @@ stream_0/stream = ExtResource("12_21e4c")
 stream_1/stream = ExtResource("13_4ebib")
 stream_2/stream = ExtResource("14_5lhga")
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_4f6od"]
+streams_count = 3
+stream_0/stream = ExtResource("15_3a8q5")
+stream_1/stream = ExtResource("16_hcsv6")
+stream_2/stream = ExtResource("17_etocf")
+
 [node name="MusicManager" type="Node" unique_id=709076895]
 process_mode = 3
 script = ExtResource("1_1u5ih")
@@ -70,14 +82,14 @@ volume_db = -5.0
 bus = &"SFX"
 
 [node name="Timer_Footstep" type="Timer" parent="." unique_id=568823240]
-wait_time = 0.266
+wait_time = 0.2
 
 [node name="SFX_Jump" type="AudioStreamPlayer" parent="." unique_id=1534722623]
 stream = SubResource("AudioStreamRandomizer_b5y6m")
 bus = &"SFX"
 
 [node name="SFX_Thrust" type="AudioStreamPlayer" parent="." unique_id=700950890]
-stream = ExtResource("15_4ebib")
+stream = SubResource("AudioStreamRandomizer_4f6od")
 bus = &"SFX"
 
 [node name="SFX_Wallbounce" type="AudioStreamPlayer" parent="." unique_id=1778573238]
@@ -95,5 +107,17 @@ bus = &"SFX"
 [node name="SFX_Divebounce" type="AudioStreamPlayer" parent="." unique_id=229959960]
 stream = ExtResource("19_dgddm")
 bus = &"SFX"
+
+[node name="SFX_Openmenu" type="AudioStreamPlayer" parent="." unique_id=1513481957]
+stream = ExtResource("22_yoy0x")
+
+[node name="SFX_SelectUp" type="AudioStreamPlayer" parent="." unique_id=658818371]
+stream = ExtResource("23_3wvko")
+
+[node name="SFX_SelectSide" type="AudioStreamPlayer" parent="." unique_id=336382181]
+stream = ExtResource("24_hfkii")
+
+[node name="SFX_SelectDown" type="AudioStreamPlayer" parent="." unique_id=425677914]
+stream = ExtResource("25_cyg2j")
 
 [connection signal="timeout" from="Timer_Footstep" to="." method="_on_timer_footstep_timeout"]

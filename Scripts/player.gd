@@ -113,6 +113,7 @@ var action_buffer_timer := 0.0
 var was_in_air_last_frame: bool = false
 var disable_jump_cancel: bool = false
 var latest_direction := Vector2i.ZERO
+var last_latest_direction := Vector2i.ZERO
 
 var is_jump_animation: bool = false
 var is_doublejump_animation: bool = false
@@ -204,6 +205,7 @@ func _physics_process(delta: float) -> void:
 	
 	
 	
+	last_latest_direction = latest_direction
 	# presses
 	if Input.is_action_just_pressed("left"):
 		dir_stack.erase(Vector2i.LEFT)
@@ -321,17 +323,23 @@ func _physics_process(delta: float) -> void:
 				Vector2i.DOWN:
 					show_swapmask_visual()
 					swapmask_target = Globals.Action.Dive
+					if latest_direction != last_latest_direction: MusicManager.play_sound_select_down()
 				Vector2i.UP:
 					show_swapmask_visual()
 					swapmask_target = Globals.Action.DoubleJump
+					if latest_direction != last_latest_direction: MusicManager.play_sound_select_up()
 				Vector2i.LEFT:
 					facedir = -1
 					show_swapmask_visual()
 					swapmask_target = Globals.Action.Thrust
+					if latest_direction != last_latest_direction: MusicManager.play_sound_select_side()
 				Vector2i.RIGHT:
 					facedir = 1
 					show_swapmask_visual()
 					swapmask_target = Globals.Action.Thrust
+					if latest_direction != last_latest_direction: MusicManager.play_sound_select_side()
+			
+			
 			
 			# exit menu
 			if input_action_pressed:
@@ -570,6 +578,7 @@ func enter_swapmask() -> void:
 	Engine.time_scale = 0.05
 	show_swapmask_visual()
 	MusicManager.slow_music()
+	MusicManager.play_sound_openmenu()
 
 func show_swapmask_visual() -> void:
 	if facedir < 0:
