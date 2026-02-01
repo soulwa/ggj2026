@@ -194,6 +194,7 @@ func _physics_process(delta: float) -> void:
 		
 		if is_on_floor():
 			print("[FROG] JUMPING DOWN -> IDLE")
+			_add_ground_dent()
 			current_state = State.IDLE
 			bounced_off_horz_wall = false
 	
@@ -206,6 +207,20 @@ func _physics_process(delta: float) -> void:
 	elif current_state == State.JUMPING_DOWN:
 		$AnimatedSprite2D.play("jumping_down")
 	#endregion
+
+func _add_ground_dent() -> void:
+	# Find the WallDentManager in the level (parent is TileMapLayer, grandparent is Level)
+	var tilemap = get_parent()
+	if tilemap:
+		var level = tilemap.get_parent()
+		if level:
+			for child in level.get_children():
+				if child.has_method("add_temporary_dent"):
+					# Position the dent at the frog's feet, slightly into the ground
+					var dent_pos = position + Vector2(0, 16)
+					child.add_temporary_dent(dent_pos, Vector2.DOWN, 48.0, 1.0)
+					return
+
 
 func die() -> void:
 	visible = false

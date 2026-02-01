@@ -11,7 +11,13 @@ const SHATTER_CHECK_RADIUS := 2  ## Tile radius to check for damage
 @export var default_strength := 1.15  ## Intensity of the dent
 @export var enable_foreground_shatter := true  ## Whether foreground tiles can shatter
 
+## Elastic bounce settings for temporary dents
+@export var temp_dent_decay := 3.0  ## How fast the bounce dampens (higher = settles faster)
+@export var temp_dent_frequency := 2.0  ## Bounce frequency (higher = faster oscillation)
+@export var temp_dent_duration := 1.4  ## Total time before dent is removed
+
 var _dents: Array[Dictionary] = []  ## Array of {position, radius, strength, direction}
+var _temp_dents: Array[Dictionary] = []  ## Array of {position, radius, strength, direction, max_strength} - fade over time
 var _data_texture: ImageTexture
 var _data_image: Image
 var _target_tilemaps: Array[TileMapLayer] = []  ## Multiple tilemaps can receive the dent effect
@@ -32,6 +38,40 @@ func _ready() -> void:
 	# Auto-find tilemaps in parent if not set
 	await get_tree().process_frame
 	_find_tilemaps()
+
+
+func _process(delta: float) -> void:
+	# Animate temporary dents with elastic bounce
+	if _temp_dents.is_empty():
+		return
+	
+	var needs_update := false
+	var i := _temp_dents.size() - 1
+	while i >= 0:
+		var temp_dent = _temp_dents[i]
+		temp_dent["time"] += delta
+		var t: float = temp_dent["time"]
+		
+		# Remove dent after duration expires
+		if t >= temp_dent_duration:
+			_temp_dents.remove_at(i)
+			needs_update = true
+			i -= 1
+			continue
+		
+		# Elastic/bouncy interpolation: damped cosine wave
+		# Starts at max_strength, oscillates and settles toward 0
+		var max_str: float = temp_dent["max_strength"]
+		var envelope := exp(-temp_dent_decay * t)  # Exponential decay envelope
+		var oscillation := cos(temp_dent_frequency * t)  # Bouncy oscillation
+		temp_dent["strength"] = max_str * envelope * oscillation
+		
+		needs_update = true
+		i -= 1
+	
+	if needs_update:
+		_update_data_texture()
+		dents_updated.emit()
 
 
 func _create_data_texture() -> void:
@@ -139,9 +179,39 @@ func add_dent_directed(world_position: Vector2, hit_direction: Vector2, radius: 
 	add_dent(offset_pos, hit_direction, radius, strength)
 
 
+## Add a temporary dent that smoothly fades back to normal over time
+func add_temporary_dent(world_position: Vector2, hit_direction: Vector2 = Vector2.DOWN, radius: float = -1.0, strength: float = -1.0) -> void:
+	if radius < 0:
+		radius = default_radius
+	if strength < 0:
+		strength = default_strength
+	
+	# Normalize direction
+	var dir = hit_direction.normalized() if hit_direction.length() > 0.001 else Vector2.DOWN
+	
+	var temp_dent := {
+		"position": world_position,
+		"radius": radius,
+		"strength": strength,
+		"direction": dir,
+		"max_strength": strength,  # Store original strength for elastic interpolation
+		"time": 0.0  # Track elapsed time for bouncy animation
+	}
+	
+	_temp_dents.append(temp_dent)
+	
+	# Limit temporary dents to avoid overwhelming the system
+	while _temp_dents.size() > MAX_DENTS / 2:
+		_temp_dents.pop_front()
+	
+	_update_data_texture()
+	dents_updated.emit()
+
+
 ## Clear all dents (call on room transition)
 func clear_dents() -> void:
 	_dents.clear()
+	_temp_dents.clear()
 	_update_data_texture()
 	dents_updated.emit()
 	clear_foreground_damage()
@@ -159,8 +229,12 @@ func _update_data_texture() -> void:
 	# Clear image
 	_data_image.fill(Color(0, 0, 0, 0))
 	
-	# Write dent data to image pixels
+	var total_index := 0
+	
+	# Write permanent dent data to image pixels
 	for i in range(_dents.size()):
+		if total_index >= MAX_DENTS:
+			break
 		var dent = _dents[i]
 		var pos: Vector2 = dent["position"]
 		var radius: float = dent["radius"]
@@ -168,9 +242,26 @@ func _update_data_texture() -> void:
 		var dir: Vector2 = dent["direction"]
 		
 		# Row 0: position.x, position.y, radius, strength
-		_data_image.set_pixel(i, 0, Color(pos.x, pos.y, radius, strength))
+		_data_image.set_pixel(total_index, 0, Color(pos.x, pos.y, radius, strength))
 		# Row 1: direction.x, direction.y, 0, 0
-		_data_image.set_pixel(i, 1, Color(dir.x, dir.y, 0.0, 0.0))
+		_data_image.set_pixel(total_index, 1, Color(dir.x, dir.y, 0.0, 0.0))
+		total_index += 1
+	
+	# Write temporary dent data to image pixels (after permanent dents)
+	for i in range(_temp_dents.size()):
+		if total_index >= MAX_DENTS:
+			break
+		var dent = _temp_dents[i]
+		var pos: Vector2 = dent["position"]
+		var radius: float = dent["radius"]
+		var strength: float = dent["strength"]
+		var dir: Vector2 = dent["direction"]
+		
+		# Row 0: position.x, position.y, radius, strength
+		_data_image.set_pixel(total_index, 0, Color(pos.x, pos.y, radius, strength))
+		# Row 1: direction.x, direction.y, 0, 0
+		_data_image.set_pixel(total_index, 1, Color(dir.x, dir.y, 0.0, 0.0))
+		total_index += 1
 	
 	# Update texture
 	_data_texture.update(_data_image)
@@ -180,7 +271,7 @@ func _update_data_texture() -> void:
 		if tilemap and tilemap.material:
 			var mat = tilemap.material as ShaderMaterial
 			if mat:
-				mat.set_shader_parameter("dent_count", _dents.size())
+				mat.set_shader_parameter("dent_count", total_index)
 
 
 # ============================================================================
