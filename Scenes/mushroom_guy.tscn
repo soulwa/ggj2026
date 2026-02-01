@@ -1,0 +1,78 @@
+[gd_scene format=3 uid="uid://c8vt2srwf1vb4"]
+
+[ext_resource type="Script" uid="uid://8lnilx6846y5" path="res://Scripts/mushroom_guy.gd" id="1_ghvsm"]
+[ext_resource type="Texture2D" uid="uid://ca4k6sd7wuw6x" path="res://Assets/Sprites/shrooms.png" id="2_dfy2u"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k7jxf"]
+atlas = ExtResource("2_dfy2u")
+region = Rect2(384, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_asn85"]
+atlas = ExtResource("2_dfy2u")
+region = Rect2(576, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ccy5p"]
+atlas = ExtResource("2_dfy2u")
+region = Rect2(768, 0, 192, 192)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_d46df"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k7jxf")
+}],
+"loop": true,
+"name": &"1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_asn85")
+}],
+"loop": true,
+"name": &"2",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ccy5p")
+}],
+"loop": true,
+"name": &"3",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l3odi"]
+size = Vector2(12, 51)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dfy2u"]
+size = Vector2(10, 44)
+
+[node name="MushroomGuy" type="CharacterBody2D" unique_id=1913379462]
+collision_layer = 16
+collision_mask = 2
+script = ExtResource("1_ghvsm")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=318614463]
+position = Vector2(0, 30)
+sprite_frames = SubResource("SpriteFrames_d46df")
+animation = &"1"
+offset = Vector2(0, -30)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1452951053]
+position = Vector2(0, 4.5)
+shape = SubResource("RectangleShape2D_l3odi")
+
+[node name="DamageRegion" type="Area2D" parent="." unique_id=1822373019]
+position = Vector2(0, -33)
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageRegion" unique_id=1461126320]
+position = Vector2(0, 41)
+shape = SubResource("RectangleShape2D_dfy2u")
+
+[node name="PivotTimer" type="Timer" parent="." unique_id=767465204]
+wait_time = 0.1
+autostart = true
+
+[connection signal="timeout" from="PivotTimer" to="." method="_on_pivot_timer_timeout"]

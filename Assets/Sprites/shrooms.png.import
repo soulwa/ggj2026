@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://be3uh4vksindp"
-path="res://.godot/imported/decals-sm.png-054be4ed85c478e4f5ffb82b06f08635.ctex"
+uid="uid://ca4k6sd7wuw6x"
+path="res://.godot/imported/shrooms.png-b5521cdb7afbd874cd627c83b609d95d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/decals-sm.png"
-dest_files=["res://.godot/imported/decals-sm.png-054be4ed85c478e4f5ffb82b06f08635.ctex"]
+source_file="res://Assets/Sprites/shrooms.png"
+dest_files=["res://.godot/imported/shrooms.png-b5521cdb7afbd874cd627c83b609d95d.ctex"]
 
 [params]
 
