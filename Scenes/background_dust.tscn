@@ -1,66 +1,16 @@
 [gd_scene format=3 uid="uid://dk8y25ohepvj6"]
 
 [ext_resource type="Script" uid="uid://bv64mhhq4qtrp" path="res://Scripts/background_dust.gd" id="1_dust"]
-[ext_resource type="Shader" uid="uid://dxubtebjknpui" path="res://Shaders/background_dust.gdshader" id="1_k5rld"]
-[ext_resource type="Texture2D" uid="uid://bm4jrbu0wxryi" path="res://Assets/Sprites/decals-sm.png" id="2_luudi"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_k5rld"]
-shader = ExtResource("1_k5rld")
-shader_parameter/h_frames = 3
-shader_parameter/v_frames = 4
-shader_parameter/drift_speed = 0.3
-shader_parameter/drift_amount = 2.0
-shader_parameter/vertical_drift = 1.5
-shader_parameter/warble_speed = 0.2
-shader_parameter/warble_amount = 0.03
-shader_parameter/blur_amount = 0.0
-shader_parameter/edge_softness = 0.0
-shader_parameter/glow_strength = 0.0
-shader_parameter/pulse_amount = 0.1
-shader_parameter/pulse_speed = 0.4
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_luudi"]
-atlas = ExtResource("2_luudi")
-region = Rect2(192, 96, 64, 160)
-
-[sub_resource type="Curve" id="Curve_ae0j5"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.15, 0.5), 0.0, 0.0, 0, 0, Vector2(0.3, 1), 0.0, 0.0, 0, 0, Vector2(0.7, 1), 0.0, 0.0, 0, 0, Vector2(0.85, 0.5), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 6
-
-[sub_resource type="CurveTexture" id="CurveTexture_p1huv"]
-curve = SubResource("Curve_ae0j5")
-
-[sub_resource type="Curve" id="Curve_fmyp2"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_12bct"]
-curve = SubResource("Curve_fmyp2")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vr8b3"]
-particle_flag_disable_z = true
-emission_shape = 3
-emission_box_extents = Vector3(200, 120, 0)
-direction = Vector3(0, 0, 0)
-spread = 180.0
-initial_velocity_min = 0.5
-initial_velocity_max = 2.0
-angular_velocity_min = -5.0
-angular_velocity_max = 5.0
-gravity = Vector3(0, 0, 0)
-damping_min = 1.0
-damping_max = 3.0
-scale_min = 1.5
-scale_max = 3.0
-scale_curve = SubResource("CurveTexture_12bct")
-color = Color(1, 1, 1, 0.3)
-alpha_curve = SubResource("CurveTexture_p1huv")
-
-[node name="BackgroundDust" type="GPUParticles2D" unique_id=334331105]
-z_index = -10
-material = SubResource("ShaderMaterial_k5rld")
-amount = 150
-texture = SubResource("AtlasTexture_luudi")
-lifetime = 20.0
-process_material = SubResource("ParticleProcessMaterial_vr8b3")
+[node name="BackgroundDust" type="GPUParticles2D"]
+z_index = 100
 script = ExtResource("1_dust")
+emission_width = 400.0
+emission_height = 240.0
+particle_count = 50
+dust_lifetime = 15.0
+min_scale = 1.5
+max_scale = 3.0
+dust_color = Color(1, 1, 1, 0.3)
+atlas_region = Rect2(192, 96, 64, 160)
+frame_size = Vector2(32, 32)
