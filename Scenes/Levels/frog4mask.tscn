@@ -52,5 +52,5 @@ frog_bounce_height = 128
 position = Vector2(-592, 40)
 
 [connection signal="body_entered" from="TileMapLayer/LevelTransition" to="TileMapLayer/LevelTransition" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@34529" to="TileMapLayer/@Area2D@34529" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@34530" to="TileMapLayer/@Area2D@34530" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@42943" to="TileMapLayer/@Area2D@42943" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@42944" to="TileMapLayer/@Area2D@42944" method="_on_body_entered"]
