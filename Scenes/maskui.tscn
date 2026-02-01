@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://diw1i4pe570qa"]
+
+[ext_resource type="Script" uid="uid://b1f32tjv1i38" path="res://Scripts/maskui.gd" id="1_mulbs"]
+[ext_resource type="Texture2D" uid="uid://cfx2an7w88eht" path="res://Assets/Sprites/mask-selectors.png" id="2_gb6u5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5itr1"]
+atlas = ExtResource("2_gb6u5")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hetre"]
+atlas = ExtResource("2_gb6u5")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rpjah"]
+atlas = ExtResource("2_gb6u5")
+region = Rect2(64, 0, 32, 32)
+
+[node name="MaskUI" type="Control" unique_id=761875988]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+grow_horizontal = 0
+script = ExtResource("1_mulbs")
+
+[node name="MaskDash" type="TextureRect" parent="." unique_id=330157717]
+layout_mode = 0
+offset_left = -80.0
+offset_right = -40.0
+offset_bottom = 40.0
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_5itr1")
+
+[node name="MaskDive" type="TextureRect" parent="." unique_id=716569600]
+layout_mode = 0
+offset_left = -144.0
+offset_right = -104.0
+offset_bottom = 40.0
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_hetre")
+
+[node name="MaskDoubleJump" type="TextureRect" parent="." unique_id=821017282]
+layout_mode = 0
+offset_left = -208.0
+offset_right = -168.0
+offset_bottom = 40.0
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_rpjah")

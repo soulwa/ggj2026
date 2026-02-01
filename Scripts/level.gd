@@ -83,6 +83,10 @@ func reset_enemies() -> void:
 			entity.reset()
 
 func switch_level(transition_dir: Direction):
+	# deregister shit
+	MusicManager.battlers = 0
+	MusicManager.crossfade_to_explore_music()
+	
 	# Prevent triggering multiple transitions from this level
 	if _is_switching_level:
 		return

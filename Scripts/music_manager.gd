@@ -6,6 +6,8 @@ var music: AudioStreamPlayer
 @export var crossfade_time: float = 2
 @export var music_slow_time: float = 0.2
 
+var battlers: int = 0
+
 func _ready() -> void:
 	music = music_opt_1
 	music.play()
@@ -15,6 +17,16 @@ func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("_debug_music_battle"):
 		crossfade_to_battle_music()
 	elif Input.is_action_just_pressed("_debug_music_explore"):
+		crossfade_to_explore_music()
+
+func add_battler() -> void:
+	battlers += 1
+	if battlers > 0:
+		crossfade_to_battle_music()
+
+func remove_battler() -> void:
+	battlers = max(0, battlers - 1)
+	if battlers == 0:
 		crossfade_to_explore_music()
 
 func crossfade_to_battle_music(instant: bool = false) -> void:

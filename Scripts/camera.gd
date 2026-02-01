@@ -21,6 +21,9 @@ var _prev_target_pos: Vector2
 var _lookahead_x := 0.0
 # var _lookahead_y := 0.0
 
+var hpui: HpUI = preload("res://Scenes/hpUI.tscn").instantiate()
+var mask_ui: MaskUI = preload("res://Scenes/maskui.tscn").instantiate()
+
 # Screen shake state
 var _shake_intensity := 0.0
 var _shake_duration := 0.0
@@ -28,7 +31,10 @@ var _shake_timer := 0.0
 var _shake_offset := Vector2.ZERO
 
 func _ready() -> void:
-	pass
+	var canvas = CanvasLayer.new()
+	add_child(canvas)
+	canvas.add_child(hpui)
+	canvas.add_child(mask_ui)
 
 
 ## Trigger screen shake with specified intensity and duration
@@ -58,6 +64,12 @@ func force_initial_position_stable(pos: Vector2, vel: Vector2) -> void:
 func _process(delta: float) -> void:
 	if player == null:
 		player = get_parent().find_child("Player")
+	
+	hpui.set_hp(player.hp)
+	mask_ui.thrust_count(player.thrusts_remaining)
+	mask_ui.dive_count(player.dives_remaining)
+	mask_ui.djump_count(player.doublejumps_remaining)
+	
 	
 	# move wrt player.
 	var player_pos := player.global_position

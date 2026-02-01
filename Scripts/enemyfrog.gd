@@ -57,6 +57,8 @@ var jump_start_y := 0.0
 # attempting smoother
 var jump_dy := 0.0
 
+var aggroed := false
+
 
 # jumping up and jumping down
 var bounced_off_horz_wall := false
@@ -78,6 +80,13 @@ func _physics_process(delta: float) -> void:
 		current_state = State.IDLE
 		return
 	
+	if (player.position.distance_to(position) < player_detection_range) and not aggroed:
+		aggroed = true
+		MusicManager.add_battler()
+	elif (player.position.distance_to(position) >= player_detection_range) and aggroed:
+		aggroed = false
+		MusicManager.remove_battler()
+	
 	var bodies = $DamageRegion.get_overlapping_bodies()
 	for body in bodies:
 		if body is Player:
@@ -91,6 +100,7 @@ func _physics_process(delta: float) -> void:
 			print("[FROG] IDLE -> READYING")
 			current_state = State.READYING
 			telegraph_timer = telegraph_time
+			
 	elif current_state == State.READYING:
 		var new_facedir = int(sign(player.position.x - position.x))
 		facedir = new_facedir if new_facedir != 0 else facedir
