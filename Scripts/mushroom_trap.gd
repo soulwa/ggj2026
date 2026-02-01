@@ -3,7 +3,7 @@ class_name MushroomTrap extends Node2D
 @onready var guy_spawn_point: Node2D = $GuySpawnPoint
 
 
-var mushroom_guy_scene: PackedScene = preload("uid://c8vt2srwf1vb4")
+var mushroom_guy_scene: PackedScene = preload("res://Scenes/mushroom_guy.tscn")
 
 var min_guys: int = 5
 var max_guys: int = 7
