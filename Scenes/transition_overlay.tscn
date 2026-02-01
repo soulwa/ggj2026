@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://dkr8yw2t6l1p5"]
+[gd_scene format=3 uid="uid://dkr8yw2t6l1p5"]
 
 [ext_resource type="Script" path="res://Scripts/transition_manager.gd" id="1_script"]
 [ext_resource type="Shader" path="res://Shaders/screen_transition_horizontal.gdshader" id="2_shader"]
