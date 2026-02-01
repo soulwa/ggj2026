@@ -107,8 +107,6 @@ func _physics_process(delta: float) -> void:
 			jump_start_y = position.y
 			var jump_apex_y = position.y - jumping_up_height
 			var effective_jumping_up_time = jumping_up_time
-			if player.position.y < jump_apex_y:
-				jump_apex_y = player.position.y 
 			jump_dy = jump_apex_y - jump_start_y
 			
 			velocity = Vector2(dist_to_travel / effective_jumping_up_time, 3.0 * jump_dy / effective_jumping_up_time)
