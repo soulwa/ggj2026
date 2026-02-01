@@ -19,7 +19,10 @@ class_name Player extends CharacterBody2D
 # 
 
 # sprites
-@onready var sprites: Array[AnimatedSprite2D] = [$Body, $Mask, $Spear]
+@onready var sprites: Array[AnimatedSprite2D] = [$Body, $ThrustMask, $DiveMask, $DoublejumpMask, $Spear]
+@onready var thrust_mask: AnimatedSprite2D = $ThrustMask
+@onready var dive_mask: AnimatedSprite2D = $DiveMask
+@onready var doublejump_mask: AnimatedSprite2D = $DoublejumpMask
 @onready var spear_hitbox: Area2D = $SpearHitbox
 @onready var shape_right: CollisionShape2D = $SpearHitbox/ShapeRight
 @onready var shape_left: CollisionShape2D = $SpearHitbox/ShapeLeft
@@ -33,6 +36,9 @@ class_name Player extends CharacterBody2D
 # particles
 @onready var smash_particles: SmashParticles = $SmashParticles
 @onready var weapon_tip: Marker2D = $WeaponTip
+
+@export var disabled_mask_modulate: Color
+var enabled_mask_modulate: Color = Color.WHITE
 
 
 const DT := 0.016
@@ -116,6 +122,7 @@ var last_tick_left: int
 var last_tick_right: int
 var last_tick_up: int
 var last_tick_down: int
+var dir_stack: Array[Vector2i] = []
 
 var swapmask_target: Globals.Action
 
@@ -177,22 +184,38 @@ func _physics_process(delta: float) -> void:
 	last_tick_down = time if input_initial_move_down else last_tick_down
 	var y_input_priority = 0
 	if input_move_up and input_move_down:
-		x_input_priority = -1 if last_tick_up > last_tick_down else 1
+		y_input_priority = -1 if last_tick_up > last_tick_down else 1
 	elif input_move_up:
 		y_input_priority = -1
 	elif input_move_down:
 		y_input_priority = 1
 	
-	if input_initial_move_left:
-		latest_direction = Vector2i.LEFT
-	if input_initial_move_right:
-		latest_direction = Vector2i.RIGHT
-	if input_initial_move_up:
-		latest_direction = Vector2i.UP
-	if input_initial_move_down:
-		latest_direction = Vector2i.DOWN
-	if not (input_move_left or input_move_right or input_move_up or input_move_down):
-		latest_direction = Vector2i.ZERO
+	
+	
+	# presses
+	if Input.is_action_just_pressed("left"):
+		dir_stack.erase(Vector2i.LEFT)
+		dir_stack.push_back(Vector2i.LEFT)
+	if Input.is_action_just_pressed("right"):
+		dir_stack.erase(Vector2i.RIGHT)
+		dir_stack.push_back(Vector2i.RIGHT)
+	if Input.is_action_just_pressed("up"):
+		dir_stack.erase(Vector2i.UP)
+		dir_stack.push_back(Vector2i.UP)
+	if Input.is_action_just_pressed("down"):
+		dir_stack.erase(Vector2i.DOWN)
+		dir_stack.push_back(Vector2i.DOWN)
+	# releases
+	if Input.is_action_just_released("left"):
+		dir_stack.erase(Vector2i.LEFT)
+	if Input.is_action_just_released("right"):
+		dir_stack.erase(Vector2i.RIGHT)
+	if Input.is_action_just_released("up"):
+		dir_stack.erase(Vector2i.UP)
+	if Input.is_action_just_released("down"):
+		dir_stack.erase(Vector2i.DOWN)
+	latest_direction = dir_stack.back() if dir_stack.size() > 0 else Vector2i.ZERO
+	
 	
 	var hmove = x_input_priority
 	#endregion
@@ -278,18 +301,25 @@ func _physics_process(delta: float) -> void:
 		
 		# SWAP MASK STATE input handling
 		elif current_state == MoveState.SWAPMASK:
-			if input_initial_move_down:
-				swapmask_target = Globals.Action.Dive
-			if input_initial_move_up:
-				swapmask_target = Globals.Action.DoubleJump
-			if input_initial_move_left:
-				facedir = -1
-				show_swapmask_visual()
-				swapmask_target = Globals.Action.Thrust
-			if input_initial_move_right:
-				facedir = 1
-				show_swapmask_visual()
-				swapmask_target = Globals.Action.Thrust
+			# input handling
+			match latest_direction:
+				Vector2i.DOWN:
+					show_swapmask_visual()
+					swapmask_target = Globals.Action.Dive
+				Vector2i.UP:
+					show_swapmask_visual()
+					swapmask_target = Globals.Action.DoubleJump
+				Vector2i.LEFT:
+					facedir = -1
+					show_swapmask_visual()
+					swapmask_target = Globals.Action.Thrust
+				Vector2i.RIGHT:
+					facedir = 1
+					show_swapmask_visual()
+					swapmask_target = Globals.Action.Thrust
+			
+			
+			
 			# exit menu
 			if input_action_pressed:
 				action_buffer_timer = action_buffer
@@ -346,6 +376,21 @@ func _physics_process(delta: float) -> void:
 	#endregion
 	
 	#region ANIMATION
+	
+	match Globals.currently_selected_action:
+		Globals.Action.Thrust:
+			thrust_mask.show()
+			dive_mask.hide()
+			doublejump_mask.hide()
+		Globals.Action.Dive:
+			thrust_mask.hide()
+			dive_mask.show()
+			doublejump_mask.hide()
+		Globals.Action.DoubleJump:
+			thrust_mask.hide()
+			dive_mask.hide()
+			doublejump_mask.show()
+	
 	for sprite in sprites:
 		sprite.flip_h = facedir == -1
 		if current_state == MoveState.NORMAL:
@@ -367,6 +412,7 @@ func _physics_process(delta: float) -> void:
 		was_in_air_last_frame = true
 	else:
 		was_in_air_last_frame = false
+	
 	#endregion
 
 func _emit_wall_smash_particles() -> void:
@@ -470,10 +516,34 @@ func show_swapmask_visual() -> void:
 	else:
 		swapmask_ui_right.show()
 		swapmask_ui_left.hide()
+	
+	# update visuals
+	match swapmask_target:
+		Globals.Action.Thrust:
+			swapmask_ui_left.get_node("ThrustMask").modulate = enabled_mask_modulate
+			swapmask_ui_left.get_node("DiveMask").modulate = disabled_mask_modulate
+			swapmask_ui_left.get_node("DoubleJumpMask").modulate = disabled_mask_modulate
+			swapmask_ui_right.get_node("ThrustMask").modulate = enabled_mask_modulate
+			swapmask_ui_right.get_node("DiveMask").modulate = disabled_mask_modulate
+			swapmask_ui_right.get_node("DoubleJumpMask").modulate = disabled_mask_modulate
+		Globals.Action.Dive:
+			swapmask_ui_left.get_node("ThrustMask").modulate = disabled_mask_modulate
+			swapmask_ui_left.get_node("DiveMask").modulate = enabled_mask_modulate
+			swapmask_ui_left.get_node("DoubleJumpMask").modulate = disabled_mask_modulate
+			swapmask_ui_right.get_node("ThrustMask").modulate = disabled_mask_modulate
+			swapmask_ui_right.get_node("DiveMask").modulate = enabled_mask_modulate
+			swapmask_ui_right.get_node("DoubleJumpMask").modulate = disabled_mask_modulate
+		Globals.Action.DoubleJump:
+			swapmask_ui_left.get_node("ThrustMask").modulate = disabled_mask_modulate
+			swapmask_ui_left.get_node("DiveMask").modulate = disabled_mask_modulate
+			swapmask_ui_left.get_node("DoubleJumpMask").modulate = enabled_mask_modulate
+			swapmask_ui_right.get_node("ThrustMask").modulate = disabled_mask_modulate
+			swapmask_ui_right.get_node("DiveMask").modulate = disabled_mask_modulate
+			swapmask_ui_right.get_node("DoubleJumpMask").modulate = enabled_mask_modulate
 
 func exit_swapmask() -> void:
 	Globals.currently_selected_action = swapmask_target
-	current_state = MoveState.NORMAL
+	if current_state == MoveState.SWAPMASK: current_state = MoveState.NORMAL
 	Engine.time_scale = 1.0
 	swapmask_ui_left.hide()
 	swapmask_ui_right.hide()

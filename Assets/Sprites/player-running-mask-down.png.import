@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bk43c73mihko7"
-path="res://.godot/imported/player-dive-spear.png-110afe1c859db16e4603e54dc4eb95a7.ctex"
+uid="uid://cvatchwcu72r3"
+path="res://.godot/imported/player-running-mask-down.png-e459155de7ef0b692c689c236aa19330.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/player-dive-spear.png"
-dest_files=["res://.godot/imported/player-dive-spear.png-110afe1c859db16e4603e54dc4eb95a7.ctex"]
+source_file="res://Assets/Sprites/player-running-mask-down.png"
+dest_files=["res://.godot/imported/player-running-mask-down.png-e459155de7ef0b692c689c236aa19330.ctex"]
 
 [params]
 

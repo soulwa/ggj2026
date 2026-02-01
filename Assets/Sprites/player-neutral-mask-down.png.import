@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bb3wchm7elvyp"
-path="res://.godot/imported/player-dive-mask-down.png-633e6fe304279d48bc811b3bc24f9dc9.ctex"
+uid="uid://c1g71l3obkvfw"
+path="res://.godot/imported/player-neutral-mask-down.png-2a640a64b416eba4d9147531f64d7fe9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/player-dive-mask-down.png"
-dest_files=["res://.godot/imported/player-dive-mask-down.png-633e6fe304279d48bc811b3bc24f9dc9.ctex"]
+source_file="res://Assets/Sprites/player-neutral-mask-down.png"
+dest_files=["res://.godot/imported/player-neutral-mask-down.png-2a640a64b416eba4d9147531f64d7fe9.ctex"]
 
 [params]
 

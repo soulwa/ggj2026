@@ -39,7 +39,7 @@ func _ready() -> void:
 	$Camera2D.limit_top = worldspace_topleft.y + 32
 	$Camera2D.limit_bottom = worldspace_topleft.y + level_bounds.size.y * 32 - 32
 	
-	print($Camera2D.limit_right)
+	#print($Camera2D.limit_right)
 	
 	if not override_dont_use_spawn:
 		for child in get_children():
