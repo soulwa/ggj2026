@@ -151,4 +151,5 @@ textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
-environment/defaults/default_clear_color=Color(0.078814976, 0.07881499, 0.078814976, 1)
+environment/defaults/default_clear_color=Color(0.15294118, 0.19215687, 0.24705882, 1)
+environment/main_scene="uid://d3irggn77ffof"
