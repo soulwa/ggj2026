@@ -11,5 +11,5 @@ particle_count = 30
 dust_lifetime = 20.0
 min_scale = 1.5
 max_scale = 3.0
-dust_color = Color(1, 1, 1, 0.3)
+dust_color = Color(1, 1, 1, 0.15)
 atlas_region = Rect2(192, 96, 64, 160)

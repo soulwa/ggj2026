@@ -22,8 +22,8 @@ func setup_for_level(camera: Camera2D) -> void:
 	var level_width: float = camera.limit_right - camera.limit_left
 	var level_height: float = camera.limit_bottom - camera.limit_top
 	
-	# Calculate cluster grid
-	var cluster_spacing: float = 500.0
+	# Calculate cluster grid - tighter spacing for better coverage
+	var cluster_spacing: float = 450.0
 	var clusters_x: int = max(1, int(level_width / cluster_spacing) + 1)
 	var clusters_y: int = max(1, int(level_height / cluster_spacing) + 1)
 	var total_clusters: int = clusters_x * clusters_y
@@ -61,17 +61,17 @@ func setup_for_level(camera: Camera2D) -> void:
 
 func _ensure_emitter_count(count: int) -> void:
 	# Cap maximum emitters to prevent runaway creation
-	var max_emitters: int = 20
+	var max_emitters: int = 25
 	count = min(count, max_emitters)
 	
 	# Create more emitters if needed
 	while _dust_emitters.size() < count:
 		var dust: CPUParticles2D = BackgroundDustScene.instantiate()
 		
-		# Configure for large area coverage
-		dust.emission_width = 1000.0
-		dust.emission_height = 1000.0
-		dust.particle_count = 25
+		# Configure for large area coverage (+25% from original)
+		dust.emission_width = 1250.0
+		dust.emission_height = 1250.0
+		dust.particle_count = 31
 		
 		_dust_container.add_child(dust)
 		_dust_emitters.append(dust)

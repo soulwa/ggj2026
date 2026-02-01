@@ -31,7 +31,7 @@ class_name BackgroundDustCPU extends CPUParticles2D
 	set(value):
 		max_scale = value
 		_update_material()
-@export var dust_color := Color(1.0, 1.0, 1.0, 0.3):
+@export var dust_color := Color(1.0, 1.0, 1.0, 0.15):
 	set(value):
 		dust_color = value
 		_update_material()
