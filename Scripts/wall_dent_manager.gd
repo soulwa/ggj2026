@@ -1,22 +1,33 @@
 class_name WallDentManager extends Node
 ## Manages wall dent data for the shader-based dent effect.
 ## Attach to a level or as an autoload. Call add_dent() when hitting walls.
+## Also tracks damage to foreground tiles and shatters them after enough hits.
 
 const MAX_DENTS := 100
+const SHATTER_THRESHOLD := 3.0  ## Total damage needed to shatter a foreground tile
+const SHATTER_CHECK_RADIUS := 2  ## Tile radius to check for damage
 
 @export var default_radius := 56.0  ## Radius of dent effect in pixels (larger = smoother blend)
 @export var default_strength := 1.15  ## Intensity of the dent
+@export var enable_foreground_shatter := true  ## Whether foreground tiles can shatter
 
 var _dents: Array[Dictionary] = []  ## Array of {position, radius, strength, direction}
 var _data_texture: ImageTexture
 var _data_image: Image
 var _target_tilemaps: Array[TileMapLayer] = []  ## Multiple tilemaps can receive the dent effect
 
+# Foreground shatter system
+var _foreground_tilemap: TileMapLayer  ## Reference to ForegroundTiles specifically
+var _foreground_damage: Dictionary = {}  ## Dictionary[Vector2i, int] - damage per cell
+var _shatter_particles: Node  ## ShatterParticles instance
+
 signal dents_updated
+signal tile_shattered(cell: Vector2i, world_pos: Vector2)  ## Emitted when a tile shatters
 
 
 func _ready() -> void:
 	_create_data_texture()
+	_setup_shatter_particles()
 	
 	# Auto-find tilemaps in parent if not set
 	await get_tree().process_frame
@@ -33,6 +44,13 @@ func _create_data_texture() -> void:
 	_data_texture = ImageTexture.create_from_image(_data_image)
 
 
+func _setup_shatter_particles() -> void:
+	# Create shatter particles instance
+	var shatter_scene = preload("res://Scenes/shatter_particles.tscn")
+	_shatter_particles = shatter_scene.instantiate()
+	add_child(_shatter_particles)
+
+
 ## Names of tilemaps that should receive the dent effect
 const DENT_TILEMAP_NAMES := ["TileMapLayer", "ForegroundTiles"]
 
@@ -45,6 +63,9 @@ func _find_tilemaps() -> void:
 			if child is TileMapLayer and child.name in DENT_TILEMAP_NAMES:
 				add_target_tilemap(child)
 				found_any = true
+				# Track ForegroundTiles specifically for shatter system
+				if child.name == "ForegroundTiles":
+					_foreground_tilemap = child
 	
 	if not found_any:
 		push_warning("WallDentManager: No matching TileMapLayer found. Expected: %s" % str(DENT_TILEMAP_NAMES))
@@ -105,6 +126,10 @@ func add_dent(world_position: Vector2, hit_direction: Vector2 = Vector2.RIGHT, r
 	
 	_update_data_texture()
 	dents_updated.emit()
+	
+	# Check for foreground tile damage
+	if enable_foreground_shatter:
+		_check_foreground_damage(world_position, radius, dir)
 
 
 ## Add a dent with direction influence (offsets position into the wall)
@@ -119,6 +144,7 @@ func clear_dents() -> void:
 	_dents.clear()
 	_update_data_texture()
 	dents_updated.emit()
+	clear_foreground_damage()
 
 
 ## Get current dent count
@@ -155,3 +181,147 @@ func _update_data_texture() -> void:
 			var mat = tilemap.material as ShaderMaterial
 			if mat:
 				mat.set_shader_parameter("dent_count", _dents.size())
+
+
+# ============================================================================
+# FOREGROUND SHATTER SYSTEM
+# ============================================================================
+
+## Check if any foreground tiles near the dent position should take damage
+func _check_foreground_damage(dent_pos: Vector2, radius: float, hit_direction: Vector2) -> void:
+	if not _foreground_tilemap:
+		return
+	
+	# Convert world position to tile coordinates
+	var center_cell = _foreground_tilemap.local_to_map(_foreground_tilemap.to_local(dent_pos))
+	
+	# Check cells in a radius around the dent
+	for dx in range(-SHATTER_CHECK_RADIUS, SHATTER_CHECK_RADIUS + 1):
+		for dy in range(-SHATTER_CHECK_RADIUS, SHATTER_CHECK_RADIUS + 1):
+			var cell = center_cell + Vector2i(dx, dy)
+			
+			# Skip empty cells
+			if _foreground_tilemap.get_cell_source_id(cell) == -1:
+				continue
+			
+			# Check if cell center is within dent radius
+			var cell_world = _foreground_tilemap.to_global(_foreground_tilemap.map_to_local(cell))
+			var distance = cell_world.distance_to(dent_pos)
+			
+			if distance <= radius:
+				_add_damage_to_cell(cell, cell_world, hit_direction)
+
+
+## Add damage to a specific cell and check if it should shatter
+func _add_damage_to_cell(cell: Vector2i, cell_world: Vector2, hit_direction: Vector2) -> void:
+	# Get current damage (default 0)
+	var current_damage: int = _foreground_damage.get(cell, 0)
+	current_damage += 1
+	_foreground_damage[cell] = current_damage
+	
+	# Check if threshold reached
+	if current_damage >= SHATTER_THRESHOLD:
+		_shatter_tile(cell, cell_world, hit_direction)
+
+
+## Shatter a foreground tile - spawn particles and remove it
+func _shatter_tile(cell: Vector2i, world_pos: Vector2, hit_direction: Vector2) -> void:
+	if not _foreground_tilemap:
+		return
+	
+	# Get colors from the tile before removing it
+	var colors = _get_tile_colors(cell)
+	
+	# Spawn shatter particles
+	if _shatter_particles and _shatter_particles.has_method("emit_shatter"):
+		_shatter_particles.emit_shatter(world_pos, colors, hit_direction)
+	
+	# Remove the tile
+	_foreground_tilemap.erase_cell(cell)
+	
+	# Clean up damage tracking
+	_foreground_damage.erase(cell)
+	
+	# Emit signal
+	tile_shattered.emit(cell, world_pos)
+
+
+## Sample colors from a tile's texture for the particle effect
+func _get_tile_colors(cell: Vector2i) -> Array[Color]:
+	var colors: Array[Color] = []
+	
+	if not _foreground_tilemap:
+		return colors
+	
+	var source_id = _foreground_tilemap.get_cell_source_id(cell)
+	if source_id == -1:
+		return colors
+	
+	var tileset = _foreground_tilemap.tile_set
+	if not tileset:
+		return colors
+	
+	var source = tileset.get_source(source_id)
+	if not source is TileSetAtlasSource:
+		return colors
+	
+	var atlas_source = source as TileSetAtlasSource
+	var atlas_coords = _foreground_tilemap.get_cell_atlas_coords(cell)
+	var texture = atlas_source.texture
+	
+	if not texture:
+		return colors
+	
+	# Get the tile region in the atlas
+	var tile_size = tileset.tile_size
+	var region_pos = Vector2(atlas_coords) * Vector2(tile_size)
+	
+	# Sample colors from the tile's texture
+	var img = texture.get_image()
+	if not img:
+		return colors
+	
+	# Sample a few points from the tile (corners and center)
+	var sample_points = [
+		Vector2i(tile_size.x / 4, tile_size.y / 4),
+		Vector2i(tile_size.x * 3 / 4, tile_size.y / 4),
+		Vector2i(tile_size.x / 2, tile_size.y / 2),
+		Vector2i(tile_size.x / 4, tile_size.y * 3 / 4),
+		Vector2i(tile_size.x * 3 / 4, tile_size.y * 3 / 4),
+	]
+	
+	for offset in sample_points:
+		var px = int(region_pos.x) + offset.x
+		var py = int(region_pos.y) + offset.y
+		
+		# Bounds check
+		if px >= 0 and px < img.get_width() and py >= 0 and py < img.get_height():
+			var sampled_color = img.get_pixel(px, py)
+			# Only add non-transparent colors
+			if sampled_color.a > 0.5:
+				colors.append(sampled_color)
+	
+	# Remove duplicates and limit to 3 colors
+	var unique_colors: Array[Color] = []
+	for c in colors:
+		var is_unique := true
+		for existing in unique_colors:
+			if c.is_equal_approx(existing):
+				is_unique = false
+				break
+		if is_unique:
+			unique_colors.append(c)
+		if unique_colors.size() >= 3:
+			break
+	
+	return unique_colors
+
+
+## Clear foreground damage tracking (call on room transition)
+func clear_foreground_damage() -> void:
+	_foreground_damage.clear()
+
+
+## Get damage for a specific cell (for debugging/UI)
+func get_cell_damage(cell: Vector2i) -> int:
+	return _foreground_damage.get(cell, 0)
