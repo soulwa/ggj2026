@@ -113,6 +113,7 @@ func _physics_process(delta: float) -> void:
 			current_state = State.IDLE
 		
 		if telegraph_timer <= 0.0:
+			MusicManager.play_frogbounce()
 			print("[FROG] READYING -> JUMPING UP")
 			
 			current_state = State.JUMPING_UP
@@ -150,6 +151,9 @@ func _physics_process(delta: float) -> void:
 			velocity.y -= gravity
 		
 		if (jumping_up_timer <= 0) or (is_on_ceiling() and jump_dist_travelled > min_dist_to_heatseek_early):
+			
+			MusicManager.play_frogcroak()
+			
 			var new_player_position = player.position
 			var heatseek_angle: float
 			if new_player_position.y < position.y:
@@ -231,12 +235,13 @@ func _add_ground_dent() -> void:
 					child.add_temporary_dent(dent_pos, Vector2.DOWN, 48.0, 1.0)
 					return
 
-
 func die() -> void:
 	dead = true
 	$DamageRegion.monitoring = false
 	$CollisionShape2D.disabled = true
 	$AnimatedSprite2D.play("die")
+	
+	MusicManager.play_killenemy()
 	
 	await $AnimatedSprite2D.animation_finished
 	
