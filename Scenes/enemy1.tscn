@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b26yahfh282p7" path="res://Scripts/enemyfrog.gd" id="1_mxdow"]
 [ext_resource type="Texture2D" uid="uid://dinxxukahkamg" path="res://Assets/Sprites/frog.png" id="3_4qy08"]
+[ext_resource type="Script" path="res://Scripts/smash_particles.gd" id="4_smash"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mxdow"]
 size = Vector2(128.66667, 89)
@@ -119,3 +120,6 @@ shape = SubResource("RectangleShape2D_4qy08")
 position = Vector2(0, -23)
 sprite_frames = SubResource("SpriteFrames_mxdow")
 animation = &"idle"
+
+[node name="SmashParticles" type="CPUParticles2D" parent="."]
+script = ExtResource("4_smash")
