@@ -565,6 +565,7 @@ func check_thrust_hits() -> void:
 			if body is MushroomGuy:
 				body.die()
 				bounce_off_mushroom(body)
+				return  # Only kill one mushroom at a time
 
 func bounce_off_wall() -> void:
 	# if we hit wall, bounce off
