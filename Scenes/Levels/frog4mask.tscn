@@ -28,6 +28,6 @@ position = Vector2(-504, 40)
 position = Vector2(-592, 40)
 
 [connection signal="body_entered" from="TileMapLayer/LevelTransition" to="TileMapLayer/LevelTransition" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@52994" to="TileMapLayer/@Area2D@52994" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@52995" to="TileMapLayer/@Area2D@52995" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@52996" to="TileMapLayer/@Area2D@52996" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@53849" to="TileMapLayer/@Area2D@53849" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@53850" to="TileMapLayer/@Area2D@53850" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@53851" to="TileMapLayer/@Area2D@53851" method="_on_body_entered"]
