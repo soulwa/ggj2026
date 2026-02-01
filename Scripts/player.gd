@@ -513,3 +513,4 @@ func double_jump() -> void:
 	doublejumps_remaining -= 1
 	print("double ump!")
 	velocity.y = double_jump_power
+	disable_jump_cancel = true
