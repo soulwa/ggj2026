@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://p8si7hu4ur8y" path="res://Scenes/player_spawn.tscn" id="5_r5ksw"]
 [ext_resource type="TileSet" uid="uid://51pf6litgg2x" path="res://Scenes/fg_tileset.tres" id="6_r5ksw"]
 [ext_resource type="PackedScene" uid="uid://cb0gujjisv726" path="res://Scenes/mask_downdash.tscn" id="6_tjisd"]
+[ext_resource type="PackedScene" uid="uid://7jq4lqv8pdmy" path="res://Scenes/helptext.tscn" id="10_kl20e"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2fjyv"]
 shader = ExtResource("4_r5ksw")
@@ -47,7 +48,15 @@ position = Vector2(-592.31494, -150.76802)
 position = Vector2(239.88297, -56.4992)
 scale = Vector2(2, 2)
 
-[connection signal="body_entered" from="TileMapLayer/@Area2D@231636" to="TileMapLayer/@Area2D@231636" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@231637" to="TileMapLayer/@Area2D@231637" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@231638" to="TileMapLayer/@Area2D@231638" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@231639" to="TileMapLayer/@Area2D@231639" method="_on_body_entered"]
+[node name="Helptext" parent="." unique_id=1654642092 instance=ExtResource("10_kl20e")]
+offset_left = -264.69846
+offset_top = -335.45
+offset_right = 216.30154
+offset_bottom = -287.45
+text = "press action to DIVE."
+after_frogmask = true
+
+[connection signal="body_entered" from="TileMapLayer/LevelTransition" to="TileMapLayer/LevelTransition" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@88334" to="TileMapLayer/@Area2D@88334" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@88335" to="TileMapLayer/@Area2D@88335" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@88336" to="TileMapLayer/@Area2D@88336" method="_on_body_entered"]
