@@ -79,9 +79,8 @@ var thrust_up_force: float
 var wall_bounce_force_y: float
 
 @export_subgroup("Double Jump")
-@export var double_jump_pixels := 32*4
+@export var double_jump_pixels := 32*6
 var double_jump_power: float
-#@export var double_jump_arc := 0 # TODO (sam): i dont know how to model this yet.
 
 @export_subgroup("Downdash")
 @export var dive_startup_time := DT * 2
@@ -93,6 +92,11 @@ var double_jump_power: float
 @export var frog_bounce_force_x := 700.0
 @export var frog_bounce_height := 16 * 8
 var frog_bounce_force_y: float
+
+@export_subgroup("Thrust Mushroom")
+@export var mushroom_bounce_force_x := 200.0
+@export var mushroom_bounce_height := 16 * 8
+var mushroom_bounce_force_y: float
 
 enum MoveState {
 	NORMAL,
@@ -143,6 +147,7 @@ func _ready() -> void:
 	thrust_up_force = thrust_height_pixels / thrust_time
 	wall_bounce_force_y = -sqrt(2 * gravity * wall_bounce_height_pixels)
 	frog_bounce_force_y = -sqrt(2 * gravity * frog_bounce_height)
+	mushroom_bounce_force_y = -sqrt(2 * gravity * mushroom_bounce_height)
 	double_jump_power = -sqrt(2 * gravity * double_jump_pixels)
 	swapmask_ui_left.hide()
 	swapmask_ui_right.hide()
@@ -386,6 +391,8 @@ func _physics_process(delta: float) -> void:
 				dive_bounce()
 			if body is EnemyFrog:
 				body.die()
+			if body is MushroomGuy:
+				body.die()
 	elif current_state == MoveState.DIVE_BOUNCE:
 		end_dive() # TODO
 	
@@ -534,6 +541,9 @@ func check_thrust_hits() -> void:
 				bounce_off_wall()
 			if body is EnemyFrog:
 				bounce_off_frog()
+			if body is MushroomGuy:
+				body.die()
+				bounce_off_mushroom()
 
 func bounce_off_wall() -> void:
 	# if we hit wall, bounce off
@@ -560,7 +570,25 @@ func bounce_off_frog() -> void:
 	disable_jump_cancel = true
 	
 	# refund if you hit an enemy
-	thrusts_remaining += 1
+	thrusts_remaining = 1
+
+func bounce_off_mushroom() -> void:
+	velocity.x = -facedir * mushroom_bounce_force_x
+	velocity.y = mushroom_bounce_force_y
+	
+	# NOTE (sam): modified not to make a dent
+	var tip_offset = weapon_tip.position
+	if facedir == -1:
+		tip_offset.x = -tip_offset.x
+	var emit_pos = global_position + tip_offset
+	if smash_particles:
+		smash_particles.emit_burst(emit_pos, Vector2.RIGHT * -facedir, velocity)
+	
+	end_thrust()
+	disable_jump_cancel = true
+	
+	# refund if you hit an enemy
+	thrusts_remaining = 1
 
 func enter_swapmask() -> void:
 	current_state = MoveState.SWAPMASK
