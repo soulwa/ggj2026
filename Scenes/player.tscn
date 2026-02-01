@@ -760,33 +760,6 @@ floor_block_on_wall = false
 floor_snap_length = 0.0
 script = ExtResource("1_cvnsp")
 disabled_mask_modulate = Color(0.29411766, 0.29411766, 0.29411766, 0.39215687)
-run_accel = null
-run_top_speed = null
-ground_friction = null
-air_accel = null
-air_top_speed = null
-air_friction = null
-turnaround_multiplier = null
-gravity = null
-jump_pixels = null
-jump_cancel_pixels = null
-max_fall_speed = null
-jump_buffer = null
-coyote_time = null
-action_buffer = null
-thrust_forward_pixels = null
-thrust_height_pixels = null
-thrust_time = null
-num_thrusts_per_jump = null
-wall_bounce_force_x = null
-wall_bounce_height_pixels = null
-double_jump_pixels = null
-dive_startup_time = null
-dive_gravity_multiplier = null
-dive_initial_y_vel = null
-dive_bounce_boost_height = null
-frog_bounce_force_x = null
-frog_bounce_height = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=334823801]
 position = Vector2(0, 7.2500005)
@@ -796,14 +769,12 @@ shape = SubResource("RectangleShape2D_f3sb7")
 [node name="Body" type="AnimatedSprite2D" parent="." unique_id=955490563]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_036b0")
-animation = &"doublejump"
-frame_progress = 0.1573222
+animation = &"idle"
 flip_h = true
 
 [node name="ThrustMask" type="AnimatedSprite2D" parent="." unique_id=973414495]
-visible = false
 sprite_frames = SubResource("SpriteFrames_lisdf")
-animation = &"doublejump"
+animation = &"idle"
 
 [node name="DiveMask" type="AnimatedSprite2D" parent="." unique_id=1613367690]
 visible = false
@@ -817,7 +788,7 @@ animation = &"doublejump"
 
 [node name="Spear" type="AnimatedSprite2D" parent="." unique_id=2118708115]
 sprite_frames = SubResource("SpriteFrames_f1ek2")
-animation = &"doublejump"
+animation = &"idle"
 
 [node name="SpearHitbox" type="Area2D" parent="." unique_id=1815314269]
 collision_layer = 0
@@ -848,7 +819,7 @@ scale = Vector2(2, 2)
 texture = SubResource("AtlasTexture_lisdf")
 
 [node name="DiveMask" type="Sprite2D" parent="SwapmaskUIRight" unique_id=1365743981]
-position = Vector2(0, 64)
+position = Vector2(0, 72)
 scale = Vector2(2, 2)
 texture = SubResource("AtlasTexture_f5f5t")
 
@@ -865,7 +836,7 @@ scale = Vector2(2, 2)
 texture = SubResource("AtlasTexture_lisdf")
 
 [node name="DiveMask" type="Sprite2D" parent="SwapmaskUILeft" unique_id=789192492]
-position = Vector2(0, 64)
+position = Vector2(0, 72)
 scale = Vector2(2, 2)
 texture = SubResource("AtlasTexture_f5f5t")
 
