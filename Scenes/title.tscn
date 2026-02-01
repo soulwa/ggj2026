@@ -2,28 +2,11 @@
 
 [ext_resource type="Script" uid="uid://bhx6c63fy8q3u" path="res://Scripts/title.gd" id="1_ekrfg"]
 [ext_resource type="FontFile" uid="uid://51nuconqua4h" path="res://Assets/Fonts/Fabled_Font.ttf" id="1_w31pl"]
+[ext_resource type="Texture2D" uid="uid://cfx2an7w88eht" path="res://Assets/Sprites/mask-selectors.png" id="3_fp2oq"]
+[ext_resource type="Texture2D" uid="uid://dh1u5isft4u0s" path="res://Assets/Sprites/title-graphic.png" id="4_q2qps"]
 
 [node name="Title" type="Node2D" unique_id=1958692985]
 script = ExtResource("1_ekrfg")
-
-[node name="Label" type="Label" parent="." unique_id=925113519]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 407.0
-offset_top = 69.0
-offset_right = 873.0
-offset_bottom = 291.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_fonts/font = ExtResource("1_w31pl")
-theme_override_font_sizes/font_size = 48
-text = "FOUR FACES 
-of
-FENRICK"
-horizontal_alignment = 1
 
 [node name="Label2" type="Label" parent="." unique_id=1270667498]
 anchors_preset = 8
@@ -41,3 +24,14 @@ theme_override_fonts/font = ExtResource("1_w31pl")
 theme_override_font_sizes/font_size = 48
 text = "press any button"
 horizontal_alignment = 1
+
+[node name="MaskSelectors" type="Sprite2D" parent="." unique_id=584947555]
+modulate = Color(1, 1, 1, 0.44313726)
+position = Vector2(640, 435.00003)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("3_fp2oq")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1446084331]
+position = Vector2(620, 160)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("4_q2qps")

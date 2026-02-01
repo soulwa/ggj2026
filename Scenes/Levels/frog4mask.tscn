@@ -73,6 +73,6 @@ text = "press action to DIVE."
 after_frogmask = true
 
 [connection signal="body_entered" from="TileMapLayer/LevelTransition" to="TileMapLayer/LevelTransition" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@85945" to="TileMapLayer/@Area2D@85945" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@85946" to="TileMapLayer/@Area2D@85946" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@85947" to="TileMapLayer/@Area2D@85947" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@224305" to="TileMapLayer/@Area2D@224305" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@224306" to="TileMapLayer/@Area2D@224306" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@224307" to="TileMapLayer/@Area2D@224307" method="_on_body_entered"]
