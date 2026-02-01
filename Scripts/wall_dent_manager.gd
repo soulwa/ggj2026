@@ -18,7 +18,7 @@ var _target_tilemaps: Array[TileMapLayer] = []  ## Multiple tilemaps can receive
 
 # Foreground shatter system
 var _foreground_tilemap: TileMapLayer  ## Reference to ForegroundTiles specifically
-var _foreground_damage: Dictionary = {}  ## Dictionary[Vector2i, int] - damage per cell
+var _foreground_damage: Dictionary = {}  ## Dictionary[Vector2i, float] - damage per cell (scales with distance)
 var _shatter_particles: Node  ## ShatterParticles instance
 
 signal dents_updated
@@ -209,14 +209,18 @@ func _check_foreground_damage(dent_pos: Vector2, radius: float, hit_direction: V
 			var distance = cell_world.distance_to(dent_pos)
 			
 			if distance <= radius:
-				_add_damage_to_cell(cell, cell_world, hit_direction)
+				# Calculate damage based on distance (1.5 at center, 1.0 at edge)
+				# This gives 2 hits to break at center, 3 hits at edge
+				var distance_factor = 1.0 - (distance / radius)
+				var damage = lerp(1.0, 1.5, distance_factor)
+				_add_damage_to_cell(cell, cell_world, hit_direction, damage)
 
 
 ## Add damage to a specific cell and check if it should shatter
-func _add_damage_to_cell(cell: Vector2i, cell_world: Vector2, hit_direction: Vector2) -> void:
+func _add_damage_to_cell(cell: Vector2i, cell_world: Vector2, hit_direction: Vector2, damage: float = 1.0) -> void:
 	# Get current damage (default 0)
-	var current_damage: int = _foreground_damage.get(cell, 0)
-	current_damage += 1
+	var current_damage: float = _foreground_damage.get(cell, 0.0)
+	current_damage += damage
 	_foreground_damage[cell] = current_damage
 	
 	# Check if threshold reached
@@ -323,5 +327,5 @@ func clear_foreground_damage() -> void:
 
 
 ## Get damage for a specific cell (for debugging/UI)
-func get_cell_damage(cell: Vector2i) -> int:
-	return _foreground_damage.get(cell, 0)
+func get_cell_damage(cell: Vector2i) -> float:
+	return _foreground_damage.get(cell, 0.0)
