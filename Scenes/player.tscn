@@ -410,7 +410,7 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_y6uwr")
-	}],
+}],
 "loop": false,
 "name": &"thrust",
 "speed": 15.0
@@ -468,9 +468,6 @@ script = ExtResource("11_trail")
 emitting = false
 script = ExtResource("12_smash")
 
-[node name="WeaponTip" type="Marker2D" parent="." unique_id=642986737]
-position = Vector2(48, 8)
-
 [node name="SwapmaskUIRight" type="Node2D" parent="." unique_id=497003996]
 visible = false
 
@@ -518,6 +515,7 @@ position = Vector2(5, 52.5)
 shape = SubResource("RectangleShape2D_igrcy")
 disabled = true
 
-[connection signal="body_entered" from="SpearHitbox" to="." method="_on_spear_hitbox_body_entered"]
-[node name="WeaponTip" type="Marker2D" parent="."]
+[node name="WeaponTip" type="Marker2D" parent="." unique_id=752614491]
 position = Vector2(80, 8)
+
+[connection signal="body_entered" from="SpearHitbox" to="." method="_on_spear_hitbox_body_entered"]
