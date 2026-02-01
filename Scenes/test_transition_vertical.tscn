@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://test_vert_trans"]
+
+[ext_resource type="Shader" path="res://Shaders/screen_transition_vertical.gdshader" id="1_shader"]
+[ext_resource type="Script" path="res://Scripts/transition_test.gd" id="2_script"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1"]
+shader = ExtResource("1_shader")
+shader_parameter/progress = 0.0
+shader_parameter/direction = 1.0
+shader_parameter/dither_size = 4.0
+shader_parameter/edge_softness = 0.15
+shader_parameter/hold_duration = 0.35
+shader_parameter/color_black = Vector3(0, 0, 0)
+
+[node name="TestTransitionVertical" type="ColorRect"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+material = SubResource("ShaderMaterial_1")
+script = ExtResource("2_script")
+animation_speed = 0.4

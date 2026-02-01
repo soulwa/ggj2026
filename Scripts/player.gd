@@ -750,6 +750,7 @@ func die() -> void:
 	visible = false # TODO (sam): animation??
 	
 	# TODO (sam): this is sort of ugly when used like this.. have to fix.
+	TransitionOverlay.set_shader_dissolve()
 	TransitionOverlay.play_transition()
 	await TransitionOverlay.transition_midpoint
 	

@@ -94,10 +94,16 @@ func switch_level(transition_dir: Direction):
 	
 	# Choose shader based on transition direction
 	# Left/Right = horizontal sweep, Up/Down = vertical sweep
-	if transition_dir == Direction.Left or transition_dir == Direction.Right:
-		TransitionOverlay.set_shader_horizontal()
-	else:
-		TransitionOverlay.set_shader_vertical()
+	# Sweep follows the player's movement direction
+	match transition_dir:
+		Direction.Left:
+			TransitionOverlay.set_shader_horizontal(1.0)   # Left to right (player going left)
+		Direction.Right:
+			TransitionOverlay.set_shader_horizontal(-1.0)  # Right to left (player going right)
+		Direction.Up:
+			TransitionOverlay.set_shader_vertical(1.0)     # Top to bottom (player going up)
+		Direction.Down:
+			TransitionOverlay.set_shader_vertical(-1.0)    # Bottom to top (player going down)
 	
 	# Store opposite direction for spawn positioning in new scene
 	Globals.opposite_direction_from = opposite
