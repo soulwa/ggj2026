@@ -163,4 +163,8 @@ stream = ExtResource("34_313iq")
 [node name="SFX_Cry" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("35_bggwv")
 
+[node name="SFX_Maskget" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("23_3wvko")
+bus = &"SFX"
+
 [connection signal="timeout" from="Timer_Footstep" to="." method="_on_timer_footstep_timeout"]
