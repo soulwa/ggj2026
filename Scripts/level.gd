@@ -30,6 +30,16 @@ func _ready() -> void:
 	# Setup wall dent manager
 	_setup_dent_manager()
 	
+	var level_bounds: Rect2i = $TileMapLayer.get_used_rect()
+	var worldspace_topleft = $TileMapLayer.map_to_local(level_bounds.position) - Vector2(16, 16)
+	$Camera2D.limit_left = worldspace_topleft.x + 32
+	$Camera2D.limit_right = worldspace_topleft.x + level_bounds.size.x * 32 - 32
+	$Camera2D.limit_top = worldspace_topleft.y + 32
+	$Camera2D.limit_bottom = worldspace_topleft.y + level_bounds.size.y * 32 - 32
+	
+	print($Camera2D.limit_right)
+	
+	
 	for child in get_children():
 		if child is PlayerSpawn and child.direction == Globals.opposite_direction_from:
 			print("[SPAWN] %s" % child.position)
@@ -49,9 +59,14 @@ func _setup_dent_manager() -> void:
 	_dent_manager.name = "WallDentManager"
 	add_child(_dent_manager)
 
-# TODO: wipe screen
+var _is_switching_level: bool = false
 
 func switch_level(transition_dir: Direction):
+	# Prevent triggering multiple transitions from this level
+	if _is_switching_level:
+		return
+	_is_switching_level = true
+	
 	var opposite = opposite_dir(transition_dir)
 	var scene: String
 	match transition_dir:
@@ -60,6 +75,30 @@ func switch_level(transition_dir: Direction):
 		Direction.Up: scene = up
 		Direction.Down: scene = down
 		_: scene = left
+	
+	# Choose shader based on transition direction
+	# Left/Right = horizontal sweep, Up/Down = vertical sweep
+	if transition_dir == Direction.Left or transition_dir == Direction.Right:
+		TransitionOverlay.set_shader_horizontal()
+	else:
+		TransitionOverlay.set_shader_vertical()
+	
+	# Store opposite direction for spawn positioning in new scene
 	Globals.opposite_direction_from = opposite
-	get_tree().change_scene_to_file(scene)
-	# TODO (sam): check if this makes sense.
+	
+	# Start the transition and change scene at midpoint
+	_do_transition(scene)
+
+
+func _do_transition(scene_path: String) -> void:
+	# Play the full transition
+	TransitionOverlay.play_transition()
+	
+	# Wait for the midpoint (screen fully covered)
+	await TransitionOverlay.transition_midpoint
+	
+	# Small delay to ensure screen is fully covered before scene switch
+	await get_tree().create_timer(0.1).timeout
+	
+	# Change the scene while covered
+	get_tree().change_scene_to_file(scene_path)
