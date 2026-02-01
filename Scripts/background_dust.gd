@@ -17,7 +17,7 @@ class_name BackgroundDust extends GPUParticles2D
 	set(value):
 		particle_count = value
 		amount = value
-@export var dust_lifetime := 25.0:
+@export var dust_lifetime := 20.0:
 	set(value):
 		dust_lifetime = value
 		lifetime = value
@@ -62,8 +62,8 @@ func _setup_particles() -> void:
 	amount = particle_count
 	lifetime = dust_lifetime
 	
-	# Preprocess for full lifetime so particles are fully established on load
-	preprocess = dust_lifetime
+	# Preprocess to establish particles (not full lifetime to reduce load spike)
+	preprocess = min(dust_lifetime * 0.5, 10.0)
 	
 	# Create atlas texture with the dust region
 	_atlas_texture = AtlasTexture.new()
@@ -89,7 +89,6 @@ func _setup_particles() -> void:
 	# Set texture frames for animation
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	
-	print("[DUST] Atlas region: %s, frame_size: %s, frames: %dx%d = %d" % [atlas_region, frame_size, h_frames, v_frames, total_frames])
 	
 	# Emission box
 	_process_material.emission_shape = ParticleProcessMaterial.EMISSION_SHAPE_BOX
@@ -115,26 +114,23 @@ func _setup_particles() -> void:
 	# Color - bright pink for debug
 	_process_material.color = dust_color
 	
-	# Smooth alpha fade - longer fade in/out to avoid harsh cutoff
+	# Simpler alpha fade - fewer curve points for better performance
 	var alpha_curve = CurveTexture.new()
 	var alpha = Curve.new()
 	alpha.add_point(Vector2(0.0, 0.0))
-	alpha.add_point(Vector2(0.15, 0.5))
-	alpha.add_point(Vector2(0.3, 1.0))
-	alpha.add_point(Vector2(0.7, 1.0))
-	alpha.add_point(Vector2(0.85, 0.5))
+	alpha.add_point(Vector2(0.2, 1.0))
+	alpha.add_point(Vector2(0.8, 1.0))
 	alpha.add_point(Vector2(1.0, 0.0))
 	alpha_curve.curve = alpha
 	_process_material.alpha_curve = alpha_curve
 	
-	# Add damping so particles slow down and stay in area
-	_process_material.damping_min = 1.0
-	_process_material.damping_max = 2.0
+	# Light damping
+	_process_material.damping_min = 0.5
+	_process_material.damping_max = 1.5
 	
 	# No shader - just raw particles
 	material = null
 	
-	print("[DUST] Particles setup complete - count: %d, color: %s" % [particle_count, dust_color])
 
 
 func _update_material() -> void:

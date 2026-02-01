@@ -1,7 +1,6 @@
 class_name Level extends Node2D
 
 const WallDentManagerScript = preload("res://Scripts/wall_dent_manager.gd")
-const BackgroundDustScene = preload("res://Scenes/background_dust.tscn")
 
 @export_file var left: String
 @export_file var right: String
@@ -68,49 +67,9 @@ func _setup_dent_manager() -> void:
 
 
 func _setup_background_dust() -> void:
-	# Spawn multiple dust clusters spread throughout the level
-	var level_width = $Camera2D.limit_right - $Camera2D.limit_left
-	var level_height = $Camera2D.limit_bottom - $Camera2D.limit_top
+	# Use the cached DustManager instead of creating new emitters each time
+	DustManager.setup_for_level($Camera2D)
 	
-	# Calculate how many dust clusters we need based on level size
-	# Larger spacing = fewer clusters but each covers more area
-	var cluster_spacing: float = 500.0  # Space between dust clusters
-	var clusters_x: int = max(1, int(level_width / cluster_spacing) + 1)
-	var clusters_y: int = max(1, int(level_height / cluster_spacing) + 1)
-	var total_clusters: int = clusters_x * clusters_y
-	
-	print("[DUST] Level size: %s x %s, spawning %d clusters (%dx%d)" % [level_width, level_height, total_clusters, clusters_x, clusters_y])
-	
-	for i in range(clusters_x):
-		for j in range(clusters_y):
-			var dust = BackgroundDustScene.instantiate()
-			
-			# Position each cluster in a grid with some randomness
-			var base_x = $Camera2D.limit_left + (i + 0.5) * (level_width / clusters_x)
-			var base_y = $Camera2D.limit_top + (j + 0.5) * (level_height / clusters_y)
-			
-			# Add some random offset
-			var rand_offset = Vector2(
-				randf_range(-50, 50),
-				randf_range(-50, 50)
-			)
-			
-			dust.position = Vector2(base_x, base_y) + rand_offset
-			
-			# Each cluster covers a much larger area with heavy overlap
-			dust.emission_width = cluster_spacing * 2.0
-			dust.emission_height = cluster_spacing * 2.0
-			
-			# More particles per cluster since they cover larger areas
-			dust.particle_count = 30
-			
-			# Render behind tilemap (tilemap is usually z_index 0)
-			dust.z_index = -5
-			
-			add_child(dust)
-	
-	print("[DUST] Spawned %d dust clusters" % total_clusters)
-
 var _is_switching_level: bool = false
 
 func reset_enemies() -> void:

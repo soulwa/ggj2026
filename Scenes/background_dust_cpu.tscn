@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://cpu_dust_001"]
+
+[ext_resource type="Script" path="res://Scripts/background_dust_cpu.gd" id="1_dust"]
+
+[node name="BackgroundDustCPU" type="CPUParticles2D"]
+z_index = -5
+script = ExtResource("1_dust")
+emission_width = 400.0
+emission_height = 240.0
+particle_count = 30
+dust_lifetime = 20.0
+min_scale = 1.5
+max_scale = 3.0
+dust_color = Color(1, 1, 1, 0.3)
+atlas_region = Rect2(192, 96, 64, 160)
