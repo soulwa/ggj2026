@@ -23,6 +23,12 @@ class_name Player extends CharacterBody2D
 @onready var spear_hitbox: Area2D = $SpearHitbox
 @onready var shape_right: CollisionShape2D = $SpearHitbox/ShapeRight
 @onready var shape_left: CollisionShape2D = $SpearHitbox/ShapeLeft
+@onready var spear_hitbox_dive: Area2D = $SpearHitboxDive
+@onready var spear_hitbox_dive_shape_left: CollisionShape2D = $SpearHitboxDive/ShapeLeft
+@onready var spear_hitbox_dive_shape_right: CollisionShape2D = $SpearHitboxDive/ShapeRight
+
+@onready var swapmask_ui_left: Node2D = $SwapmaskUILeft
+@onready var swapmask_ui_right: Node2D = $SwapmaskUIRight
 
 # particles
 @onready var smash_particles: SmashParticles = $SmashParticles
@@ -73,14 +79,16 @@ var wall_bounce_force_y: float
 
 @export_subgroup("Downdash")
 @export var dive_startup_time := DT * 2
-@export var dive_accel := -30.0
-@export var dive_max_speed := -300.0
+@export var dive_gravity_multiplier := 2.0
+@export var dive_initial_y_vel := 1000.0
+@export var dive_bounce_boost_height := 32.0 * 4
 
 enum MoveState {
 	NORMAL,
 	THRUST,
 	THRUST_ACTIONABLE,
-	DOWNDASH,
+	DIVE,
+	DIVE_BOUNCE,
 	SWAPMASK,
 }
 
@@ -92,15 +100,24 @@ var coyote_timer := coyote_time
 var jump_buffer_timer := 0.0
 var action_buffer_timer := 0.0
 var was_in_air_last_frame: bool = false
+var disable_jump_cancel: bool = false
+var latest_direction := Vector2i.ZERO
 
 var thrust_timer: float
 var thrust_direction: int
 var thrusts_remaining: int
 
+var dive_height_fallen: float
+var dives_remaining: int
+
+var doublejumps_remaining: int
+
 var last_tick_left: int
 var last_tick_right: int
 var last_tick_up: int
 var last_tick_down: int
+
+var swapmask_target: Globals.Action
 
 
 func _ready() -> void:
@@ -109,6 +126,8 @@ func _ready() -> void:
 	thrust_forward_force = thrust_forward_pixels / thrust_time
 	thrust_up_force = thrust_height_pixels / thrust_time
 	wall_bounce_force_y = -sqrt(2 * gravity * wall_bounce_height_pixels)
+	swapmask_ui_left.hide()
+	swapmask_ui_right.hide()
 
 func _input(event: InputEvent) -> void:
 	pass
@@ -163,6 +182,16 @@ func _physics_process(delta: float) -> void:
 	elif input_move_down:
 		y_input_priority = 1
 	
+	if input_initial_move_left:
+		latest_direction = Vector2i.LEFT
+	if input_initial_move_right:
+		latest_direction = Vector2i.RIGHT
+	if input_initial_move_up:
+		latest_direction = Vector2i.UP
+	if input_initial_move_down:
+		latest_direction = Vector2i.DOWN
+	if not (input_move_left or input_move_right or input_move_up or input_move_down):
+		latest_direction = Vector2i.ZERO
 	
 	var hmove = x_input_priority
 	#endregion
@@ -180,10 +209,17 @@ func _physics_process(delta: float) -> void:
 		action_buffer_timer -= delta
 	#endregion
 	
+	if input_swapmask_pressed:
+		enter_swapmask()
+	if input_swapmask_released:
+		exit_swapmask()
+	
+	
 	#region MOVEMENT
 	
-	if current_state == MoveState.NORMAL:
-		facedir = x_input_priority if x_input_priority != 0 else facedir
+	if current_state == MoveState.NORMAL or current_state == MoveState.SWAPMASK:
+		if current_state == MoveState.NORMAL:
+			facedir = x_input_priority if x_input_priority != 0 else facedir
 		
 		var effective_accel = run_accel if is_on_floor() else air_accel
 		var effective_top_speed = run_top_speed if is_on_floor() else air_top_speed
@@ -200,36 +236,68 @@ func _physics_process(delta: float) -> void:
 			velocity.x = move_toward(velocity.x, 0, effective_friction * delta)
 		
 		
-		# jump from the floor
-		# TODO (sam): fix dj w coyote time off of wall.
-		if input_jump_pressed:
-			jump_buffer_timer = jump_buffer
-		# jump is buffered and on the floor, or just left it.
-		if jump_buffer_timer > 0 and coyote_timer >= 0 and is_on_floor():
-			velocity.y = jump_power
-			jump_buffer_timer = 0
-		# wall jump
-		#elif jump_buffer_timer > 0 and is_on_wall():
-			#var walldir = get_wall_normal()
-			#velocity.x = wall_jump_power_x * walldir.x
-			#velocity.y = wall_jump_power_y
-			#jump_buffer_timer = 0
-		if input_jump_released and velocity.y < jump_cancel_power:
-			velocity.y = jump_cancel_power
+		if current_state == MoveState.NORMAL:
+			# jump from the floor
+			# TODO (sam): fix dj w coyote time off of wall.
+			if input_jump_pressed:
+				jump_buffer_timer = jump_buffer
+			# jump is buffered and on the floor, or just left it.
+			if jump_buffer_timer > 0 and coyote_timer >= 0 and is_on_floor():
+				disable_jump_cancel = false
+				velocity.y = jump_power
+				jump_buffer_timer = 0
+			# wall jump
+			#elif jump_buffer_timer > 0 and is_on_wall():
+				#var walldir = get_wall_normal()
+				#velocity.x = wall_jump_power_x * walldir.x
+				#velocity.y = wall_jump_power_y
+				#jump_buffer_timer = 0
+			if input_jump_released and velocity.y < jump_cancel_power and !disable_jump_cancel:
+				velocity.y = jump_cancel_power
+			
+			# prepare thrust direction as latest input dir in normal move
+			if is_on_floor():
+				thrusts_remaining = num_thrusts_per_jump
+				dives_remaining = 1
+				doublejumps_remaining = 1
+			if input_action_pressed:
+				action_buffer_timer = action_buffer
+			match Globals.currently_selected_action:
+				Globals.Action.Thrust:
+					if action_buffer_timer > 0 and thrusts_remaining > 0:
+						begin_thrust()
+				Globals.Action.Dive:
+					if action_buffer_timer > 0 and dives_remaining > 0:
+						begin_dive()
+				Globals.Action.DoubleJump:
+					if action_buffer_timer > 0 and doublejumps_remaining > 0:
+						double_jump()
+			#if Input.is_action_just_pressed("_debug_dive") and dives_remaining > 0:
+				#begin_dive()
 		
-		# prepare thrust direction as latest input dir in normal move
-		if is_on_floor():
-			thrusts_remaining = num_thrusts_per_jump
-		if input_action_pressed:
-			action_buffer_timer = action_buffer
-		match Globals.currently_selected_action:
-			Globals.Action.Thrust:
-				if action_buffer_timer > 0 and thrusts_remaining > 0:
-					begin_thrust()
-			Globals.Action.Dive:
-				pass
-			Globals.Action.DoubleJump:
-				pass
+		# SWAP MASK STATE input handling
+		elif current_state == MoveState.SWAPMASK:
+			if input_initial_move_down:
+				swapmask_target = Globals.Action.Dive
+			if input_initial_move_up:
+				swapmask_target = Globals.Action.DoubleJump
+			if input_initial_move_left:
+				if facedir < 0:
+					swapmask_target = Globals.Action.Thrust
+				else:
+					swapmask_target = Globals.Action.Cry
+			if input_initial_move_right:
+				if facedir < 0:
+					swapmask_target = Globals.Action.Cry
+				else:
+					swapmask_target = Globals.Action.Thrust
+			# exit menu
+			if input_action_pressed:
+				action_buffer_timer = action_buffer
+				exit_swapmask()
+			elif input_swapmask_released:
+				exit_swapmask()
+		
 		
 		# compute maximums (unless we want to bypass), gravity as final pass on "physics"
 		#velocity.x = clamp(velocity.x, -effective_top_speed, effective_top_speed)
@@ -252,7 +320,7 @@ func _physics_process(delta: float) -> void:
 		for body in spear_hitbox.get_overlapping_bodies():
 			if body is TileMapLayer:
 				bounce_off_wall()
-
+	
 	# thrust can be cancelled, gravity applies now
 	elif current_state == MoveState.THRUST_ACTIONABLE:
 		# apply gravity
@@ -260,12 +328,22 @@ func _physics_process(delta: float) -> void:
 		if sign(hmove) == -sign(velocity.x) or is_on_floor() or is_on_wall():
 			end_thrust()
 	
+	elif current_state == MoveState.DIVE:
+		# apply gravity
+		velocity.y += gravity * delta * dive_gravity_multiplier
+		dive_height_fallen += velocity.y * delta
+		# check to hit ground
+		for body in spear_hitbox_dive.get_overlapping_bodies():
+			if body is TileMapLayer:
+				dive_bounce()
+	elif current_state == MoveState.DIVE_BOUNCE:
+		end_dive() # TODO
+	
 	move_and_slide()
 	var num_cols = get_slide_collision_count()
 	for idx in num_cols:
 		var collision = get_slide_collision(idx)
 		# TODO (sam): do relevant stuff here if we need, like enemies, walls, spike
-		pass
 	#endregion
 	
 	#region ANIMATION
@@ -283,12 +361,13 @@ func _physics_process(delta: float) -> void:
 				if sprite.animation != "jump": sprite.play("jump")
 		elif current_state == MoveState.THRUST or current_state == MoveState.THRUST_ACTIONABLE and sprite.animation != "thrust":
 			sprite.play("thrust")
+		elif current_state == MoveState.DIVE:
+			if sprite.animation != "dive": sprite.play("dive")
 	
 	if !is_on_floor():
 		was_in_air_last_frame = true
 	else:
 		was_in_air_last_frame = false
-	print($Body.animation)
 	#endregion
 
 func _emit_wall_smash_particles() -> void:
@@ -338,3 +417,68 @@ func bounce_off_wall() -> void:
 	velocity.y = wall_bounce_force_y
 	_emit_wall_smash_particles()
 	end_thrust()
+	disable_jump_cancel = true
+
+func enter_swapmask() -> void:
+	current_state = MoveState.SWAPMASK
+	match latest_direction:
+		Vector2i.UP:
+			swapmask_target = Globals.Action.DoubleJump
+		Vector2i.DOWN:
+			swapmask_target = Globals.Action.Dive
+		Vector2i.LEFT:
+			if facedir < 0:
+				swapmask_target = Globals.Action.Thrust
+			else:
+				swapmask_target = Globals.Action.Cry
+		Vector2i.RIGHT:
+			if facedir < 0:
+				swapmask_target = Globals.Action.Cry
+			else:
+				swapmask_target = Globals.Action.Thrust
+		Vector2i.ZERO:
+			swapmask_target = Globals.currently_selected_action
+	Engine.time_scale = 0.05
+	if facedir < 0:
+		swapmask_ui_left.show()
+	else:
+		swapmask_ui_right.show()
+
+func exit_swapmask() -> void:
+	Globals.currently_selected_action = swapmask_target
+	current_state = MoveState.NORMAL
+	Engine.time_scale = 1.0
+	swapmask_ui_left.hide()
+	swapmask_ui_right.hide()
+
+func begin_dive() -> void:
+	current_state = MoveState.DIVE
+	velocity.y = dive_initial_y_vel
+	dive_height_fallen = 0
+	dives_remaining -= 1
+	spear_hitbox_dive.monitoring = true
+	if facedir < 0:
+		spear_hitbox_dive_shape_right.disabled = true
+		spear_hitbox_dive_shape_left.disabled = false
+	else:
+		spear_hitbox_dive_shape_right.disabled = false
+		spear_hitbox_dive_shape_left.disabled = true
+
+func dive_bounce() -> void:
+	print("dive bouncing from a fall of ", dive_height_fallen, " (", round(dive_height_fallen/16.0), " tiles)")
+	velocity.y = -sqrt(2 * gravity * (dive_height_fallen + dive_bounce_boost_height))
+	current_state = MoveState.DIVE_BOUNCE
+	dives_remaining = 0
+	thrusts_remaining = num_thrusts_per_jump
+	doublejumps_remaining = 1
+	spear_hitbox_dive.monitoring = false
+	spear_hitbox_dive_shape_right.disabled = true
+	spear_hitbox_dive_shape_left.disabled = true
+	disable_jump_cancel = true
+
+func end_dive() -> void:
+	current_state = MoveState.NORMAL
+
+func double_jump() -> void:
+	doublejumps_remaining -= 1
+	print("double ump!")

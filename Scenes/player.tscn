@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://utx1cv7juuf5" path="res://Scripts/player.gd" id="1_cvnsp"]
 [ext_resource type="Texture2D" uid="uid://bhnlook8ti2qb" path="res://Assets/Sprites/player-neutral-body.png" id="2_fkybt"]
+[ext_resource type="Texture2D" uid="uid://dpd6pff5dtsme" path="res://Assets/Sprites/player-dive-body.png" id="2_igrcy"]
 [ext_resource type="Texture2D" uid="uid://bi8jyaveywfuq" path="res://Assets/Sprites/player-jump-body.png" id="3_ukyrk"]
 [ext_resource type="Texture2D" uid="uid://b5nyo2ajajnaw" path="res://Assets/Sprites/player-running-body.png" id="3_x3wgy"]
 [ext_resource type="Texture2D" uid="uid://mwoxk3x1yvq7" path="res://Assets/Sprites/player-thrust-body.png" id="4_tx1dd"]
@@ -10,14 +11,24 @@
 [ext_resource type="Texture2D" uid="uid://d1par8hg1tmfv" path="res://Assets/Sprites/player-running-mask.png" id="5_8erm5"]
 [ext_resource type="Texture2D" uid="uid://vtqqxwx8dueg" path="res://Assets/Sprites/player-running-spear.png" id="7_3smsa"]
 [ext_resource type="Texture2D" uid="uid://bv8pjuxcwfvf0" path="res://Assets/Sprites/player-jump-mask.png" id="7_7dp3o"]
+[ext_resource type="Texture2D" uid="uid://dctdcy3smovto" path="res://Assets/Sprites/player-dive-mask-down.png" id="7_fs7ks"]
 [ext_resource type="Texture2D" uid="uid://swei1d44s7gd" path="res://Assets/Sprites/player-thrust-mask.png" id="7_gymyn"]
 [ext_resource type="Texture2D" uid="uid://c47nouorgr18i" path="res://Assets/Sprites/player-thrust-spear.png" id="10_pu2lt"]
 [ext_resource type="Texture2D" uid="uid://b5t70y3872jtp" path="res://Assets/Sprites/player-jump-spear.png" id="11_h4iuc"]
-[ext_resource type="Script" path="res://Scripts/afterimage_trail.gd" id="11_trail"]
-[ext_resource type="Script" path="res://Scripts/smash_particles.gd" id="12_smash"]
+[ext_resource type="Script" uid="uid://cj5b38efi7kmh" path="res://Scripts/afterimage_trail.gd" id="11_trail"]
+[ext_resource type="Texture2D" uid="uid://bk43c73mihko7" path="res://Assets/Sprites/player-dive-spear.png" id="12_l6n3p"]
+[ext_resource type="Script" uid="uid://cvogmgc3vx3iq" path="res://Scripts/smash_particles.gd" id="12_smash"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f3sb7"]
 size = Vector2(20, 16.166668)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ph33w"]
+atlas = ExtResource("2_igrcy")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7ldla"]
+atlas = ExtResource("2_igrcy")
+region = Rect2(192, 0, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_83xs0"]
 atlas = ExtResource("3_ukyrk")
@@ -65,6 +76,17 @@ region = Rect2(384, 0, 192, 192)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_036b0"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ph33w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7ldla")
+}],
+"loop": false,
+"name": &"dive",
+"speed": 10.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("2_fkybt")
@@ -130,6 +152,14 @@ animations = [{
 "speed": 15.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_r7t2e"]
+atlas = ExtResource("7_fs7ks")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nmr2m"]
+atlas = ExtResource("7_fs7ks")
+region = Rect2(192, 0, 192, 192)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_yh6i2"]
 atlas = ExtResource("7_7dp3o")
 region = Rect2(192, 0, 192, 192)
@@ -180,6 +210,17 @@ region = Rect2(384, 0, 192, 192)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_8erm5"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r7t2e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nmr2m")
+}],
+"loop": false,
+"name": &"dive",
+"speed": 10.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("4_x3wgy")
@@ -245,6 +286,14 @@ animations = [{
 "speed": 15.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_ax3m3"]
+atlas = ExtResource("12_l6n3p")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3vlem"]
+atlas = ExtResource("12_l6n3p")
+region = Rect2(192, 0, 192, 192)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_qpa8y"]
 atlas = ExtResource("11_h4iuc")
 region = Rect2(192, 0, 192, 192)
@@ -291,6 +340,17 @@ region = Rect2(384, 0, 192, 192)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_f1ek2"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ax3m3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3vlem")
+}],
+"loop": false,
+"name": &"dive",
+"speed": 10.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("5_3smsa")
@@ -359,9 +419,13 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ukyrk"]
 size = Vector2(70, 14)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_igrcy"]
+size = Vector2(30, 41)
+
 [node name="Player" type="CharacterBody2D" unique_id=1327567935]
 collision_mask = 14
 floor_block_on_wall = false
+floor_snap_length = 0.0
 script = ExtResource("1_cvnsp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=334823801]
@@ -372,17 +436,16 @@ shape = SubResource("RectangleShape2D_f3sb7")
 [node name="Body" type="AnimatedSprite2D" parent="." unique_id=955490563]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_036b0")
-animation = &"land"
+animation = &"dive"
+flip_h = true
 
 [node name="Mask" type="AnimatedSprite2D" parent="." unique_id=973414495]
 sprite_frames = SubResource("SpriteFrames_8erm5")
-animation = &"land"
+animation = &"dive"
 
 [node name="Spear" type="AnimatedSprite2D" parent="." unique_id=2118708115]
 sprite_frames = SubResource("SpriteFrames_f1ek2")
-animation = &"thrust"
-frame = 2
-frame_progress = 1.0
+animation = &"dive"
 
 [node name="SpearHitbox" type="Area2D" parent="." unique_id=1815314269]
 collision_layer = 0
@@ -398,14 +461,61 @@ position = Vector2(-55, 12)
 shape = SubResource("RectangleShape2D_ukyrk")
 disabled = true
 
-[connection signal="body_entered" from="SpearHitbox" to="." method="_on_spear_hitbox_body_entered"]
-
-[node name="AfterimageTrail" type="Node2D" parent="."]
+[node name="AfterimageTrail" type="Node2D" parent="." unique_id=801396021]
 script = ExtResource("11_trail")
 
-[node name="SmashParticles" type="CPUParticles2D" parent="."]
+[node name="SmashParticles" type="CPUParticles2D" parent="." unique_id=1728665215]
 emitting = false
 script = ExtResource("12_smash")
 
-[node name="WeaponTip" type="Marker2D" parent="."]
+[node name="WeaponTip" type="Marker2D" parent="." unique_id=642986737]
 position = Vector2(48, 8)
+
+[node name="SwapmaskUIRight" type="Node2D" parent="." unique_id=497003996]
+visible = false
+
+[node name="ThrustMask" type="Sprite2D" parent="SwapmaskUIRight" unique_id=390062780]
+position = Vector2(54, 3)
+texture = ExtResource("4_x3wgy")
+
+[node name="DiveMask" type="Sprite2D" parent="SwapmaskUIRight" unique_id=1365743981]
+position = Vector2(-6, 65)
+texture = ExtResource("4_x3wgy")
+
+[node name="DoubleumpMask" type="Sprite2D" parent="SwapmaskUIRight" unique_id=58692241]
+position = Vector2(-3, -58)
+texture = ExtResource("4_x3wgy")
+
+[node name="SwapmaskUILeft" type="Node2D" parent="." unique_id=1511842870]
+visible = false
+
+[node name="ThrustMask" type="Sprite2D" parent="SwapmaskUILeft" unique_id=579651800]
+position = Vector2(-56, 4)
+texture = ExtResource("4_x3wgy")
+flip_h = true
+
+[node name="DiveMask" type="Sprite2D" parent="SwapmaskUILeft" unique_id=2133865910]
+position = Vector2(-6, 65)
+texture = ExtResource("4_x3wgy")
+flip_h = true
+
+[node name="DoubleumpMask" type="Sprite2D" parent="SwapmaskUILeft" unique_id=961024862]
+position = Vector2(-3, -58)
+texture = ExtResource("4_x3wgy")
+flip_h = true
+
+[node name="SpearHitboxDive" type="Area2D" parent="." unique_id=879356101]
+collision_layer = 0
+collision_mask = 6
+
+[node name="ShapeRight" type="CollisionShape2D" parent="SpearHitboxDive" unique_id=1610819215]
+position = Vector2(-5, 52.5)
+shape = SubResource("RectangleShape2D_igrcy")
+disabled = true
+
+[node name="ShapeLeft" type="CollisionShape2D" parent="SpearHitboxDive" unique_id=1543199290]
+position = Vector2(5, 52.5)
+shape = SubResource("RectangleShape2D_igrcy")
+disabled = true
+
+[connection signal="body_entered" from="SpearHitbox" to="." method="_on_spear_hitbox_body_entered"]
