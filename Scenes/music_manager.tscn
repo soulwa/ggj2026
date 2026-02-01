@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://4fdlg7wgj87w"]
+[gd_scene load_steps=41 format=3 uid="uid://4fdlg7wgj87w"]
 
 [ext_resource type="Script" uid="uid://c8wsr1j84y1sk" path="res://Scripts/music_manager.gd" id="1_1u5ih"]
 [ext_resource type="AudioStream" uid="uid://c52prxvvmstig" path="res://Assets/Music/GGJ2026_MX_Fenrick_bassMinusLead_v02_-7dB.wav" id="1_a0g8o"]
@@ -17,14 +17,23 @@
 [ext_resource type="AudioStream" uid="uid://ck64wpqpqt2cy" path="res://Assets/Sfx/GGJ_2026_SFX_Fenrick_verb_thrust01_v02_-5dB.wav" id="15_3a8q5"]
 [ext_resource type="AudioStream" uid="uid://cjwtfbfhc8f35" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_verb_wallBounce_v01_-6dB.wav" id="16_5lhga"]
 [ext_resource type="AudioStream" uid="uid://bv1uasjh2pvrf" path="res://Assets/Sfx/GGJ_2026_SFX_Fenrick_verb_thrust02_v02_-5dB.wav" id="16_hcsv6"]
-[ext_resource type="AudioStream" uid="uid://evxib7xhd3iw" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_verb_doubleJump_v01_-6dB.wav" id="17_b5y6m"]
 [ext_resource type="AudioStream" uid="uid://c3rut5bmlyip7" path="res://Assets/Sfx/GGJ_2026_SFX_Fenrick_verb_thrust03_v02_-5dB.wav" id="17_etocf"]
 [ext_resource type="AudioStream" uid="uid://cnh6mdkf1ksji" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_verb_dive_v01_-5dB.wav" id="18_wnqgx"]
-[ext_resource type="AudioStream" uid="uid://3ae74mgkxvls" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_verb_diveBounce_v01_-6dB.wav" id="19_dgddm"]
-[ext_resource type="AudioStream" uid="uid://benofsxqdwoil" path="res://Assets/Sfx/GGJ_2026_SFX_Fenrick_dry_openMenu_v01_-7dB.wav" id="22_yoy0x"]
+[ext_resource type="AudioStream" uid="uid://bf2n0lvwukt78" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_verb_doubleJump_v02_-6dB.wav" id="19_jtpmq"]
+[ext_resource type="AudioStream" uid="uid://du154scwx67ya" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_verb_diveBounce01_v02_-6dB.wav" id="21_bggwv"]
+[ext_resource type="AudioStream" uid="uid://bdh3q3o3u4k4p" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_verb_diveBounce02_v02_-6dB.wav" id="22_u6hki"]
 [ext_resource type="AudioStream" uid="uid://p7v7rkyj5j" path="res://Assets/Sfx/GGJ_2026_SFX_Fenrick_dry_maskSelect01_v01_-7dB.wav" id="23_3wvko"]
+[ext_resource type="AudioStream" uid="uid://ib5k3lpnv7ur" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_verb_diveBounce03_v02_-6dB.wav" id="23_no07j"]
 [ext_resource type="AudioStream" uid="uid://eu1c0vhxooci" path="res://Assets/Sfx/GGJ_2026_SFX_Fenrick_dry_maskSelect02_v01_-7dB.wav" id="24_hfkii"]
+[ext_resource type="AudioStream" uid="uid://c2mcxcka3yfr8" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_dry_openMenu_v02_-7dB.wav" id="24_tjvmt"]
 [ext_resource type="AudioStream" uid="uid://bt8t1a3df5006" path="res://Assets/Sfx/GGJ_2026_SFX_Fenrick_dry_maskSelect03_v01_-7dB.wav" id="25_cyg2j"]
+[ext_resource type="AudioStream" uid="uid://dqyudrcsmrlvj" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_verb_die_v01_-4dB.wav" id="28_01jp5"]
+[ext_resource type="AudioStream" uid="uid://cbgeq4hq0536r" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_verb_frogBounce_v01_-5dB.wav" id="29_71hgo"]
+[ext_resource type="AudioStream" uid="uid://dj0cpivdsnjhl" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_verb_frogCroak_-3dB.wav" id="30_pqmke"]
+[ext_resource type="AudioStream" uid="uid://fpkm0b7y6nul" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_verb_hurt_v01_-5dB.wav" id="31_wg1jy"]
+[ext_resource type="AudioStream" uid="uid://8kl76v8r2cwd" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_verb_killEnemy_v02_-4dB.wav" id="32_mfpbl"]
+[ext_resource type="AudioStream" uid="uid://bnwmy5gg62edx" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_verb_shoot_v01_-6dB.wav" id="33_e0oj2"]
+[ext_resource type="AudioStream" uid="uid://bkqvjf1qdmg2q" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_verb_shroomScream_v01_-4dB.wav" id="34_313iq"]
 
 [sub_resource type="AudioStreamSynchronized" id="AudioStreamSynchronized_me85s"]
 stream_count = 3
@@ -64,60 +73,90 @@ stream_0/stream = ExtResource("15_3a8q5")
 stream_1/stream = ExtResource("16_hcsv6")
 stream_2/stream = ExtResource("17_etocf")
 
-[node name="MusicManager" type="Node" unique_id=709076895]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_fmjw1"]
+playback_mode = 1
+streams_count = 3
+stream_0/stream = ExtResource("21_bggwv")
+stream_1/stream = ExtResource("22_u6hki")
+stream_2/stream = ExtResource("23_no07j")
+
+[node name="MusicManager" type="Node"]
 process_mode = 3
 script = ExtResource("1_1u5ih")
 
-[node name="MusicOpt1" type="AudioStreamPlayer" parent="." unique_id=1318677475]
+[node name="MusicOpt1" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamSynchronized_me85s")
 bus = &"Music"
 
-[node name="MusicOpt2" type="AudioStreamPlayer" parent="." unique_id=1240963594]
+[node name="MusicOpt2" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamSynchronized_57cfc")
 bus = &"Music"
 
-[node name="SFX_Footstep" type="AudioStreamPlayer" parent="." unique_id=138878411]
+[node name="SFX_Footstep" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamRandomizer_5lhga")
 volume_db = -5.0
 bus = &"SFX"
 
-[node name="Timer_Footstep" type="Timer" parent="." unique_id=568823240]
+[node name="Timer_Footstep" type="Timer" parent="."]
 wait_time = 0.2
 
-[node name="SFX_Jump" type="AudioStreamPlayer" parent="." unique_id=1534722623]
+[node name="SFX_Jump" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamRandomizer_b5y6m")
 bus = &"SFX"
 
-[node name="SFX_Thrust" type="AudioStreamPlayer" parent="." unique_id=700950890]
+[node name="SFX_Thrust" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamRandomizer_4f6od")
 bus = &"SFX"
 
-[node name="SFX_Wallbounce" type="AudioStreamPlayer" parent="." unique_id=1778573238]
+[node name="SFX_Wallbounce" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("16_5lhga")
 bus = &"SFX"
 
-[node name="SFX_Doublejump" type="AudioStreamPlayer" parent="." unique_id=1787953517]
-stream = ExtResource("17_b5y6m")
+[node name="SFX_Doublejump" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("19_jtpmq")
 bus = &"SFX"
 
-[node name="SFX_Dive" type="AudioStreamPlayer" parent="." unique_id=807820737]
+[node name="SFX_Dive" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("18_wnqgx")
 bus = &"SFX"
 
-[node name="SFX_Divebounce" type="AudioStreamPlayer" parent="." unique_id=229959960]
-stream = ExtResource("19_dgddm")
+[node name="SFX_Divebounce" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_fmjw1")
 bus = &"SFX"
 
-[node name="SFX_Openmenu" type="AudioStreamPlayer" parent="." unique_id=1513481957]
-stream = ExtResource("22_yoy0x")
+[node name="SFX_Openmenu" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("24_tjvmt")
 
-[node name="SFX_SelectUp" type="AudioStreamPlayer" parent="." unique_id=658818371]
+[node name="SFX_SelectUp" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("23_3wvko")
 
-[node name="SFX_SelectSide" type="AudioStreamPlayer" parent="." unique_id=336382181]
+[node name="SFX_SelectSide" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("24_hfkii")
 
-[node name="SFX_SelectDown" type="AudioStreamPlayer" parent="." unique_id=425677914]
+[node name="SFX_SelectDown" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("25_cyg2j")
+
+[node name="SFX_Die" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("28_01jp5")
+bus = &"SFX"
+
+[node name="SFX_Frogbounce" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("29_71hgo")
+
+[node name="SFX_Frogcroak" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("30_pqmke")
+volume_db = -1.938
+
+[node name="SFX_Playerhurt" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("31_wg1jy")
+
+[node name="SFX_Killenemy" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("32_mfpbl")
+
+[node name="SFX_Shoot" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("33_e0oj2")
+
+[node name="SFX_Shroomscream" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("34_313iq")
 
 [connection signal="timeout" from="Timer_Footstep" to="." method="_on_timer_footstep_timeout"]
