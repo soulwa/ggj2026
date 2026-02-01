@@ -134,6 +134,7 @@ _debug_normalmusic={
 2d_physics/layer_3="EnemyHitbox"
 2d_physics/layer_4="Transition"
 2d_physics/layer_5="EnemyPhysics"
+2d_physics/layer_6="Death"
 
 [physics]
 

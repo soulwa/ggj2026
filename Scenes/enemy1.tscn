@@ -6,6 +6,9 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mxdow"]
 size = Vector2(128.66667, 89)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4qy08"]
+size = Vector2(104, 72)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_apx2k"]
 atlas = ExtResource("3_4qy08")
 region = Rect2(0, 0, 192, 192)
@@ -56,9 +59,11 @@ animations = [{
 collision_layer = 16
 collision_mask = 2
 script = ExtResource("1_mxdow")
+player_detection_range = 650
 gravity = 100.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=618495061]
+visible = false
 position = Vector2(2.6666667, -21.666666)
 shape = SubResource("RectangleShape2D_mxdow")
 
@@ -67,8 +72,8 @@ position = Vector2(0, -33)
 collision_layer = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DamageRegion" unique_id=1887129810]
-position = Vector2(2.6666667, 11.333334)
-shape = SubResource("RectangleShape2D_mxdow")
+position = Vector2(1.000001, 10)
+shape = SubResource("RectangleShape2D_4qy08")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=299828257]
 position = Vector2(0, -23)

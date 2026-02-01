@@ -755,11 +755,38 @@ region = Rect2(64, 0, 32, 32)
 size = Vector2(30, 41)
 
 [node name="Player" type="CharacterBody2D" unique_id=1327567935]
-collision_mask = 14
+collision_mask = 46
 floor_block_on_wall = false
 floor_snap_length = 0.0
 script = ExtResource("1_cvnsp")
 disabled_mask_modulate = Color(0.29411766, 0.29411766, 0.29411766, 0.39215687)
+run_accel = null
+run_top_speed = null
+ground_friction = null
+air_accel = null
+air_top_speed = null
+air_friction = null
+turnaround_multiplier = null
+gravity = null
+jump_pixels = null
+jump_cancel_pixels = null
+max_fall_speed = null
+jump_buffer = null
+coyote_time = null
+action_buffer = null
+thrust_forward_pixels = null
+thrust_height_pixels = null
+thrust_time = null
+num_thrusts_per_jump = null
+wall_bounce_force_x = null
+wall_bounce_height_pixels = null
+double_jump_pixels = null
+dive_startup_time = null
+dive_gravity_multiplier = null
+dive_initial_y_vel = null
+dive_bounce_boost_height = null
+frog_bounce_force_x = null
+frog_bounce_height = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=334823801]
 position = Vector2(0, 7.2500005)
@@ -849,7 +876,7 @@ texture = SubResource("AtlasTexture_by7i4")
 
 [node name="SpearHitboxDive" type="Area2D" parent="." unique_id=879356101]
 collision_layer = 0
-collision_mask = 6
+collision_mask = 22
 
 [node name="ShapeRight" type="CollisionShape2D" parent="SpearHitboxDive" unique_id=1610819215]
 position = Vector2(-5, 52.5)

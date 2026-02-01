@@ -3,7 +3,8 @@ class_name NiceCamera extends Camera2D
 var player: Player
 
 @export var xvel_lookahead_scale := 200.0
-@export var lookahead_distance := 1000.0
+@export var yvel_lookahead_scale := 1000.0
+@export var lookahead_distance := 200.0
 @export var lookahead_smoothing := 8.0
 @export var vertical_offset := 64.0
 @export var deadzone := Vector2(24.0, 32.0)
@@ -12,6 +13,7 @@ var player: Player
 
 var _prev_target_pos: Vector2
 var _lookahead_x := 0.0
+var _lookahead_y := 0.0
 
 func _ready() -> void:
 	pass
@@ -28,8 +30,12 @@ func _process(delta: float) -> void:
 	var desired_lookahead: float = clampf(player_vel.x / xvel_lookahead_scale, -1.0, 1.0) * lookahead_distance
 	_lookahead_x = lerp(_lookahead_x, desired_lookahead, 1.0 - exp(-lookahead_smoothing * delta))
 	
+	var desired_lookahead_y: float = clampf(player_vel.y / yvel_lookahead_scale, -1.0, 1.0) * lookahead_distance
+	_lookahead_y = lerp(_lookahead_y, desired_lookahead_y, 1.0 - exp(-lookahead_smoothing * delta))
+	
+	
 	var current_position := position
-	var desired_position := Vector2(player_pos.x, player_pos.y - vertical_offset)
+	var desired_position := Vector2(player_pos.x, player_pos.y - vertical_offset + _lookahead_y)
 	if abs(desired_position.x - current_position.x) < deadzone.x:
 		desired_position.x = current_position.x
 	if abs(desired_position.y - current_position.y) < deadzone.y:

@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://ciijemsy51xup"]
+
+[ext_resource type="Script" uid="uid://c4a2x7frii434" path="res://Scripts/mask.gd" id="1_dgecq"]
+[ext_resource type="Texture2D" uid="uid://bc5ucxfgt8xk7" path="res://Assets/Sprites/entitiesplaceholder.png" id="2_jur8d"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_erexc"]
+
+[node name="MaskCrying" type="Area2D" unique_id=962368857]
+script = ExtResource("1_dgecq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1763277132]
+shape = SubResource("RectangleShape2D_erexc")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2027792935]
+position = Vector2(-2, -1)
+texture = ExtResource("2_jur8d")
+region_enabled = true
+region_rect = Rect2(64, 32, 32, 32)

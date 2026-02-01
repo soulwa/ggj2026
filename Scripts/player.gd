@@ -380,6 +380,8 @@ func _physics_process(delta: float) -> void:
 		for body in spear_hitbox_dive.get_overlapping_bodies():
 			if body is TileMapLayer:
 				dive_bounce()
+			if body is EnemyFrog:
+				body.die()
 	elif current_state == MoveState.DIVE_BOUNCE:
 		end_dive() # TODO
 	
@@ -388,6 +390,9 @@ func _physics_process(delta: float) -> void:
 	for idx in num_cols:
 		var collision = get_slide_collision(idx)
 		# TODO (sam): do relevant stuff here if we need, like enemies, walls, spike
+		var body = collision.get_collider()
+		if body is EnemySpike:
+			die()
 	#endregion
 	
 	#region ANIMATION
@@ -649,6 +654,8 @@ func double_jump() -> void:
 var iframes := DT * 60
 var iframe_timer := 0.0
 
+var dead: bool = false
+
 const START_HP := 3
 var hp := START_HP
 
@@ -658,6 +665,8 @@ var kb_force_x := 500.0
 var kb_force_y := -sqrt(2 * gravity * 4 * 10) # 32 px height
 
 func take_hit(kb: bool) -> void:
+	if dead:
+		return
 	if iframe_timer > 0.0:
 		return
 	hp -= 1
@@ -673,8 +682,10 @@ func take_hit(kb: bool) -> void:
 	
 
 func die() -> void:
-	if hp < 0:
-		return # we're already dying.
+	if dead:
+		return
+	
+	dead = true
 		
 	print("Player died!")
 	if current_state == MoveState.SWAPMASK:
@@ -684,6 +695,7 @@ func die() -> void:
 	
 	visible = false # TODO (sam): animation??
 	
+	# TODO (sam): this is sort of ugly when used like this.. have to fix.
 	TransitionOverlay.play_transition()
 	await TransitionOverlay.transition_midpoint
 	
@@ -705,6 +717,7 @@ func die() -> void:
 	visible = true
 	
 	await TransitionOverlay.transition_complete
+	dead = false
 
 func set_spawn(pos: Vector2) -> void:
 	spawnpoint = pos

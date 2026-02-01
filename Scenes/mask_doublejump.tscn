@@ -1,3 +1,20 @@
 [gd_scene format=3 uid="uid://bg5hp0t7vs5pd"]
 
-[node name="MaskDoublejump" type="Node2D" unique_id=1769408033]
+[ext_resource type="Script" uid="uid://c4a2x7frii434" path="res://Scripts/mask.gd" id="1_0x8qr"]
+[ext_resource type="Texture2D" uid="uid://cfx2an7w88eht" path="res://Assets/Sprites/mask-selectors.png" id="1_f4qva"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_khhbh"]
+size = Vector2(23, 21)
+
+[node name="MaskDoublejump" type="Area2D" unique_id=588720635]
+script = ExtResource("1_0x8qr")
+is_doublejump = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1317683399]
+position = Vector2(0.5, 0.5)
+shape = SubResource("RectangleShape2D_khhbh")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2003803598]
+texture = ExtResource("1_f4qva")
+region_enabled = true
+region_rect = Rect2(64, 0, 32, 32)

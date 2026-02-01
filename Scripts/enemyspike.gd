@@ -1,0 +1,1 @@
+class_name EnemySpike extends StaticBody2D

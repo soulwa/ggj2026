@@ -1,11 +1,14 @@
 [gd_scene format=3 uid="uid://vowtmkpnur4v"]
 
 [ext_resource type="Texture2D" uid="uid://r3pw2wybijnj" path="res://Assets/Sprites/spikes.png" id="1_hvxaj"]
+[ext_resource type="Script" uid="uid://bvyq6uxeojfy5" path="res://Scripts/enemyspike.gd" id="1_t205n"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hvxaj"]
 size = Vector2(46, 10)
 
 [node name="EnemySpikes" type="StaticBody2D" unique_id=415451843]
+collision_layer = 32
+script = ExtResource("1_t205n")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=671327044]
 z_index = -1

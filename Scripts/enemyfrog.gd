@@ -34,6 +34,7 @@ enum State {
 
 var facedir = 1
 var current_state := State.IDLE
+var dead := false
 
 # telegraph
 var telegraph_timer := 0.0
@@ -61,6 +62,9 @@ func _physics_process(delta: float) -> void:
 	if player == null:
 		# Tilemaplayer > Level
 		player = get_parent().get_parent().find_child("Player")
+	
+	if dead:
+		return
 	
 	var bodies = $DamageRegion.get_overlapping_bodies()
 	for body in bodies:
@@ -98,18 +102,18 @@ func _physics_process(delta: float) -> void:
 			# trying to ease
 			jump_start_y = position.y
 			var jump_apex_y = position.y - jumping_up_height
+			var effective_jumping_up_time = jumping_up_time
+			if player.position.y < jump_apex_y:
+				jump_apex_y = player.position.y 
 			jump_dy = jump_apex_y - jump_start_y
 			
-			velocity = Vector2(dist_to_travel / jumping_up_time, 3.0 * jump_dy / jumping_up_time)
-			
-			#var upwards_target = Vector2(position.x + dist_to_travel, position.y - jumping_up_height)
-			#velocity = ((upwards_target - position) - 0.5 * Vector2(0, gravity) * jumping_up_time * jumping_up_time) / jumping_up_time
+			velocity = Vector2(dist_to_travel / effective_jumping_up_time, 3.0 * jump_dy / effective_jumping_up_time)
 			
 			facedir = int(sign(velocity.x)) if velocity.x != 0 else facedir
 			
 			bubbles_left = num_bubbles
 			bubble_timer = bubble_time
-			jumping_up_timer = jumping_up_time
+			jumping_up_timer = effective_jumping_up_time
 			
 	elif current_state == State.JUMPING_UP:
 		bubble_timer -= delta
@@ -119,7 +123,7 @@ func _physics_process(delta: float) -> void:
 			print("[FROG] SHOOT A BUBBLE")
 		
 		jumping_up_timer -= delta
-		if not bounced_off_horz_wall and not bounced_off_ceiling:
+		if not bounced_off_ceiling:
 			var time_pct := clampf(jumping_up_timer / jumping_up_time, 0.0, 1.0)
 			velocity.y = (3.0 * jump_dy / jumping_up_time) * time_pct * time_pct
 		else:
@@ -193,6 +197,17 @@ func _physics_process(delta: float) -> void:
 		$AnimatedSprite2D.play("jumping_down")
 	#endregion
 
+func die() -> void:
+	visible = false
+	dead = true
+	$DamageRegion.monitoring = false
+	$CollisionShape2D.disabled = true
+
 func reset() -> void:
+	visible = true
+	dead = false
+	$DamageRegion.monitoring = true
+	$CollisionShape2D.disabled = false
+	
 	position = spawn
 	current_state = State.IDLE
