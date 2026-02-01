@@ -66,6 +66,10 @@ func _physics_process(delta: float) -> void:
 	if dead:
 		return
 	
+	if not Globals.has_downdash:
+		current_state = State.IDLE
+		return
+	
 	var bodies = $DamageRegion.get_overlapping_bodies()
 	for body in bodies:
 		if body is Player:

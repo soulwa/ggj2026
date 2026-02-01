@@ -20,10 +20,37 @@ tile_set = ExtResource("3_8c6ni")
 
 [node name="Player" parent="." unique_id=1327567935 instance=ExtResource("4_ev1tv")]
 position = Vector2(-504, 40)
+run_accel = 6000.0
+run_top_speed = 250.0
+ground_friction = 5000.0
+air_accel = 2000.0
+air_top_speed = 300.0
+air_friction = 500.0
+turnaround_multiplier = 0.5
+gravity = 2000.0
+jump_pixels = 104
+jump_cancel_pixels = 32
+max_fall_speed = 2000.0
+jump_buffer = 0.16
+coyote_time = 0.096
+action_buffer = 0.096
+thrust_forward_pixels = 128
+thrust_height_pixels = 18
+thrust_time = 0.16
+num_thrusts_per_jump = 1
+wall_bounce_force_x = 100.0
+wall_bounce_height_pixels = 128
+double_jump_pixels = 128
+dive_startup_time = 0.032
+dive_gravity_multiplier = 2.0
+dive_initial_y_vel = 1000.0
+dive_bounce_boost_height = 128.0
+frog_bounce_force_x = 700.0
+frog_bounce_height = 128
 
 [node name="LeftSpawn" parent="." unique_id=1409851272 instance=ExtResource("5_r5ksw")]
 position = Vector2(-592, 40)
 
 [connection signal="body_entered" from="TileMapLayer/LevelTransition" to="TileMapLayer/LevelTransition" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@91873" to="TileMapLayer/@Area2D@91873" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@91874" to="TileMapLayer/@Area2D@91874" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@42943" to="TileMapLayer/@Area2D@42943" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@42944" to="TileMapLayer/@Area2D@42944" method="_on_body_entered"]
