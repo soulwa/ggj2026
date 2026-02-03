@@ -51,6 +51,6 @@ position = Vector2(3448, 232)
 direction = 3
 
 [connection signal="body_entered" from="TileMapLayer/LevelTransition" to="TileMapLayer/LevelTransition" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@225668" to="TileMapLayer/@Area2D@225668" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@225669" to="TileMapLayer/@Area2D@225669" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@225670" to="TileMapLayer/@Area2D@225670" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@29716" to="TileMapLayer/@Area2D@29716" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@29717" to="TileMapLayer/@Area2D@29717" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@29718" to="TileMapLayer/@Area2D@29718" method="_on_body_entered"]

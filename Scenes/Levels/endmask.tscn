@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://dhch22tc1caqq" path="res://Assets/Sprites/decals-xl.png" id="3_juyq2"]
 [ext_resource type="TileSet" uid="uid://cs3dniqm6bgdo" path="res://Scenes/tileset.tres" id="3_y7pt2"]
 [ext_resource type="PackedScene" uid="uid://bsfa1tlsh7fwr" path="res://Scenes/player.tscn" id="4_0xm38"]
-[ext_resource type="Shader" path="res://Shaders/brightness-contrast.gdshader" id="4_juyq2"]
+[ext_resource type="Shader" uid="uid://cl7vmth0yv5m8" path="res://Shaders/brightness-contrast.gdshader" id="4_juyq2"]
 [ext_resource type="PackedScene" uid="uid://p8si7hu4ur8y" path="res://Scenes/player_spawn.tscn" id="5_juyq2"]
 [ext_resource type="TileSet" uid="uid://ce86g6go5rhye" path="res://Scenes/bg_tileset.tres" id="5_ofmk2"]
 [ext_resource type="TileSet" uid="uid://51pf6litgg2x" path="res://Scenes/fg_tileset.tres" id="6_0xm38"]
@@ -64,10 +64,12 @@ position = Vector2(-590.9384, 30.22951)
 position = Vector2(238.80807, -92.49704)
 
 [node name="Helptext" parent="." unique_id=1654642092 instance=ExtResource("11_cla6d")]
+texture_filter = 1
 offset_left = -263.56876
 offset_top = 207.54883
 offset_right = 217.43124
 offset_bottom = 255.54883
+theme_override_font_sizes/font_size = 30
 text = "press action to CRY."
 after_cry = true
 fade_in_time = 2.0

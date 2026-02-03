@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://bg5hp0t7vs5pd" path="res://Scenes/mask_doublejump.tscn" id="6_ltlgd"]
 [ext_resource type="TileSet" uid="uid://51pf6litgg2x" path="res://Scenes/fg_tileset.tres" id="6_wbuh1"]
 [ext_resource type="Texture2D" uid="uid://dhch22tc1caqq" path="res://Assets/Sprites/decals-xl.png" id="10_7nd03"]
+[ext_resource type="PackedScene" uid="uid://7jq4lqv8pdmy" path="res://Scenes/helptext.tscn" id="11_8v483"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_t1jpn"]
 shader = ExtResource("4_wbuh1")
@@ -59,7 +60,17 @@ direction = 1
 position = Vector2(0, 574)
 scale = Vector2(2, 2)
 
+[node name="Helptext" parent="." unique_id=1654642092 instance=ExtResource("11_8v483")]
+texture_filter = 1
+offset_left = -243.0
+offset_top = 787.0
+offset_right = 238.0
+offset_bottom = 835.0
+theme_override_font_sizes/font_size = 30
+text = "press action to SPIN."
+after_mushmask = true
+
 [connection signal="body_entered" from="TileMapLayer/LevelTransition" to="TileMapLayer/LevelTransition" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@22003" to="TileMapLayer/@Area2D@22003" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@22004" to="TileMapLayer/@Area2D@22004" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@22005" to="TileMapLayer/@Area2D@22005" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@51675" to="TileMapLayer/@Area2D@51675" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@51676" to="TileMapLayer/@Area2D@51676" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@51677" to="TileMapLayer/@Area2D@51677" method="_on_body_entered"]

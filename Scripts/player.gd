@@ -146,6 +146,10 @@ var swapmask_target: Globals.Action
 var spike_recoil_time := 10 * DT
 var spike_recoil_timer := 0.0
 
+# TODO (sam): what i want this to do is continue whatever direction you were going in when you hit the transition tile
+# so that way we continue to simulate that input, but ignore jumps/actions
+var lock_input := false
+var direction_when_touched_transition := -1 # TODO (sam): implement
 
 func _ready() -> void:
 	jump_power = -sqrt(2 * gravity * jump_pixels)
@@ -158,12 +162,6 @@ func _ready() -> void:
 	double_jump_power = -sqrt(2 * gravity * double_jump_pixels)
 	swapmask_ui_left.hide()
 	swapmask_ui_right.hide()
-
-func _input(event: InputEvent) -> void:
-	pass
-	
-func _process(delta: float) -> void:
-	pass
 
 func _physics_process(delta: float) -> void:
 	if hp < 0 or dead:
@@ -186,13 +184,13 @@ func _physics_process(delta: float) -> void:
 	var input_jump_held = false if dead else Input.is_action_pressed("jump")
 	var input_jump_released = false if dead else Input.is_action_just_released("jump")
 	
-	var input_action_pressed = false if dead else Input.is_action_just_pressed("action")
-	var input_action_held = false if dead else Input.is_action_pressed("action")
-	var input_action_released = false if dead else Input.is_action_just_released("action")
+	var input_action_pressed = false if (dead or lock_input) else Input.is_action_just_pressed("action")
+	var input_action_held = false if (dead or lock_input) else Input.is_action_pressed("action")
+	var input_action_released = false if (dead or lock_input) else Input.is_action_just_released("action")
 	
-	var input_swapmask_pressed = false if dead else Input.is_action_just_pressed("switch_mask")
-	var input_swapmask_held = false if dead else Input.is_action_pressed("switch_mask")
-	var input_swapmask_released = false if dead else Input.is_action_just_released("switch_mask")
+	var input_swapmask_pressed = false if (dead or lock_input) else Input.is_action_just_pressed("switch_mask")
+	var input_swapmask_held = false if (dead or lock_input) else Input.is_action_pressed("switch_mask")
+	var input_swapmask_released = false if (dead or lock_input) else Input.is_action_just_released("switch_mask")
 	
 	# resolve x move presses
 	last_tick_left = time if input_initial_move_left else last_tick_left
@@ -438,6 +436,7 @@ func _physics_process(delta: float) -> void:
 			if (spike_recoil_timer < 0 or (current_state == MoveState.DIVE and collision.get_normal().y < 0)):
 				print("avoided spike death")
 			if not (spike_recoil_timer >= 0 or (current_state == MoveState.DIVE and collision.get_normal().y < 0)):
+				hp = 0
 				die()
 	#endregion
 	
@@ -565,9 +564,9 @@ func _add_wall_dent(hit_pos: Vector2, hit_direction: Vector2, strength_multiplie
 
 
 func switch_level(direction: Level.Direction):
+	lock_input = true
 	var current_level: Level = get_parent()
 	current_level.switch_level(direction)
-
 
 
 func jump() -> void:
@@ -826,6 +825,8 @@ func die() -> void:
 	TransitionOverlay.play_transition()
 	await TransitionOverlay.transition_midpoint
 	
+	MusicManager.battlers = 0
+	MusicManager.crossfade_to_explore_music()
 	level.reset_enemies()
 	
 	position = spawnpoint
@@ -837,12 +838,12 @@ func die() -> void:
 	
 	iframe_timer = 0
 	coyote_timer = 0
-	
+	jump_buffer_timer = 0
 	spike_recoil_timer = -1.0
 	
 	# TODO (sam): @zane more state to reset here? or maybe its okay.
 	
-	# TODO (sam): not sure if this works the way we want, stopping execution until it happens?
+	level.reset_camera()
 	visible = true
 	
 	await TransitionOverlay.transition_complete
