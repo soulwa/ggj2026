@@ -233,7 +233,8 @@ func update_pivot_visual() -> void:
 func die() -> void:
 	MusicManager.remove_battler()
 	
-	MusicManager.play_shroomscream()
+	MusicManager.play_killenemy()
+	
 	dead = true
 	$DamageRegion.monitoring = false
 	$CollisionShape2D.disabled = true

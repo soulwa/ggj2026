@@ -25,7 +25,7 @@
 [ext_resource type="Texture2D" uid="uid://c1g71l3obkvfw" path="res://Assets/Sprites/player-neutral-mask-down.png" id="12_bi64h"]
 [ext_resource type="Script" uid="uid://cvogmgc3vx3iq" path="res://Scripts/smash_particles.gd" id="12_smash"]
 [ext_resource type="Texture2D" uid="uid://cvatchwcu72r3" path="res://Assets/Sprites/player-running-mask-down.png" id="14_2ijsl"]
-[ext_resource type="Texture2D" uid="uid://cfx2an7w88eht" path="res://Assets/Sprites/mask-selectors.png" id="24_2ijsl"]
+[ext_resource type="Texture2D" uid="uid://cfx2an7w88eht" path="res://Assets/Sprites/mask - selectors.png" id="24_2ijsl"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f3sb7"]
 size = Vector2(20, 16.166668)
@@ -1033,7 +1033,9 @@ shape = SubResource("RectangleShape2D_f3sb7")
 [node name="Body" type="AnimatedSprite2D" parent="." unique_id=955490563]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_036b0")
-animation = &"cry_idle"
+animation = &"dive"
+frame = 1
+frame_progress = 1.0
 flip_h = true
 
 [node name="ThrustMask" type="AnimatedSprite2D" parent="." unique_id=973414495]
@@ -1052,7 +1054,7 @@ animation = &"cry_start"
 
 [node name="Spear" type="AnimatedSprite2D" parent="." unique_id=2118708115]
 sprite_frames = SubResource("SpriteFrames_f1ek2")
-animation = &"cry_start"
+animation = &"dive"
 
 [node name="SpearHitbox" type="Area2D" parent="." unique_id=1815314269]
 collision_layer = 0
@@ -1114,6 +1116,7 @@ collision_layer = 0
 collision_mask = 22
 
 [node name="ShapeRight" type="CollisionShape2D" parent="SpearHitboxDive" unique_id=1610819215]
+visible = false
 position = Vector2(-5, 52.5)
 shape = SubResource("RectangleShape2D_igrcy")
 disabled = true

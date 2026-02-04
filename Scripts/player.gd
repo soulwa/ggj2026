@@ -268,6 +268,8 @@ func _physics_process(delta: float) -> void:
 	if input_swapmask_pressed and current_state != MoveState.DIVE and Globals.currently_selected_action != Globals.Action.Cry:
 		enter_swapmask()
 	
+	if !is_on_floor():
+		MusicManager.stop_sound_footstep()
 	
 	#region MOVEMENT
 	
@@ -300,8 +302,6 @@ func _physics_process(delta: float) -> void:
 		
 		if hmove != 0 and is_on_floor():
 			MusicManager.start_sound_footstep()
-		else:
-			MusicManager.stop_sound_footstep()
 		
 		if current_state == MoveState.NORMAL:
 			# jump from the floor

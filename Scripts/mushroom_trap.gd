@@ -53,6 +53,7 @@ func activate() -> void:
 		# EXPLODE! Emit spore burst and hide trap
 		_emit_explosion()
 		hide()
+		MusicManager.play_shroomscream()
 		
 		# Spawn the mushroom guys immediately (they emerge from the explosion)
 		var num_guys = randi_range(min_guys, max_guys)
