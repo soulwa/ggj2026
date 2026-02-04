@@ -100,6 +100,9 @@ func play_sound_jump() -> void:
 func play_sound_thrust() -> void:
 	$SFX_Thrust.play()
 
+func stop_sound_thrust() -> void:
+	pass # zane: nevermind this, was testing something. sounded bad. this was the easiest way to undo it
+
 func play_sound_wallbounce() -> void:
 	$SFX_Wallbounce.play()
 

@@ -300,6 +300,8 @@ func _physics_process(delta: float) -> void:
 		
 		if hmove != 0 and is_on_floor():
 			MusicManager.start_sound_footstep()
+		if hmove == 0:
+			MusicManager.stop_sound_footstep()
 		
 		if current_state == MoveState.NORMAL:
 			# jump from the floor
@@ -362,12 +364,13 @@ func _physics_process(delta: float) -> void:
 					if latest_direction != last_latest_direction: MusicManager.play_sound_select_side()
 			
 			Globals.currently_selected_action = swapmask_target
+			check_thrust_hits()
 			
 			# exit menu
 			if input_action_pressed:
 				action_buffer_timer = action_buffer
 				exit_swapmask()
-			elif input_swapmask_released:
+			elif !input_swapmask_held:
 				exit_swapmask()
 		
 		
@@ -594,8 +597,9 @@ func end_thrust() -> void:
 	spear_hitbox.monitoring = false
 	shape_right.disabled = true
 	shape_left.disabled = true
-	current_state = MoveState.NORMAL
-	
+	if current_state == MoveState.THRUST or current_state == MoveState.THRUST_ACTIONABLE:
+		current_state = MoveState.NORMAL
+
 
 func check_thrust_hits() -> void:
 	if spear_hitbox.monitoring:
@@ -618,9 +622,11 @@ func bounce_off_wall() -> void:
 	end_thrust()
 	disable_jump_cancel = true
 	MusicManager.play_sound_wallbounce()
+	MusicManager.stop_sound_thrust()
 
 func bounce_off_frog(frog: EnemyFrog) -> void:
 	MusicManager.play_frogbounce()
+	MusicManager.stop_sound_thrust()
 	velocity.x = -facedir * frog_bounce_force_x
 	velocity.y = frog_bounce_force_y
 	
@@ -633,6 +639,7 @@ func bounce_off_frog(frog: EnemyFrog) -> void:
 	thrusts_remaining = 1  # refund if you hit an enemy
 
 func bounce_off_mushroom(mushroom: MushroomGuy) -> void:
+	MusicManager.stop_sound_thrust()
 	velocity.x = -facedir * mushroom_bounce_force_x
 	velocity.y = mushroom_bounce_force_y
 	
