@@ -7,8 +7,8 @@ var mushroom_guy_scene: PackedScene = preload("res://Scenes/mushroom_guy.tscn")
 var mushroom_spores_scene: PackedScene = preload("res://Scenes/mushroom_spores.tscn")
 var squash_stretch_shader: Shader = preload("res://Shaders/squash_stretch.gdshader")
 
-var min_guys: int = 5
-var max_guys: int = 6
+var min_guys: int = 3
+var max_guys: int = 4
 
 var spore_delay: float = 0.1  ## Delay between spore burst and mushroom spawn
 var spore_y_offset: float = 24.0  ## Lower offset for spore emission (positive = down)

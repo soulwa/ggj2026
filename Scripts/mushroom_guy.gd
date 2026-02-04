@@ -4,6 +4,8 @@ class_name MushroomGuy extends CharacterBody2D
 var pivoted: bool = false
 @onready var pivot_timer: Timer = $PivotTimer
 
+@onready var damage_region = $DamageRegion
+
 var max_speed: float = 225
 var acceleration: float = 3000
 var gravity: float = 1000
@@ -85,7 +87,7 @@ func _setup_spawn_shader() -> void:
 func _start_spawn_animation() -> void:
 	# Disable collision during spawn
 	$CollisionShape2D.disabled = true
-	$DamageRegion.monitoring = false
+	damage_region.monitoring = false
 	
 	# Wait for spawn delay (for staggered spawns)
 	if spawn_delay > 0:
@@ -103,7 +105,7 @@ func _start_spawn_animation() -> void:
 	
 	# Re-enable collision after spawn
 	$CollisionShape2D.disabled = false
-	$DamageRegion.monitoring = true
+	damage_region.monitoring = true
 	is_spawning = false
 
 func _set_squash(value: float) -> void:
@@ -135,6 +137,9 @@ func _physics_process(delta: float) -> void:
 		var collision = get_slide_collision(idx)
 		if collision.get_normal().x != 0 and bounce_timer < 0:
 			bounce_off_wall(collision.get_normal().normalized())
+		var body = collision.get_collider()
+		if body is EnemySpike:
+			die()
 	
 	bounce_timer -= delta
 	
@@ -155,7 +160,7 @@ func _physics_process(delta: float) -> void:
 	
 	was_in_air = not is_on_floor()
 	
-	var bodies = $DamageRegion.get_overlapping_bodies()
+	var bodies = damage_region.get_overlapping_bodies()
 	for body in bodies:
 		if body is Player:
 			body.take_hit(true)
@@ -230,13 +235,14 @@ func update_pivot_visual() -> void:
 		sprite.rotation_degrees = -5
 
 
-func die() -> void:
+func die(play_sound: bool = true) -> void:
 	MusicManager.remove_battler()
 	
-	MusicManager.play_killenemy()
+	if play_sound:
+		MusicManager.play_killenemy()
 	
 	dead = true
-	$DamageRegion.monitoring = false
+	damage_region.monitoring = false
 	$CollisionShape2D.disabled = true
 	
 	# Death squash effect - smooth flatten

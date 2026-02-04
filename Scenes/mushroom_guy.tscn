@@ -86,7 +86,7 @@ size = Vector2(16, 68)
 
 [node name="MushroomGuy" type="CharacterBody2D" unique_id=1913379462]
 collision_layer = 16
-collision_mask = 2
+collision_mask = 34
 script = ExtResource("1_ghvsm")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=318614463]
