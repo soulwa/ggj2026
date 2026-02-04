@@ -20,7 +20,7 @@ shader_parameter/contrast = 0.3370000160075
 [node name="FrogMask" type="Node2D" unique_id=360288603]
 rotation = 0.0020805018
 script = ExtResource("1_acixw")
-left = "uid://bq4va81v4pgd0"
+left = "uid://bem4gnpottf3k"
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1346476378]
 script = ExtResource("2_tjisd")
@@ -75,6 +75,6 @@ text = "press action to DIVE."
 after_frogmask = true
 
 [connection signal="body_entered" from="TileMapLayer/LevelTransition" to="TileMapLayer/LevelTransition" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@37911" to="TileMapLayer/@Area2D@37911" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@37912" to="TileMapLayer/@Area2D@37912" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@37913" to="TileMapLayer/@Area2D@37913" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@119303" to="TileMapLayer/@Area2D@119303" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@119304" to="TileMapLayer/@Area2D@119304" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@119305" to="TileMapLayer/@Area2D@119305" method="_on_body_entered"]
