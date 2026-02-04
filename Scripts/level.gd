@@ -51,7 +51,7 @@ func _ready() -> void:
 				$Player.position = child.position
 				$Player.spawnpoint = child.position
 	
-	$Camera2D.force_initial_position_stable($Player.position, $Player.velocity)
+	reset_camera()
 
 func _setup_dent_manager() -> void:
 	# Check if dent manager already exists
@@ -81,6 +81,9 @@ func reset_enemies() -> void:
 			entity.reset()
 		elif entity is MushroomTrap:
 			entity.reset()
+
+func reset_camera() -> void:
+	$Camera2D.force_initial_position_stable($Player.position, $Player.velocity)
 
 func switch_level(transition_dir: Direction):
 	# deregister shit
@@ -127,6 +130,9 @@ func _do_transition(scene_path: String) -> void:
 	
 	# Wait for the midpoint (screen fully covered)
 	await TransitionOverlay.transition_midpoint
+	
+	# stop player walking at this point
+	MusicManager.stop_sound_footstep()
 	
 	# Small delay to ensure screen is fully covered before scene switch
 	await get_tree().create_timer(0.1).timeout

@@ -9,7 +9,7 @@ func darken(tex: TextureRect) -> void:
 	atlas.region.position.x = 16
 
 func set_hp(hp: int):
-	if hp < 0:
+	if hp <= 0:
 		darken($HP1)
 		darken($HP2)
 		darken($HP3)

@@ -21,10 +21,9 @@ var _prev_target_pos: Vector2
 var _lookahead_x := 0.0
 var _lookahead_y := 0.0
 
-var hpui: HpUI = preload("res://Scenes/hpUI.tscn").instantiate()
-var mask_ui: MaskUI = preload("res://Scenes/maskui.tscn").instantiate()
+var hpui: HpUI = preload("res://Scenes/ui_hp.tscn").instantiate()
+var mask_ui: MaskUI = preload("res://Scenes/ui_mask.tscn").instantiate()
 
-# Screen shake state
 var _shake_intensity := 0.0
 var _shake_duration := 0.0
 var _shake_timer := 0.0
@@ -36,20 +35,14 @@ func _ready() -> void:
 	canvas.add_child(hpui)
 	canvas.add_child(mask_ui)
 
-
-## Trigger screen shake with specified intensity and duration
 func shake(intensity: float, duration: float) -> void:
 	_shake_intensity = intensity
 	_shake_duration = duration
 	_shake_timer = duration
 
-
-## Trigger screen shake for player hit
 func shake_hit() -> void:
 	shake(hit_shake_intensity, hit_shake_duration)
 
-
-## Trigger screen shake for player death
 func shake_death() -> void:
 	shake(death_shake_intensity, death_shake_duration)
 
@@ -83,7 +76,7 @@ func _process(delta: float) -> void:
 		desired_lookahead_y = clampf(player_vel.y / yvel_lookahead_scale, -1.0, 1.0) * lookahead_distance
 		_lookahead_y = lerp(_lookahead_y, desired_lookahead_y, 1.0 - exp(-lookahead_smoothing * delta))
 	
-	
+	# FIXME (sam): something is weird with the deadzone...
 	var current_position := global_position
 	var desired_position := Vector2(player_pos.x, player_pos.y - vertical_offset + _lookahead_y)
 	if abs(desired_position.x - current_position.x) < deadzone.x:
@@ -94,20 +87,13 @@ func _process(delta: float) -> void:
 	global_position.x = lerp(global_position.x, desired_position.x, follow_speed.x * delta)
 	global_position.y = lerp(global_position.y, desired_position.y, follow_speed.y * delta)
 	
-	# Apply screen shake
-	_update_shake(delta)
-
-
-func _update_shake(delta: float) -> void:
+	
+	#region SCREENSHAKE
 	if _shake_timer > 0:
 		_shake_timer -= delta
-		
-		# Calculate shake progress (1.0 at start, 0.0 at end)
 		var shake_progress := _shake_timer / _shake_duration
-		# Apply decay for smooth falloff
 		var current_intensity := _shake_intensity * shake_progress
 		
-		# Generate random offset
 		_shake_offset = Vector2(
 			randf_range(-current_intensity, current_intensity),
 			randf_range(-current_intensity, current_intensity)
@@ -115,7 +101,7 @@ func _update_shake(delta: float) -> void:
 		
 		offset = _shake_offset
 	else:
-		# Smoothly return to zero offset
 		offset = offset.lerp(Vector2.ZERO, shake_decay_rate * delta)
 		if offset.length() < 0.1:
 			offset = Vector2.ZERO
+	#endregion

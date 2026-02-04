@@ -51,7 +51,7 @@ tile_set = ExtResource("5_kl20e")
 
 [node name="ForegroundTiles" type="TileMapLayer" parent="." unique_id=107919146]
 z_index = 1
-tile_map_data = PackedByteArray("AAD9//z/AQAQAAwAAAD0/wMAAQAMAAwAAAANAPn/AQAMAAQAAAD6//n/AQAEAAAAAAAHAPn/AQAIAAAAAAADAPn/AQAAAAAAAAAFAPn/AQAAAAAAAAD8//n/AQAAAAAAAAAGAP//AAADAAIAAAAIAP//AAADAAIAABAHAP//AAAFAAIAAAD9/wEAAAAAAAUAAAD+/wEAAAABAAUAAAANAAEAAAAAAAQAAAD7/wcAAAAFAAAAAAD6/wcAAAABAAAAAAD5/wcAAAAHAAAAAAD4/wcAAAAAAAAAAAD3/wcAAAACAAAAAAD2/wcAAAAGAAAAAAD1/wcAAAAFAAAAAAD0/wcAAAAHAAAAAADz/wcAAAABAAAAAAA=")
+tile_map_data = PackedByteArray("AAANAPn/AQAMAAQAAAD6//n/AQAEAAAAAAAHAPn/AQAIAAAAAAADAPn/AQAAAAAAAAAFAPn/AQAAAAAAAAD8//n/AQAAAAAAAAAGAP//AAADAAIAAAAIAP//AAADAAIAABAHAP//AAAFAAIAAAD9/wEAAAAAAAUAAAD+/wEAAAABAAUAAAANAAEAAAAAAAQAAAD7/wcAAAAFAAAAAAD6/wcAAAABAAAAAAD5/wcAAAAHAAAAAAD4/wcAAAAAAAAAAAD3/wcAAAACAAAAAAD2/wcAAAAGAAAAAAD1/wcAAAAFAAAAAAD0/wcAAAAHAAAAAADz/wcAAAABAAAAAAD9//z/AQAQAAwAAAAMAP7/AQAQAAgAAAAOAAAAAQAMAAwAAAD//wAAAQAIAAwAAAA=")
 tile_set = ExtResource("6_r5ksw")
 
 [node name="Player" parent="." unique_id=1327567935 instance=ExtResource("4_ev1tv")]
@@ -65,14 +65,16 @@ position = Vector2(239.88297, -56.4992)
 scale = Vector2(2, 2)
 
 [node name="Helptext" parent="." unique_id=1654642092 instance=ExtResource("10_kl20e")]
+texture_filter = 1
 offset_left = -264.69846
 offset_top = -335.45
 offset_right = 216.30154
 offset_bottom = -287.45
+theme_override_font_sizes/font_size = 30
 text = "press action to DIVE."
 after_frogmask = true
 
 [connection signal="body_entered" from="TileMapLayer/LevelTransition" to="TileMapLayer/LevelTransition" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@224305" to="TileMapLayer/@Area2D@224305" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@224306" to="TileMapLayer/@Area2D@224306" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@224307" to="TileMapLayer/@Area2D@224307" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@37911" to="TileMapLayer/@Area2D@37911" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@37912" to="TileMapLayer/@Area2D@37912" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@37913" to="TileMapLayer/@Area2D@37913" method="_on_body_entered"]
