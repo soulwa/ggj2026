@@ -61,7 +61,7 @@ offset_top = -280.0
 offset_right = 377.0
 offset_bottom = -184.0
 theme_override_font_sizes/font_size = 30
-text = "hold LB/RB or Shift for mask menu
+text = "hold LT/RT or Shift for mask menu
 press direction to select a mask,
 then release the mask menu button."
 horizontal_alignment = 0
@@ -80,10 +80,10 @@ position = Vector2(576, 104)
 direction = 1
 
 [connection signal="body_entered" from="TileMapLayer/LevelTransition" to="TileMapLayer/LevelTransition" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@124544" to="TileMapLayer/@Area2D@124544" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@124545" to="TileMapLayer/@Area2D@124545" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@124546" to="TileMapLayer/@Area2D@124546" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@124547" to="TileMapLayer/@Area2D@124547" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@124548" to="TileMapLayer/@Area2D@124548" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@124549" to="TileMapLayer/@Area2D@124549" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@124593" to="TileMapLayer/@Area2D@124593" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@21823" to="TileMapLayer/@Area2D@21823" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@21824" to="TileMapLayer/@Area2D@21824" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@21825" to="TileMapLayer/@Area2D@21825" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@21826" to="TileMapLayer/@Area2D@21826" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@21827" to="TileMapLayer/@Area2D@21827" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@21828" to="TileMapLayer/@Area2D@21828" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@21866" to="TileMapLayer/@Area2D@21866" method="_on_body_entered"]

@@ -1001,7 +1001,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ukyrk"]
-size = Vector2(70, 14)
+size = Vector2(70, 29)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lisdf"]
 atlas = ExtResource("24_2ijsl")
@@ -1016,10 +1016,10 @@ atlas = ExtResource("24_2ijsl")
 region = Rect2(64, 0, 32, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_igrcy"]
-size = Vector2(30, 41)
+size = Vector2(40, 41)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0gysh"]
-size = Vector2(56, 53)
+size = Vector2(56, 58)
 
 [node name="Player" type="CharacterBody2D" unique_id=1327567935]
 collision_mask = 46
@@ -1062,12 +1062,12 @@ collision_layer = 0
 collision_mask = 22
 
 [node name="ShapeRight" type="CollisionShape2D" parent="SpearHitbox" unique_id=1271532211]
-position = Vector2(55, 12)
+position = Vector2(55, 16.5)
 shape = SubResource("RectangleShape2D_ukyrk")
 disabled = true
 
 [node name="ShapeLeft" type="CollisionShape2D" parent="SpearHitbox" unique_id=1086160323]
-position = Vector2(-55, 12)
+position = Vector2(-55, 17)
 shape = SubResource("RectangleShape2D_ukyrk")
 disabled = true
 
@@ -1117,13 +1117,12 @@ collision_layer = 0
 collision_mask = 22
 
 [node name="ShapeRight" type="CollisionShape2D" parent="SpearHitboxDive" unique_id=1610819215]
-visible = false
-position = Vector2(-5, 52.5)
+position = Vector2(0, 52)
 shape = SubResource("RectangleShape2D_igrcy")
 disabled = true
 
 [node name="ShapeLeft" type="CollisionShape2D" parent="SpearHitboxDive" unique_id=1543199290]
-position = Vector2(5, 52.5)
+position = Vector2(0, 52)
 shape = SubResource("RectangleShape2D_igrcy")
 disabled = true
 
@@ -1135,7 +1134,7 @@ collision_layer = 0
 collision_mask = 20
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SpinJumpHitbox" unique_id=818628283]
-position = Vector2(0, 1.5)
+position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_0gysh")
 disabled = true
 

@@ -377,6 +377,10 @@ func _physics_process(delta: float) -> void:
 					swapmask_target = Globals.Action.Thrust
 					if latest_direction != last_latest_direction: MusicManager.play_sound_select_side()
 			
+			#(zane) this is bad duplicated code but handle closing a lingering hitbox
+			if sign(hmove) == -sign(velocity.x) or is_on_floor() or is_on_wall():
+				end_thrust()
+			
 			Globals.currently_selected_action = swapmask_target
 			check_thrust_hits()
 			

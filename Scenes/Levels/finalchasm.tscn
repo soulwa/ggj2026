@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://drrpfettr5xr5" path="res://Scripts/camera.gd" id="2_7o6j5"]
 [ext_resource type="TileSet" uid="uid://cs3dniqm6bgdo" path="res://Scenes/tileset.tres" id="3_ah3ca"]
 [ext_resource type="PackedScene" uid="uid://bsfa1tlsh7fwr" path="res://Scenes/player.tscn" id="4_g356u"]
-[ext_resource type="Shader" path="res://Shaders/brightness-contrast.gdshader" id="4_oas0c"]
+[ext_resource type="Shader" uid="uid://cl7vmth0yv5m8" path="res://Shaders/brightness-contrast.gdshader" id="4_oas0c"]
 [ext_resource type="PackedScene" uid="uid://p8si7hu4ur8y" path="res://Scenes/player_spawn.tscn" id="5_oas0c"]
 [ext_resource type="TileSet" uid="uid://ce86g6go5rhye" path="res://Scenes/bg_tileset.tres" id="5_pjkfu"]
 [ext_resource type="TileSet" uid="uid://51pf6litgg2x" path="res://Scenes/fg_tileset.tres" id="6_g356u"]
@@ -17,7 +17,7 @@ shader_parameter/contrast = 0.3370000160075
 
 [node name="FinalChasm" type="Node2D" unique_id=360288603]
 script = ExtResource("1_oqgxb")
-right = "uid://cc72sbjpw2x2h"
+right = "uid://bhlowkskji67h"
 up = "uid://4c1ps6n1sm4p"
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1346476378]
@@ -66,6 +66,6 @@ position = Vector2(0, -260)
 direction = 2
 
 [connection signal="body_entered" from="TileMapLayer/LevelTransition" to="TileMapLayer/LevelTransition" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@199630" to="TileMapLayer/@Area2D@199630" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@199631" to="TileMapLayer/@Area2D@199631" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@199632" to="TileMapLayer/@Area2D@199632" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@234883" to="TileMapLayer/@Area2D@234883" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@234884" to="TileMapLayer/@Area2D@234884" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@234885" to="TileMapLayer/@Area2D@234885" method="_on_body_entered"]
