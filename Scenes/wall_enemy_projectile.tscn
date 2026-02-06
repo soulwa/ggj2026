@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://d04mouxrarkp4"]
+
+[ext_resource type="Texture2D" uid="uid://bh103wp6m6ipo" path="res://Assets/Sprites/bubbleplaceholder.png" id="1_os1xt"]
+[ext_resource type="Script" uid="uid://c01yl5yghaqdd" path="res://Scripts/wall_enemy_projectile.gd" id="1_t1c8r"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_t1c8r"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_os1xt")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"pop",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_t1c8r"]
+radius = 32.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_d7abw"]
+radius = 32.0
+
+[node name="WallEnemyProjectile" type="CharacterBody2D" unique_id=1237560248]
+collision_layer = 16
+collision_mask = 2
+motion_mode = 1
+script = ExtResource("1_t1c8r")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=614432049]
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_t1c8r")
+animation = &"pop"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=428997983]
+shape = SubResource("CircleShape2D_t1c8r")
+
+[node name="DamageRegion" type="Area2D" parent="." unique_id=2037416366]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageRegion" unique_id=322756593]
+shape = SubResource("CircleShape2D_d7abw")

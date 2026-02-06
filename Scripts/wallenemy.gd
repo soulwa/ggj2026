@@ -1,0 +1,47 @@
+class_name WallEnemy extends Node2D
+
+const projectile_scene: PackedScene = preload("uid://d04mouxrarkp4")
+
+@onready var projectile_origin: Marker2D = $ProjectileOrigin
+
+var player: Player
+
+var should_shoot: bool = false
+
+@export var projectile_speed: float = 100
+
+@export var shoot_seconds: float = 3
+@export var shoot_on_sight_seconds: float = 1
+var shoot_timer: float = 0
+
+
+func _ready() -> void:
+	shoot_timer = shoot_seconds
+
+
+func _process(delta: float) -> void:
+	if player == null:
+		# Tilemaplayer > Level
+		player = get_parent().get_parent().find_child("Player")
+	
+	
+	if should_shoot and shoot_timer > 0:
+		shoot_timer -= delta
+		if shoot_timer <= 0:
+			shoot_timer = shoot_seconds
+			shoot()
+
+
+func _on_player_detect_area_body_entered(body: Node2D) -> void:
+	should_shoot = true
+	shoot_timer = shoot_on_sight_seconds
+
+
+func _on_player_detect_area_body_exited(body: Node2D) -> void:
+	should_shoot = false
+
+
+func shoot() -> void:
+	var new_projectile: WallEnemyProjectile = projectile_scene.instantiate()
+	new_projectile.init_me((player.global_position - projectile_origin.global_position).normalized() * projectile_speed)
+	projectile_origin.add_child(new_projectile)

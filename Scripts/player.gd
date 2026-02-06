@@ -29,6 +29,8 @@ class_name Player extends CharacterBody2D
 @onready var spear_hitbox_dive: Area2D = $SpearHitboxDive
 @onready var spear_hitbox_dive_shape_left: CollisionShape2D = $SpearHitboxDive/ShapeLeft
 @onready var spear_hitbox_dive_shape_right: CollisionShape2D = $SpearHitboxDive/ShapeRight
+@onready var spin_jump_hitbox: Area2D = $SpinJumpHitbox
+@onready var spin_jump_hitbox_shape: CollisionShape2D = $SpinJumpHitbox/CollisionShape2D
 
 @onready var swapmask_ui_left: Node2D = $SwapmaskUILeft
 @onready var swapmask_ui_right: Node2D = $SwapmaskUIRight
@@ -98,6 +100,12 @@ var frog_bounce_force_y: float
 @export var mushroom_bounce_height := 16 * 8
 var mushroom_bounce_force_y: float
 
+@export_subgroup("Thrust Bubble")
+@export var bubble_bounce_force_x := 300.0
+@export var bubble_bounce_height := 16 * 16
+var bubble_bounce_force_y: float
+@export var bubble_dive_bounce_height = 16 * 8
+
 enum MoveState {
 	NORMAL,
 	THRUST,
@@ -159,6 +167,7 @@ func _ready() -> void:
 	wall_bounce_force_y = -sqrt(2 * gravity * wall_bounce_height_pixels)
 	frog_bounce_force_y = -sqrt(2 * gravity * frog_bounce_height)
 	mushroom_bounce_force_y = -sqrt(2 * gravity * mushroom_bounce_height)
+	bubble_bounce_force_y = -sqrt(2 * gravity * bubble_bounce_height)
 	double_jump_power = -sqrt(2 * gravity * double_jump_pixels)
 	swapmask_ui_left.hide()
 	swapmask_ui_right.hide()
@@ -320,6 +329,11 @@ func _physics_process(delta: float) -> void:
 			if input_jump_released and velocity.y < jump_cancel_power and !disable_jump_cancel:
 				velocity.y = jump_cancel_power
 			
+			# check for double jump kills
+			check_spin_hits()
+			if is_on_floor():
+				end_spin_hitbox()
+			
 			# prepare thrust direction as latest input dir in normal move
 			if is_on_floor():
 				thrusts_remaining = num_thrusts_per_jump
@@ -386,6 +400,10 @@ func _physics_process(delta: float) -> void:
 	
 	# handle thrust movement
 	elif current_state == MoveState.THRUST:
+		
+		if input_action_pressed:
+				action_buffer_timer = action_buffer
+		
 		velocity.x = thrust_forward_force * facedir
 		velocity.y = -thrust_up_force
 		thrust_timer -= delta
@@ -399,6 +417,8 @@ func _physics_process(delta: float) -> void:
 	elif current_state == MoveState.THRUST_ACTIONABLE:
 		# apply gravity
 		velocity.y += gravity * delta
+		if input_action_pressed:
+			action_buffer_timer = action_buffer
 		if sign(hmove) == -sign(velocity.x) or is_on_floor() or is_on_wall():
 			end_thrust()
 		check_thrust_hits()
@@ -419,6 +439,10 @@ func _physics_process(delta: float) -> void:
 			if body is EnemyFrog:
 				_emit_enemy_particles(body, body.global_position, Vector2.UP)
 				body.die()
+			if body is WallEnemyProjectile:
+				body.pop_me()
+				dive_bounce(bubble_dive_bounce_height)
+				dives_remaining = 1
 			if body is TileMapLayer:
 				hit_tilemap = true
 		
@@ -592,6 +616,7 @@ func begin_thrust() -> void:
 		shape_right.disabled = false
 		shape_left.disabled = true
 	MusicManager.play_sound_thrust()
+	end_spin_hitbox()
 
 func end_thrust() -> void:
 	spear_hitbox.monitoring = false
@@ -609,6 +634,9 @@ func check_thrust_hits() -> void:
 				bounce_off_wall()
 			if body is EnemyFrog:
 				bounce_off_frog(body)
+			if body is WallEnemyProjectile:
+				body.pop_me()
+				bounce_off_bubble(body)
 			if body is MushroomGuy:
 				body.die()
 				bounce_off_mushroom(body)
@@ -637,6 +665,7 @@ func bounce_off_frog(frog: EnemyFrog) -> void:
 	end_thrust()
 	disable_jump_cancel = true
 	thrusts_remaining = 1  # refund if you hit an enemy
+	doublejumps_remaining = 1
 
 func bounce_off_mushroom(mushroom: MushroomGuy) -> void:
 	MusicManager.stop_sound_thrust()
@@ -650,6 +679,21 @@ func bounce_off_mushroom(mushroom: MushroomGuy) -> void:
 	
 	# refund if you hit an enemy
 	thrusts_remaining = 1
+	doublejumps_remaining = 1
+
+func bounce_off_bubble(bubble: WallEnemyProjectile) -> void:
+	MusicManager.stop_sound_thrust()
+	velocity.x = -facedir * bubble_bounce_force_x
+	velocity.y = bubble_bounce_force_y
+	
+	_emit_enemy_particles(bubble, _get_thrust_emit_pos(), Vector2.RIGHT * -facedir)
+	
+	end_thrust()
+	disable_jump_cancel = true
+	
+	# refund if you hit an enemy
+	thrusts_remaining = 1
+	doublejumps_remaining = 1
 
 func enter_swapmask() -> void:
 	current_state = MoveState.SWAPMASK
@@ -735,10 +779,11 @@ func begin_dive() -> void:
 		spear_hitbox_dive_shape_right.disabled = false
 		spear_hitbox_dive_shape_left.disabled = true
 	MusicManager.play_sound_dive()
+	end_spin_hitbox()
 
-func dive_bounce() -> void:
+func dive_bounce(extra_height: float = 0) -> void:
 	print("dive bouncing from a fall of ", dive_height_fallen, " (", round(dive_height_fallen/16.0), " tiles)")
-	velocity.y = -sqrt(2 * gravity * (dive_height_fallen + dive_bounce_boost_height))
+	velocity.y = -sqrt(2 * gravity * (dive_height_fallen + dive_bounce_boost_height + extra_height))
 	current_state = MoveState.DIVE_BOUNCE
 	dives_remaining = 0
 	thrusts_remaining = num_thrusts_per_jump
@@ -766,7 +811,25 @@ func double_jump() -> void:
 	is_jump_animation = false
 	is_doublejump_animation = true
 	MusicManager.play_sound_doublejump()
-	
+	spin_jump_hitbox.monitoring = true
+	spin_jump_hitbox_shape.disabled = false
+
+func check_spin_hits() -> void:
+	if spin_jump_hitbox.monitoring:
+		# check for hits
+		for body in spin_jump_hitbox.get_overlapping_bodies():
+			if body is EnemyFrog:
+				iframe_timer = iframes
+				bounce_off_frog(body)
+			if body is WallEnemyProjectile:
+				body.pop_me()
+			if body is MushroomGuy:
+				body.die()
+
+func end_spin_hitbox() -> void:
+	if spin_jump_hitbox.monitoring:
+		spin_jump_hitbox.monitoring = false
+		spin_jump_hitbox_shape.disabled = true
 
 #region DEATH AND RESPAWN
 var iframes := DT * 60

@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://b7sqm3aysrc0e"]
+
+[ext_resource type="Script" uid="uid://b3iuefr56x11y" path="res://Scripts/wallenemy.gd" id="1_01t0a"]
+[ext_resource type="Texture2D" uid="uid://bakptbpoon23l" path="res://Assets/Sprites/wallenemy.png" id="1_4sas7"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_01t0a"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_4sas7")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_4sas7")
+}],
+"loop": true,
+"name": &"shoot",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kibrv"]
+radius = 1000.0
+
+[node name="Wallenemy" type="Node2D" unique_id=47793117]
+script = ExtResource("1_01t0a")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2141928844]
+position = Vector2(0, -48)
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_01t0a")
+animation = &"idle"
+
+[node name="ProjectileOrigin" type="Marker2D" parent="." unique_id=1849932495]
+position = Vector2(0, -33)
+
+[node name="PlayerDetectArea" type="Area2D" parent="." unique_id=1077558287]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetectArea" unique_id=1083374926]
+shape = SubResource("CircleShape2D_kibrv")
+disabled = true
+debug_color = Color(0.1922, 0.62, 0.46313995, 0.17254902)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PlayerDetectArea" unique_id=1071586811]
+polygon = PackedVector2Array(-966, -259, -866, -500, -707, -707, -500, -866, -258, -966, 0, -1000, 258, -966, 500, -866, 707, -707, 866, -500, 966, -259, 0, 0)
+
+[connection signal="body_entered" from="PlayerDetectArea" to="." method="_on_player_detect_area_body_entered"]
+[connection signal="body_exited" from="PlayerDetectArea" to="." method="_on_player_detect_area_body_exited"]

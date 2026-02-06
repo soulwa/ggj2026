@@ -1018,6 +1018,9 @@ region = Rect2(64, 0, 32, 32)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_igrcy"]
 size = Vector2(30, 41)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0gysh"]
+size = Vector2(56, 53)
+
 [node name="Player" type="CharacterBody2D" unique_id=1327567935]
 collision_mask = 46
 floor_block_on_wall = false
@@ -1033,9 +1036,7 @@ shape = SubResource("RectangleShape2D_f3sb7")
 [node name="Body" type="AnimatedSprite2D" parent="." unique_id=955490563]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_036b0")
-animation = &"dive"
-frame = 1
-frame_progress = 1.0
+animation = &"doublejump"
 flip_h = true
 
 [node name="ThrustMask" type="AnimatedSprite2D" parent="." unique_id=973414495]
@@ -1128,5 +1129,14 @@ disabled = true
 
 [node name="WeaponTip" type="Marker2D" parent="." unique_id=752614491]
 position = Vector2(80, 8)
+
+[node name="SpinJumpHitbox" type="Area2D" parent="." unique_id=1179712380]
+collision_layer = 0
+collision_mask = 20
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SpinJumpHitbox" unique_id=818628283]
+position = Vector2(0, 1.5)
+shape = SubResource("RectangleShape2D_0gysh")
+disabled = true
 
 [connection signal="body_entered" from="SpearHitbox" to="." method="_on_spear_hitbox_body_entered"]
