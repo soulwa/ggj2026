@@ -1,15 +1,32 @@
-[gd_scene format=3 uid="uid://cpu_dust_001"]
+[gd_scene format=3 uid="uid://5cb0xnfl8e5h"]
 
-[ext_resource type="Script" path="res://Scripts/background_dust_cpu.gd" id="1_dust"]
+[ext_resource type="Texture2D" uid="uid://be3uh4vksindp" path="res://Assets/Sprites/decals-sm.png" id="1_3vbxk"]
+[ext_resource type="Script" uid="uid://hjvj48udku8x" path="res://Scripts/background_dust_cpu.gd" id="1_dust"]
 
-[node name="BackgroundDustCPU" type="CPUParticles2D"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_kaiw0"]
+atlas = ExtResource("1_3vbxk")
+region = Rect2(192, 96, 64, 160)
+
+[node name="BackgroundDustCPU" type="CPUParticles2D" unique_id=1427284621]
 z_index = -5
+amount = 30
+texture = SubResource("AtlasTexture_kaiw0")
+lifetime = 20.0
+preprocess = 10.0
+local_coords = true
+emission_shape = 3
+emission_rect_extents = Vector2(200, 120)
+direction = Vector2(0, 0)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 0.5
+initial_velocity_max = 2.0
+angular_velocity_min = -10.0
+angular_velocity_max = 10.0
+damping_min = 0.5
+damping_max = 1.5
+scale_amount_min = 1.5
+scale_amount_max = 3.0
+color = Color(1, 1, 1, 0.15)
 script = ExtResource("1_dust")
-emission_width = 400.0
-emission_height = 240.0
 particle_count = 30
-dust_lifetime = 20.0
-min_scale = 1.5
-max_scale = 3.0
-dust_color = Color(1, 1, 1, 0.15)
-atlas_region = Rect2(192, 96, 64, 160)

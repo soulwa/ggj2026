@@ -52,7 +52,7 @@ tile_set = ExtResource("5_06v3b")
 [node name="ForegroundTiles" type="TileMapLayer" parent="." unique_id=875897085]
 z_index = 1
 position = Vector2(-2, 0)
-tile_map_data = PackedByteArray("AAD3/wEAAAADAAIAAAD7/wEAAAAEAAIAAAD4/wEAAAAEAAIAAAD8/wEAAAAFAAIAAADx/wEAAAABAAAAAADy/wEAAAACAAAAAADv/wEAAAAGAAAAAADw/wEAAAAFAAAAAAABAP//AAACAAAAAAACAP//AAACAAAAAAADAP//AAAGAAAAAAAGAP//AAABAAAAAAD2//z/AAABAAMAAAAAAPr/AAADAAMAAAAZAPX/AAACAAMAAAAhAOv/AAAFAAMAAAAFAO//AAADAAMAAAD9/+r/AAACAAMAAAAqAPH/AAABAAMAAAAfAPH/AAACAAAAAAAgAPH/AAAHAAAAAAArAPH/AAACAAAAAAAsAPH/AAAGAAAAAAAZAPj/AAAAAAAAAAAJAPv/AAAAAAUAAAAIAPv/AAABAAQAAAAXAO7/AAAFAAMAAAAOAPP/AAABAAMAAAAGAPj/AQAIAAAAAAD2//b/AQAEAAAAAAD5//b/AQAAAAAAAAD9//b/AQAIAAAAAAAAAPb/AQAAAAAAAAARAO//AQAAAAAAAAAOAO//AQAEAAAAAAAtAO3/AQAEAAAAAAAZAOn/AQAEAAAAAAAWAOn/AQAAAAAAAAAcAOn/AQAIAAAAAAAfAOn/AQAEAAAAAAAGAPH/AAAFAAAAAAABAPH/AAAFAAAAAAD+//H/AAAFAAAAAAADAPH/AAAHAAAAAAAIAPH/AAAGAAAAAAAAAPH/AAAGAAEAAAAFAPH/AAAFAAEAAAA=")
+tile_map_data = PackedByteArray("AAArAPH/AAACAAAAAAAsAPH/AAAGAAAAAAAtAO3/AQAEAAAAAADv/wEAAAAGAAAAAADw/wEAAAAFAAAAAADx/wEAAAABAAAAAADy/wEAAAACAAAAAAD2//b/AQAEAAAAAAD3/wEAAAADAAIAAAD4/wEAAAAEAAIAAAD5//b/AQAAAAAAAAD7/wEAAAAEAAIAAAD8/wEAAAAFAAIAAAD9/+r/AAACAAMAAAD9//b/AQAIAAAAAAD+//H/AAAFAAAAAAAAAPH/AAAGAAEAAAAAAPb/AQAAAAAAAAABAPH/AAAFAAAAAAABAP//AAACAAAAAAACAP//AAACAAAAAAADAPH/AAAHAAAAAAADAP//AAAGAAAAAAAFAPH/AAAFAAEAAAAGAPH/AAAFAAAAAAAGAPj/AQAIAAAAAAAGAP//AAABAAAAAAAIAPH/AAAGAAAAAAAIAPv/AAABAAQAAAAJAPv/AAAAAAUAAAAWAOn/AQAAAAAAAAAZAOn/AQAEAAAAAAAZAPX/AAACAAMAAAAcAOn/AQAIAAAAAAAfAOn/AQAEAAAAAAAfAPH/AAACAAAAAAAgAPH/AAAHAAAAAAAEAOn/AQAEAAAAAAAHAOn/AQAAAAAAAAATAO7/AAAAAAAAAAA=")
 tile_set = ExtResource("6_xwmjj")
 
 [node name="Player" parent="." unique_id=1327567935 instance=ExtResource("4_xwmjj")]
@@ -65,12 +65,12 @@ position = Vector2(-564, 38)
 position = Vector2(1459, -468)
 direction = 1
 
-[connection signal="body_entered" from="TileMapLayer/LevelTransition" to="TileMapLayer/LevelTransition" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@121943" to="TileMapLayer/@Area2D@121943" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@121944" to="TileMapLayer/@Area2D@121944" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@121945" to="TileMapLayer/@Area2D@121945" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@121946" to="TileMapLayer/@Area2D@121946" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@121947" to="TileMapLayer/@Area2D@121947" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@121948" to="TileMapLayer/@Area2D@121948" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@121949" to="TileMapLayer/@Area2D@121949" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@121950" to="TileMapLayer/@Area2D@121950" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@41352" to="TileMapLayer/@Area2D@41352" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@41353" to="TileMapLayer/@Area2D@41353" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@41354" to="TileMapLayer/@Area2D@41354" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@41355" to="TileMapLayer/@Area2D@41355" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@41356" to="TileMapLayer/@Area2D@41356" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@41357" to="TileMapLayer/@Area2D@41357" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@41358" to="TileMapLayer/@Area2D@41358" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@41359" to="TileMapLayer/@Area2D@41359" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@41360" to="TileMapLayer/@Area2D@41360" method="_on_body_entered"]

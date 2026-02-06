@@ -5,16 +5,42 @@ extends Node
 const BackgroundDustScene = preload("res://Scenes/background_dust_cpu.tscn")
 
 var _dust_emitters: Array[CPUParticles2D] = []
-var _dust_container: Node2D
+var _dust_containers: Array[Parallax2D]
 var _current_cluster_count: int = 0
 
 
 func _ready() -> void:
 	# Create a container that persists across scenes
-	_dust_container = Node2D.new()
-	_dust_container.name = "DustContainer"
-	_dust_container.z_index = -5
-	add_child(_dust_container)
+	var new_dust_container: Parallax2D
+	new_dust_container = Parallax2D.new()
+	new_dust_container.name = "DustContainer0"
+	new_dust_container.z_index = -7
+	new_dust_container.scroll_scale = Vector2.ONE * 0.7
+	add_child(new_dust_container)
+	new_dust_container = Parallax2D.new()
+	new_dust_container.name = "DustContainer1"
+	new_dust_container.z_index = -6
+	new_dust_container.scroll_scale = Vector2.ONE * 0.8
+	add_child(new_dust_container)
+	_dust_containers.append(new_dust_container)
+	new_dust_container = Parallax2D.new()
+	new_dust_container.name = "DustContainer2"
+	new_dust_container.z_index = -5
+	new_dust_container.scroll_scale = Vector2.ONE * 0.9
+	add_child(new_dust_container)
+	_dust_containers.append(new_dust_container)
+	new_dust_container = Parallax2D.new()
+	new_dust_container.name = "DustContainer3"
+	new_dust_container.z_index = 5
+	new_dust_container.scroll_scale = Vector2.ONE * 1.1
+	add_child(new_dust_container)
+	_dust_containers.append(new_dust_container)
+	new_dust_container = Parallax2D.new()
+	new_dust_container.name = "DustContainer4"
+	new_dust_container.z_index = 6
+	new_dust_container.scroll_scale = Vector2.ONE * 1.2
+	add_child(new_dust_container)
+	_dust_containers.append(new_dust_container)
 
 
 ## Call this when a level loads to position dust throughout it
@@ -69,17 +95,14 @@ func _ensure_emitter_count(count: int) -> void:
 		var dust: CPUParticles2D = BackgroundDustScene.instantiate()
 		
 		# Configure for large area coverage (+25% from original)
-		dust.emission_width = 1250.0
-		dust.emission_height = 1250.0
-		dust.particle_count = 31
+		dust.emission_width = 5000.0
+		dust.emission_height = 5000.0
+		dust.particle_count = 128
 		
-		_dust_container.add_child(dust)
+		_dust_containers.pick_random().add_child(dust)
 		_dust_emitters.append(dust)
 
 
-## Get the dust container so it can be reparented to the current scene if needed
-func get_container() -> Node2D:
-	return _dust_container
 
 
 ## Temporarily hide all dust (useful during transitions)
