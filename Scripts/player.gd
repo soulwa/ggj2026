@@ -435,6 +435,10 @@ func _physics_process(delta: float) -> void:
 		velocity.y += gravity * delta * dive_gravity_multiplier
 		dive_height_fallen += velocity.y * delta
 		
+		# left/right movement
+		if hmove != 0:
+			velocity.x = move_toward(velocity.x, hmove * air_top_speed, air_accel * delta)
+		
 		# Collect all overlapping bodies first
 		var overlapping_bodies = spear_hitbox_dive.get_overlapping_bodies()
 		var hit_tilemap := false

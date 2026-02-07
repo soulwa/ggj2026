@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://dl82jxnkf32k6" path="res://Assets/Tiles/cave_tiles.png" id="5_enq7f"]
 [ext_resource type="PackedScene" uid="uid://bg5hp0t7vs5pd" path="res://Scenes/mask_doublejump.tscn" id="6_r5lvc"]
 [ext_resource type="PackedScene" uid="uid://cb0gujjisv726" path="res://Scenes/mask_downdash.tscn" id="7_q7qop"]
+[ext_resource type="PackedScene" uid="uid://b7sqm3aysrc0e" path="res://Scenes/wallenemy.tscn" id="7_r5lvc"]
 [ext_resource type="PackedScene" uid="uid://br5csituinfex" path="res://Scenes/SceneTiles/transition_left.tscn" id="10_r5lvc"]
 [ext_resource type="PackedScene" uid="uid://kx6ysfcstest" path="res://Scenes/SceneTiles/transition_right.tscn" id="11_q7qop"]
 [ext_resource type="PackedScene" uid="uid://gb38645hbtch" path="res://Scenes/SceneTiles/transition_up.tscn" id="12_c2jgy"]
@@ -1285,6 +1286,7 @@ texture_region_size = Vector2i(32, 32)
 resource_name = "Scenes"
 scenes/1/scene = ExtResource("6_r5lvc")
 scenes/2/scene = ExtResource("7_q7qop")
+scenes/3/scene = ExtResource("7_r5lvc")
 scenes/4/scene = ExtResource("1_63fbx")
 scenes/5/scene = ExtResource("2_ip6ku")
 scenes/6/scene = ExtResource("3_aihrc")

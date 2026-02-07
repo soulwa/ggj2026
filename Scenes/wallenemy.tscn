@@ -74,6 +74,7 @@ animations = [{
 radius = 1000.0
 
 [node name="Wallenemy" type="Node2D" unique_id=47793117]
+position = Vector2(0, 23)
 script = ExtResource("1_01t0a")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2141928844]
@@ -95,6 +96,7 @@ disabled = true
 debug_color = Color(0.1922, 0.62, 0.46313995, 0.17254902)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PlayerDetectArea" unique_id=1071586811]
+modulate = Color(1, 1, 1, 0.16862746)
 polygon = PackedVector2Array(-966, -259, -866, -500, -707, -707, -500, -866, -258, -966, 0, -1000, 258, -966, 500, -866, 707, -707, 866, -500, 966, -259, 0, 0)
 
 [connection signal="body_entered" from="PlayerDetectArea" to="." method="_on_player_detect_area_body_entered"]
