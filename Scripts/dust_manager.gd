@@ -11,36 +11,36 @@ var _current_cluster_count: int = 0
 
 func _ready() -> void:
 	# Create a container that persists across scenes
-	var new_dust_container: Parallax2D
-	new_dust_container = Parallax2D.new()
-	new_dust_container.name = "DustContainer0"
-	new_dust_container.z_index = -7
-	new_dust_container.scroll_scale = Vector2.ONE * 0.7
-	add_child(new_dust_container)
-	new_dust_container = Parallax2D.new()
-	new_dust_container.name = "DustContainer1"
-	new_dust_container.z_index = -6
-	new_dust_container.scroll_scale = Vector2.ONE * 0.8
-	add_child(new_dust_container)
-	_dust_containers.append(new_dust_container)
-	new_dust_container = Parallax2D.new()
-	new_dust_container.name = "DustContainer2"
-	new_dust_container.z_index = -5
-	new_dust_container.scroll_scale = Vector2.ONE * 0.9
-	add_child(new_dust_container)
-	_dust_containers.append(new_dust_container)
-	new_dust_container = Parallax2D.new()
-	new_dust_container.name = "DustContainer3"
-	new_dust_container.z_index = 5
-	new_dust_container.scroll_scale = Vector2.ONE * 1.1
-	add_child(new_dust_container)
-	_dust_containers.append(new_dust_container)
-	new_dust_container = Parallax2D.new()
-	new_dust_container.name = "DustContainer4"
-	new_dust_container.z_index = 6
-	new_dust_container.scroll_scale = Vector2.ONE * 1.2
-	add_child(new_dust_container)
-	_dust_containers.append(new_dust_container)
+	var new_dust_container0 = Parallax2D.new()
+	new_dust_container0.name = "DustContainer0"
+	new_dust_container0.z_index = -7
+	new_dust_container0.scroll_scale = Vector2.ONE * 0.7
+	add_child(new_dust_container0)
+	_dust_containers.append(new_dust_container0)
+	var new_dust_container1 = Parallax2D.new()
+	new_dust_container1.name = "DustContainer1"
+	new_dust_container1.z_index = -6
+	new_dust_container1.scroll_scale = Vector2.ONE * 0.8
+	add_child(new_dust_container1)
+	_dust_containers.append(new_dust_container1)
+	var new_dust_container2 = Parallax2D.new()
+	new_dust_container2.name = "DustContainer2"
+	new_dust_container2.z_index = -5
+	new_dust_container2.scroll_scale = Vector2.ONE * 0.9
+	add_child(new_dust_container2)
+	_dust_containers.append(new_dust_container2)
+	var new_dust_container3 = Parallax2D.new()
+	new_dust_container3.name = "DustContainer3"
+	new_dust_container3.z_index = 5
+	new_dust_container3.scroll_scale = Vector2.ONE * 1.1
+	add_child(new_dust_container3)
+	_dust_containers.append(new_dust_container3)
+	var new_dust_container4 = Parallax2D.new()
+	new_dust_container4.name = "DustContainer4"
+	new_dust_container4.z_index = 6
+	new_dust_container4.scroll_scale = Vector2.ONE * 1.2
+	add_child(new_dust_container4)
+	_dust_containers.append(new_dust_container4)
 
 
 ## Call this when a level loads to position dust throughout it
@@ -49,7 +49,7 @@ func setup_for_level(camera: Camera2D) -> void:
 	var level_height: float = camera.limit_bottom - camera.limit_top
 	
 	# Calculate cluster grid - tighter spacing for better coverage
-	var cluster_spacing: float = 450.0
+	var cluster_spacing: float = 600.0
 	var clusters_x: int = max(1, int(level_width / cluster_spacing) + 1)
 	var clusters_y: int = max(1, int(level_height / cluster_spacing) + 1)
 	var total_clusters: int = clusters_x * clusters_y
@@ -78,16 +78,16 @@ func setup_for_level(camera: Camera2D) -> void:
 			emitter_index += 1
 	
 	# Hide any extra emitters
-	for i in range(emitter_index, _dust_emitters.size()):
-		_dust_emitters[i].visible = false
-		_dust_emitters[i].emitting = false
+	#for i in range(emitter_index, _dust_emitters.size()):
+		#_dust_emitters[i].visible = false
+		#_dust_emitters[i].emitting = false
 	
 	_current_cluster_count = total_clusters
 
 
 func _ensure_emitter_count(count: int) -> void:
 	# Cap maximum emitters to prevent runaway creation
-	var max_emitters: int = 25
+	var max_emitters: int = 100
 	count = min(count, max_emitters)
 	
 	# Create more emitters if needed
@@ -95,9 +95,9 @@ func _ensure_emitter_count(count: int) -> void:
 		var dust: CPUParticles2D = BackgroundDustScene.instantiate()
 		
 		# Configure for large area coverage (+25% from original)
-		dust.emission_width = 5000.0
-		dust.emission_height = 5000.0
-		dust.particle_count = 128
+		dust.emission_width = 2500.0
+		dust.emission_height = 2500.0
+		dust.particle_count = 32
 		
 		_dust_containers.pick_random().add_child(dust)
 		_dust_emitters.append(dust)

@@ -160,10 +160,11 @@ func _physics_process(delta: float) -> void:
 	
 	was_in_air = not is_on_floor()
 	
-	var bodies = damage_region.get_overlapping_bodies()
-	for body in bodies:
-		if body is Player:
-			body.take_hit(true)
+	if damage_region.monitoring:
+		var bodies = damage_region.get_overlapping_bodies()
+		for body in bodies:
+			if body is Player:
+				body.take_hit(true)
 
 func _play_landing_squash() -> void:
 	if not shader_material:

@@ -6,7 +6,7 @@ func _ready() -> void:
 	hide()
 
 func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed("pause"):
+	if Input.is_action_just_pressed("pause") and !Globals.begin_fade_out:
 		paused = !paused
 		if paused:
 			open_me()

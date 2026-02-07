@@ -4,6 +4,7 @@ var death_count := 0
 var time_spent := 0.0
 
 var begin_fade_out: bool = false
+var end_text_done: bool = false
 
 func _ready() -> void:
 	# Pre-warm mushroom spore shader by emitting particles during startup
@@ -52,3 +53,14 @@ enum Action {
 	Cry,
 }
 var currently_selected_action: Action = Action.Thrust
+
+const title_screen_path = "res://Scenes/title.tscn"
+func reset_game(new_game_plus: bool = true) -> void:
+	if !new_game_plus:
+		has_double_jump = false
+		has_downdash = false
+	has_crying = false
+	begin_fade_out = false
+	end_text_done = false
+	currently_selected_action = Action.Thrust
+	get_tree().change_scene_to_file(title_screen_path)
