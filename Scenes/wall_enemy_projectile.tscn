@@ -1,25 +1,50 @@
 [gd_scene format=3 uid="uid://d04mouxrarkp4"]
 
-[ext_resource type="Texture2D" uid="uid://bh103wp6m6ipo" path="res://Assets/Sprites/bubbleplaceholder.png" id="1_os1xt"]
 [ext_resource type="Script" uid="uid://c01yl5yghaqdd" path="res://Scripts/wall_enemy_projectile.gd" id="1_t1c8r"]
+[ext_resource type="Texture2D" uid="uid://cu21li5x0k01n" path="res://Assets/Sprites/projectile-bubble.png" id="2_t1c8r"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d7abw"]
+atlas = ExtResource("2_t1c8r")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i30d5"]
+atlas = ExtResource("2_t1c8r")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3y45b"]
+atlas = ExtResource("2_t1c8r")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jrkqk"]
+atlas = ExtResource("2_t1c8r")
+region = Rect2(192, 0, 64, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_t1c8r"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_os1xt")
+"texture": SubResource("AtlasTexture_d7abw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i30d5")
 }],
 "loop": true,
 "name": &"default",
-"speed": 5.0
+"speed": 3.0
 }, {
 "frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3y45b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jrkqk")
+}, {
 "duration": 1.0,
 "texture": null
 }],
 "loop": false,
 "name": &"pop",
-"speed": 5.0
+"speed": 15.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_t1c8r"]
@@ -35,9 +60,10 @@ motion_mode = 1
 script = ExtResource("1_t1c8r")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=614432049]
-scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_t1c8r")
 animation = &"pop"
+frame = 2
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=428997983]
 shape = SubResource("CircleShape2D_t1c8r")

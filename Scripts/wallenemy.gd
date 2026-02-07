@@ -3,6 +3,7 @@ class_name WallEnemy extends Node2D
 const projectile_scene: PackedScene = preload("uid://d04mouxrarkp4")
 
 @onready var projectile_origin: Marker2D = $ProjectileOrigin
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 var player: Player
 
@@ -17,6 +18,7 @@ var shoot_timer: float = 0
 
 func _ready() -> void:
 	shoot_timer = shoot_seconds
+	sprite.play("idle")
 
 
 func _process(delta: float) -> void:
@@ -42,6 +44,11 @@ func _on_player_detect_area_body_exited(body: Node2D) -> void:
 
 
 func shoot() -> void:
+	sprite.play("shoot")
+	await sprite.animation_finished
+	
 	var new_projectile: WallEnemyProjectile = projectile_scene.instantiate()
-	new_projectile.init_me((player.global_position - projectile_origin.global_position).normalized() * projectile_speed)
+	new_projectile.init_me((player.global_position - projectile_origin.global_position).normalized() * projectile_speed, rotation_degrees)
 	projectile_origin.add_child(new_projectile)
+	
+	sprite.play("retract")

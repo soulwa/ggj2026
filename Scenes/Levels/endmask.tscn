@@ -61,7 +61,7 @@ position = Vector2(-504, 40)
 position = Vector2(-590.9384, 30.22951)
 
 [node name="MaskCrying" parent="." unique_id=962368857 instance=ExtResource("10_ofmk2")]
-position = Vector2(238.80807, -92.49704)
+position = Vector2(238.77687, -107.497)
 
 [node name="Helptext" parent="." unique_id=1654642092 instance=ExtResource("11_cla6d")]
 texture_filter = 1

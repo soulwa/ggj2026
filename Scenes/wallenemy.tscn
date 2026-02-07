@@ -1,25 +1,73 @@
 [gd_scene format=3 uid="uid://b7sqm3aysrc0e"]
 
 [ext_resource type="Script" uid="uid://b3iuefr56x11y" path="res://Scripts/wallenemy.gd" id="1_01t0a"]
-[ext_resource type="Texture2D" uid="uid://bakptbpoon23l" path="res://Assets/Sprites/wallenemy.png" id="1_4sas7"]
+[ext_resource type="Texture2D" uid="uid://brg3hwm0cf4te" path="res://Assets/Sprites/barnacle.png" id="2_kibrv"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ydjsv"]
+atlas = ExtResource("2_kibrv")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d8mo8"]
+atlas = ExtResource("2_kibrv")
+region = Rect2(576, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_01t0a"]
+atlas = ExtResource("2_kibrv")
+region = Rect2(384, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kibrv"]
+atlas = ExtResource("2_kibrv")
+region = Rect2(192, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jlv27"]
+atlas = ExtResource("2_kibrv")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1heos"]
+atlas = ExtResource("2_kibrv")
+region = Rect2(192, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ljm6j"]
+atlas = ExtResource("2_kibrv")
+region = Rect2(384, 0, 192, 192)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_01t0a"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_4sas7")
+"texture": SubResource("AtlasTexture_ydjsv")
 }],
 "loop": true,
 "name": &"idle",
 "speed": 5.0
 }, {
 "frames": [{
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_d8mo8")
+}, {
 "duration": 1.0,
-"texture": ExtResource("1_4sas7")
+"texture": SubResource("AtlasTexture_01t0a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kibrv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jlv27")
 }],
-"loop": true,
+"loop": false,
+"name": &"retract",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1heos")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ljm6j")
+}],
+"loop": false,
 "name": &"shoot",
-"speed": 5.0
+"speed": 10.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kibrv"]
@@ -29,15 +77,16 @@ radius = 1000.0
 script = ExtResource("1_01t0a")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2141928844]
-position = Vector2(0, -48)
-scale = Vector2(0.5, 0.5)
+position = Vector2(11, -32)
+rotation = 1.5707964
 sprite_frames = SubResource("SpriteFrames_01t0a")
-animation = &"idle"
+animation = &"retract"
 
 [node name="ProjectileOrigin" type="Marker2D" parent="." unique_id=1849932495]
-position = Vector2(0, -33)
+position = Vector2(0, -93)
 
 [node name="PlayerDetectArea" type="Area2D" parent="." unique_id=1077558287]
+position = Vector2(0, -93)
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetectArea" unique_id=1083374926]

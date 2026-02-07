@@ -6,6 +6,8 @@ var pivoted: bool = false
 
 @onready var damage_region = $DamageRegion
 
+var default_anim: String
+
 var max_speed: float = 225
 var acceleration: float = 3000
 var gravity: float = 1000
@@ -59,7 +61,8 @@ var current_squash: float = 0.0  # Track current squash for smooth transitions
 
 
 func _ready() -> void:
-	sprite.animation = ["1", "2", "3"].pick_random()
+	default_anim = ["1", "2", "3"].pick_random()
+	sprite.animation = default_anim
 	sprite.flip_h = randf() < 0.5
 	pivoted = randf() < 0.5
 	update_pivot_visual()
@@ -147,6 +150,7 @@ func _physics_process(delta: float) -> void:
 		# Landing squash effect
 		if in_air_before and was_in_air:
 			_play_landing_squash()
+			sprite.play(default_anim)
 		
 		if jump_timer <= 0:
 			jump_timer = randf_range(jump_timer_seconds_min, jump_timer_seconds_max)
@@ -190,11 +194,14 @@ func jump() -> void:
 	velocity.y = jump_power
 	should_double_jump = randf() < 0.333
 	_play_jump_stretch()
+	MusicManager.play_shroom_jump()
 
 func double_jump() -> void:
 	velocity.y = double_jump_power
 	should_double_jump = false
+	sprite.play("jump")
 	_play_jump_stretch()
+	MusicManager.play_shroom_doublejump()
 
 func _play_jump_stretch() -> void:
 	if not shader_material:

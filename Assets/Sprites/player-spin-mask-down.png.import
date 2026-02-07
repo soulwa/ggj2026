@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://js0ssobcgg4n"
-path="res://.godot/imported/bubble.png-1877a4b37a9491d8aa60fd6f7250381b.ctex"
+uid="uid://g7r1svakqtfr"
+path="res://.godot/imported/player-spin-mask-down.png-6cf5b5387017ecd6d708705c5f62afd0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/bubble.png"
-dest_files=["res://.godot/imported/bubble.png-1877a4b37a9491d8aa60fd6f7250381b.ctex"]
+source_file="res://Assets/Sprites/player-spin-mask-down.png"
+dest_files=["res://.godot/imported/player-spin-mask-down.png-6cf5b5387017ecd6d708705c5f62afd0.ctex"]
 
 [params]
 

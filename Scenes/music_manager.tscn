@@ -173,6 +173,18 @@ bus = &"SFX"
 stream = ExtResource("34_313iq")
 bus = &"SFX"
 
+[node name="SFX_ShroomJump" type="AudioStreamPlayer" parent="." unique_id=902921267]
+stream = SubResource("AudioStreamRandomizer_b5y6m")
+volume_db = -12.0
+pitch_scale = 1.2
+bus = &"SFX"
+
+[node name="SFX_ShroomDoublejump" type="AudioStreamPlayer" parent="." unique_id=403896320]
+stream = ExtResource("19_jtpmq")
+volume_db = -8.0
+pitch_scale = 1.2
+bus = &"SFX"
+
 [node name="SFX_Cry" type="AudioStreamPlayer" parent="." unique_id=1052273176]
 stream = ExtResource("35_bggwv")
 volume_db = -5.0

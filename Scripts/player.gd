@@ -173,8 +173,6 @@ func _ready() -> void:
 	swapmask_ui_right.hide()
 
 func _physics_process(delta: float) -> void:
-	if hp < 0 or dead:
-		return
 	
 	#region INPUT
 	var time = Time.get_ticks_msec()
@@ -272,15 +270,16 @@ func _physics_process(delta: float) -> void:
 	spike_recoil_timer -= delta
 	#endregion
 	
-	if input_swapmask_pressed and current_state != MoveState.DIVE and Globals.currently_selected_action != Globals.Action.Cry:
+	if input_swapmask_pressed and current_state != MoveState.DIVE and Globals.currently_selected_action != Globals.Action.Cry and !dead:
 		enter_swapmask()
 	
 	if !is_on_floor():
 		MusicManager.stop_sound_footstep()
 	
 	#region MOVEMENT
-	
-	if Globals.currently_selected_action == Globals.Action.Cry:
+	if dead:
+		pass
+	elif Globals.currently_selected_action == Globals.Action.Cry:
 		velocity.x = 0
 		velocity.y += gravity * delta
 		
@@ -461,18 +460,19 @@ func _physics_process(delta: float) -> void:
 		spike_recoil_timer = spike_recoil_time
 		end_dive() # TODO
 	
-	move_and_slide()
-	var num_cols = get_slide_collision_count()
-	for idx in num_cols:
-		var collision = get_slide_collision(idx)
-		# TODO (sam): do relevant stuff here if we need, like enemies, walls, spike
-		var body = collision.get_collider()
-		if body is EnemySpike:
-			if (spike_recoil_timer < 0 or (current_state == MoveState.DIVE and collision.get_normal().y < 0)):
-				print("avoided spike death")
-			if not (spike_recoil_timer >= 0 or (current_state == MoveState.DIVE and collision.get_normal().y < 0)):
-				hp = 0
-				die()
+	if !dead:
+		move_and_slide()
+		var num_cols = get_slide_collision_count()
+		for idx in num_cols:
+			var collision = get_slide_collision(idx)
+			# TODO (sam): do relevant stuff here if we need, like enemies, walls, spike
+			var body = collision.get_collider()
+			if body is EnemySpike:
+				if (spike_recoil_timer < 0 or (current_state == MoveState.DIVE and collision.get_normal().y < 0)):
+					print("avoided spike death")
+				if not (spike_recoil_timer >= 0 or (current_state == MoveState.DIVE and collision.get_normal().y < 0)):
+					hp = 0
+					die()
 	#endregion
 	
 	#region ANIMATION
@@ -502,7 +502,9 @@ func _physics_process(delta: float) -> void:
 	else:
 		for sprite in sprites:
 			sprite.flip_h = facedir == -1
-			if current_state == MoveState.NORMAL:
+			if dead_anim:
+				if sprite.animation != "die": sprite.play("die")
+			elif current_state == MoveState.NORMAL:
 				if is_on_floor():
 					if hmove != 0:
 						sprite.play("run")
@@ -511,8 +513,10 @@ func _physics_process(delta: float) -> void:
 					if was_in_air_last_frame:
 						sprite.play("land")
 				else:
-					if is_doublejump_animation and sprite.animation != "doublejump": sprite.play("doublejump")
-					elif is_jump_animation and sprite.animation != "jump": sprite.play("jump")
+					if is_doublejump_animation:
+						if sprite.animation != "doublejump": sprite.play("doublejump")
+					elif is_jump_animation:
+						if sprite.animation != "jump": sprite.play("jump")
 					else:
 						sprite.play("air")
 			elif current_state == MoveState.THRUST or current_state == MoveState.THRUST_ACTIONABLE and sprite.animation != "thrust":
@@ -847,6 +851,7 @@ var iframes := DT * 60
 var iframe_timer := 0.0
 
 var dead: bool = false
+var dead_anim: bool = false
 
 const START_HP := 3
 var hp := START_HP
@@ -884,6 +889,7 @@ func die() -> void:
 	MusicManager.play_die()
 	
 	dead = true
+	dead_anim = true
 	
 	# Clear all afterimage trails immediately
 	var afterimage_trail = get_node_or_null("AfterimageTrail")
@@ -899,12 +905,13 @@ func die() -> void:
 		
 	var level: Level = get_parent()
 	
-	visible = false # TODO (sam): animation??
-	
 	# TODO (sam): this is sort of ugly when used like this.. have to fix.
 	TransitionOverlay.set_shader_dissolve()
 	TransitionOverlay.play_transition()
 	await TransitionOverlay.transition_midpoint
+	
+	dead_anim = false
+	print("reset dead naim")
 	
 	MusicManager.battlers = 0
 	MusicManager.crossfade_to_explore_music()
@@ -927,6 +934,7 @@ func die() -> void:
 	
 	level.reset_camera()
 	visible = true
+	
 	
 	await TransitionOverlay.transition_complete
 	dead = false

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cjd4i74pioxnb"
-path="res://.godot/imported/shrooms_jump.png-8d61aa13a07465e48ca5689db197723f.ctex"
+uid="uid://biaopepc7qjgi"
+path="res://.godot/imported/player-spin-mask.png-2c9f98f9cf230e05c791154d2e38c393.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/shrooms_jump.png"
-dest_files=["res://.godot/imported/shrooms_jump.png-8d61aa13a07465e48ca5689db197723f.ctex"]
+source_file="res://Assets/Sprites/player-spin-mask.png"
+dest_files=["res://.godot/imported/player-spin-mask.png-2c9f98f9cf230e05c791154d2e38c393.ctex"]
 
 [params]
 

@@ -148,6 +148,12 @@ func play_shoot() -> void:
 func play_shroomscream() -> void:
 	$SFX_Shroomscream.play()
 
+func play_shroom_jump() -> void:
+	$SFX_ShroomJump.play()
+
+func play_shroom_doublejump() -> void:
+	$SFX_ShroomDoublejump.play()
+
 func play_maskget(is_final: bool = false) -> void:
 	$SFX_Maskget.play()
 	music.volume_linear = 0.0
