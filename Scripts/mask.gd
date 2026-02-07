@@ -59,6 +59,7 @@ func _on_body_entered(body: Node2D) -> void:
 			MusicManager.play_maskget(true)
 			Globals.currently_selected_action = Globals.Action.Cry
 			MusicManager.stop_sound_footstep()
+			PauseMenu.can_pause = false
 			queue_free()
 		if is_medal_downdash:
 			Globals.has_medal_downdash = true

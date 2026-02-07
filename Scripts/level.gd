@@ -29,6 +29,8 @@ var spawn: Vector2
 var _dent_manager: Node  # WallDentManager
 
 func _ready() -> void:
+	PauseMenu.can_pause = true
+	
 	# Setup wall dent manager
 	_setup_dent_manager()
 	

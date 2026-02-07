@@ -1,5 +1,8 @@
 class_name Title extends Node2D
 
+func _ready() -> void:
+	PauseMenu.can_pause = false
+
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("pause") or Input.is_action_just_pressed("jump") or Input.is_action_just_pressed("action"):
 		var tween := create_tween()

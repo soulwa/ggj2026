@@ -1,12 +1,13 @@
-extends ColorRect
+extends CanvasLayer
 
+var can_pause: bool = false
 var paused: bool = false
 
 func _ready() -> void:
 	hide()
 
 func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed("pause") and !Globals.begin_fade_out:
+	if Input.is_action_just_pressed("pause") and !Globals.begin_fade_out and can_pause:
 		paused = !paused
 		if paused:
 			open_me()

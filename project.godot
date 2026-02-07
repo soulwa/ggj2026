@@ -29,6 +29,7 @@ Globals="*uid://bedjkd7mes0le"
 TransitionOverlay="*res://Scenes/transition_overlay.tscn"
 MusicManager="*uid://4fdlg7wgj87w"
 DustManager="*res://Scripts/dust_manager.gd"
+PauseMenu="*uid://sjav0ajcejyx"
 
 [display]
 

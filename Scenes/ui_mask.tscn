@@ -4,8 +4,6 @@
 [ext_resource type="Texture2D" uid="uid://cfx2an7w88eht" path="res://Assets/Sprites/mask - selectors.png" id="2_gb6u5"]
 [ext_resource type="Script" uid="uid://fg7cxylesuyg" path="res://Scripts/fade_to_black.gd" id="3_cig8l"]
 [ext_resource type="FontFile" uid="uid://51nuconqua4h" path="res://Assets/Fonts/Fabled_Font.ttf" id="4_gb6u5"]
-[ext_resource type="Script" uid="uid://coru7mww62f24" path="res://Scripts/pause_overlay.gd" id="5_d15r0"]
-[ext_resource type="PackedScene" uid="uid://c5fd1jro8nf6" path="res://Scenes/audio_controls.tscn" id="6_10rwv"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5itr1"]
 atlas = ExtResource("2_gb6u5")
@@ -87,42 +85,3 @@ theme_override_font_sizes/font_size = 20
 text = "press start to play new game+"
 horizontal_alignment = 2
 vertical_alignment = 2
-
-[node name="PauseOverlay" type="ColorRect" parent="." unique_id=1077267379]
-process_mode = 3
-visible = false
-layout_mode = 0
-offset_left = -1280.0
-offset_bottom = 720.0
-color = Color(0, 0, 0, 0.5882353)
-script = ExtResource("5_d15r0")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="PauseOverlay" unique_id=1695501956]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 469.0
-offset_right = -469.0
-grow_horizontal = 2
-grow_vertical = 2
-alignment = 1
-
-[node name="Label" type="Label" parent="PauseOverlay/VBoxContainer" unique_id=325113732]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("4_gb6u5")
-theme_override_font_sizes/font_size = 60
-text = "paused"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Label2" type="Label" parent="PauseOverlay/VBoxContainer" unique_id=1981347206]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("4_gb6u5")
-theme_override_font_sizes/font_size = 20
-text = "(ESC or Start to unpause)"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="AudioControls" parent="PauseOverlay/VBoxContainer" unique_id=422061046 instance=ExtResource("6_10rwv")]
-layout_mode = 2
