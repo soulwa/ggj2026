@@ -7,7 +7,7 @@ func _ready() -> void:
 	hide()
 
 func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed("pause") and !Globals.begin_fade_out and can_pause:
+	if Input.is_action_just_pressed("pause") and !Globals.begin_fade_out:
 		paused = !paused
 		if paused:
 			open_me()
@@ -15,8 +15,9 @@ func _process(_delta: float) -> void:
 			close_me()
 
 func open_me() -> void:
-	get_tree().paused = true
-	show()
+	if can_pause:
+		get_tree().paused = true
+		show()
 
 func close_me() -> void:
 	get_tree().paused = false

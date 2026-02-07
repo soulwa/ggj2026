@@ -41,6 +41,7 @@ func _setup_shader() -> void:
 func _on_player_detect_area_body_entered(body: Node2D) -> void:
 	if body is Player:
 		activate()
+		print("activated by ", body)
 
 
 func activate() -> void:

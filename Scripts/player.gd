@@ -453,7 +453,9 @@ func _physics_process(delta: float) -> void:
 			if body is WallEnemyProjectile:
 				body.pop_me()
 				dive_bounce(bubble_dive_bounce_height)
+				thrusts_remaining = 1
 				dives_remaining = 1
+				doublejumps_remaining = 1
 			if body is TileMapLayer:
 				hit_tilemap = true
 		
@@ -710,8 +712,9 @@ func bounce_off_bubble(bubble: WallEnemyProjectile) -> void:
 	end_thrust()
 	disable_jump_cancel = true
 	
-	# refund if you hit an enemy
+	# refund everything if you pop a bubble
 	thrusts_remaining = 1
+	dives_remaining = 1
 	doublejumps_remaining = 1
 
 func enter_swapmask() -> void:
@@ -861,6 +864,7 @@ const START_HP := 3
 var hp := START_HP
 
 var spawnpoint: Vector2
+var spawnpoint_priority: int
 
 var kb_force_x := 500.0
 var kb_force_y := -sqrt(2 * gravity * 4 * 10) # 32 px height
@@ -869,6 +873,8 @@ func take_hit(kb: bool) -> void:
 	if dead:
 		return
 	if iframe_timer > 0.0:
+		return
+	if current_state == MoveState.DIVE:
 		return
 	hp -= 1
 	print("Player HP: ", hp)
@@ -943,8 +949,10 @@ func die() -> void:
 	await TransitionOverlay.transition_complete
 	dead = false
 
-func set_spawn(pos: Vector2) -> void:
-	spawnpoint = pos
+func set_spawn(pos: Vector2, priority: int) -> void:
+	if priority >= spawnpoint_priority:
+		spawnpoint = pos
+		spawnpoint_priority = priority
 
 
 func _get_camera() -> NiceCamera:

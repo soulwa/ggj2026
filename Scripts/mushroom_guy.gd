@@ -143,6 +143,7 @@ func _physics_process(delta: float) -> void:
 		var body = collision.get_collider()
 		if body is EnemySpike:
 			die()
+			return
 	
 	bounce_timer -= delta
 	

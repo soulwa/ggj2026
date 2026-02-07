@@ -144,7 +144,7 @@ animations = [{
 size = Vector2(36, 80)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dfy2u"]
-size = Vector2(16, 68)
+size = Vector2(16, 67)
 
 [node name="MushroomGuy" type="CharacterBody2D" unique_id=1913379462]
 collision_layer = 16
@@ -155,9 +155,7 @@ script = ExtResource("1_ghvsm")
 position = Vector2(0, 30)
 scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_d46df")
-animation = &"jump"
-frame = 3
-frame_progress = 0.49786943
+animation = &"death"
 offset = Vector2(0, -30)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1452951053]
@@ -169,7 +167,7 @@ position = Vector2(0, -33)
 collision_layer = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DamageRegion" unique_id=1461126320]
-position = Vector2(0, 29)
+position = Vector2(0, 28.5)
 shape = SubResource("RectangleShape2D_dfy2u")
 
 [node name="PivotTimer" type="Timer" parent="." unique_id=767465204]

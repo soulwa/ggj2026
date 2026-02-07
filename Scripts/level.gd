@@ -52,6 +52,7 @@ func _ready() -> void:
 				print("[SPAWN] %s" % child.position)
 				$Player.position = child.position
 				$Player.spawnpoint = child.position
+				$Player.spawnpoint_priority = 0
 	
 	reset_camera()
 
