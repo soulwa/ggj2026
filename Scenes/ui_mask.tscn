@@ -52,6 +52,7 @@ scale = Vector2(2, 2)
 texture = SubResource("AtlasTexture_rpjah")
 
 [node name="FadeToBlack" type="ColorRect" parent="." unique_id=374565158]
+modulate = Color(1, 1, 1, 0)
 z_index = 5
 layout_mode = 0
 offset_left = -1813.0
@@ -62,6 +63,7 @@ color = Color(0, 0, 0, 1)
 script = ExtResource("3_cig8l")
 
 [node name="Endtext" type="Label" parent="FadeToBlack" unique_id=1654642092]
+modulate = Color(1, 1, 1, 0)
 layout_mode = 0
 offset_left = 533.0
 offset_top = 387.0
@@ -74,6 +76,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="restarttext" type="Label" parent="FadeToBlack" unique_id=1472107605]
+modulate = Color(1, 1, 1, 0)
 layout_mode = 0
 offset_left = 533.0
 offset_top = 387.0

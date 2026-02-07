@@ -99,7 +99,10 @@ func _ensure_emitter_count(count: int) -> void:
 		dust.emission_height = 2500.0
 		dust.particle_count = 32
 		
-		_dust_containers.pick_random().add_child(dust)
+		var target_container = _dust_containers.pick_random()
+		dust.scale_amount_max *= target_container.scroll_scale.x
+		dust.scale_amount_min *= target_container.scroll_scale.x
+		target_container.add_child(dust)
 		_dust_emitters.append(dust)
 
 

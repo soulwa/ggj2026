@@ -1,8 +1,13 @@
 class_name MaskItem extends Area2D
 
+var medal_doublejump_scene: PackedScene = load("res://Scenes/medal_doublejump.tscn")
+var medal_downdash_scene: PackedScene = load("res://Scenes/medal_downdash.tscn")
+
 @export var is_downdash: bool = false
 @export var is_doublejump: bool = false
 @export var is_crying: bool = false
+@export var is_medal_downdash: bool = false
+@export var is_medal_doublejump: bool = false
 @onready var sprite: Sprite2D = $Sprite2D
 
 @export var bob_amplitude: float = 6.0 # pixels
@@ -12,9 +17,17 @@ var _base_sprite_y := 0.0
 
 func _ready() -> void:
 	if is_downdash and Globals.has_downdash:
+		if Globals.is_ngp and !Globals.has_medal_downdash:
+			var medal = medal_downdash_scene.instantiate()
+			get_parent().add_child.call_deferred(medal)
+			medal.global_position = global_position
 		queue_free()
 	
 	if is_doublejump and Globals.has_double_jump:
+		if Globals.is_ngp and !Globals.has_medal_doublejump:
+			var medal = medal_doublejump_scene.instantiate()
+			get_parent().add_child.call_deferred(medal)
+			medal.global_position = global_position
 		queue_free()
 	
 	if is_crying and Globals.has_crying:
@@ -46,6 +59,14 @@ func _on_body_entered(body: Node2D) -> void:
 			MusicManager.play_maskget(true)
 			Globals.currently_selected_action = Globals.Action.Cry
 			MusicManager.stop_sound_footstep()
+			queue_free()
+		if is_medal_downdash:
+			Globals.has_medal_downdash = true
+			MusicManager.play_maskget(true)
+			queue_free()
+		if is_medal_doublejump:
+			Globals.has_medal_doublejump = true
+			MusicManager.play_maskget(true)
 			queue_free()
 		
 		match Globals.currently_selected_action:

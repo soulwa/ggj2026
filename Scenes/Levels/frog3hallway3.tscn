@@ -80,10 +80,10 @@ position = Vector2(576, 104)
 direction = 1
 
 [connection signal="body_entered" from="TileMapLayer/LevelTransition" to="TileMapLayer/LevelTransition" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@21823" to="TileMapLayer/@Area2D@21823" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@21824" to="TileMapLayer/@Area2D@21824" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@21825" to="TileMapLayer/@Area2D@21825" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@21826" to="TileMapLayer/@Area2D@21826" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@21827" to="TileMapLayer/@Area2D@21827" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@21828" to="TileMapLayer/@Area2D@21828" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@21866" to="TileMapLayer/@Area2D@21866" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@108401" to="TileMapLayer/@Area2D@108401" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@108402" to="TileMapLayer/@Area2D@108402" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@108403" to="TileMapLayer/@Area2D@108403" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@108404" to="TileMapLayer/@Area2D@108404" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@108405" to="TileMapLayer/@Area2D@108405" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@108406" to="TileMapLayer/@Area2D@108406" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@108444" to="TileMapLayer/@Area2D@108444" method="_on_body_entered"]

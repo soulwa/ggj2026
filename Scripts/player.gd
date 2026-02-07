@@ -912,7 +912,8 @@ func die() -> void:
 	
 	iframe_timer = 0
 	coyote_timer = 0
-	jump_buffer_timer = 0
+	jump_buffer_timer = -1
+	action_buffer_timer = -1
 	spike_recoil_timer = -1.0
 	
 	# TODO (sam): @zane more state to reset here? or maybe its okay.

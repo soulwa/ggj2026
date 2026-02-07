@@ -5,6 +5,7 @@ var time_spent := 0.0
 
 var begin_fade_out: bool = false
 var end_text_done: bool = false
+var is_ngp: bool = false
 
 func _ready() -> void:
 	# Pre-warm mushroom spore shader by emitting particles during startup
@@ -38,9 +39,12 @@ func _prewarm_spore_shader() -> void:
 var ignore_spawn_direction := false
 var opposite_direction_from := Level.Direction.Left
 
-var has_double_jump := true
-var has_downdash := true
+var has_double_jump := false
+var has_downdash := false
 var has_crying := false
+
+var has_medal_downdash = false
+var has_medal_doublejump = false
 
 # 0 to 1 to fill screen, "cutscene" maybe.
 # when its 1.0 you can swim
@@ -59,7 +63,11 @@ func reset_game(new_game_plus: bool = true) -> void:
 	if !new_game_plus:
 		has_double_jump = false
 		has_downdash = false
+	else:
+		is_ngp = true
 	has_crying = false
+	has_medal_downdash = false
+	has_medal_doublejump = false
 	begin_fade_out = false
 	end_text_done = false
 	currently_selected_action = Action.Thrust

@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://dghogfky6fvqx"]
+
+[ext_resource type="Script" uid="uid://c4a2x7frii434" path="res://Scripts/mask.gd" id="1_6xc1n"]
+[ext_resource type="Texture2D" uid="uid://c7cld6hdorq6w" path="res://Assets/Sprites/ngp-medal.png" id="2_0jr2u"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kk41w"]
+size = Vector2(21, 21)
+
+[node name="MedalDoubleJump" type="Area2D" unique_id=236375324]
+script = ExtResource("1_6xc1n")
+is_medal_doublejump = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1772621334]
+position = Vector2(0.5, 0.5)
+shape = SubResource("RectangleShape2D_kk41w")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1423758992]
+scale = Vector2(2, 2)
+texture = ExtResource("2_0jr2u")
+region_rect = Rect2(32, 0, 32, 32)
