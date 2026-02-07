@@ -282,7 +282,11 @@ func _physics_process(delta: float) -> void:
 	
 	if Globals.currently_selected_action == Globals.Action.Cry:
 		velocity.x = 0
-		velocity.y += gravity
+		velocity.y += gravity * delta
+		
+		thrusts_remaining = 0
+		dives_remaining = 0
+		doublejumps_remaining = 0
 		
 		if input_action_pressed and !started_crying:
 			started_crying = true
@@ -508,7 +512,9 @@ func _physics_process(delta: float) -> void:
 						sprite.play("land")
 				else:
 					if is_doublejump_animation and sprite.animation != "doublejump": sprite.play("doublejump")
-					if is_jump_animation and sprite.animation != "jump": sprite.play("jump")
+					elif is_jump_animation and sprite.animation != "jump": sprite.play("jump")
+					else:
+						sprite.play("air")
 			elif current_state == MoveState.THRUST or current_state == MoveState.THRUST_ACTIONABLE and sprite.animation != "thrust":
 				sprite.play("thrust")
 			elif current_state == MoveState.DIVE:
@@ -525,6 +531,7 @@ func _physics_process(delta: float) -> void:
 		was_in_air_last_frame = false
 		is_jump_animation = false
 		is_doublejump_animation = false
+	
 	
 	#endregion
 

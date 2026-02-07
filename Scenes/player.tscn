@@ -30,6 +30,10 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f3sb7"]
 size = Vector2(20, 16.166668)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_4grkl"]
+atlas = ExtResource("3_ukyrk")
+region = Rect2(576, 0, 192, 192)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_dj0x0"]
 atlas = ExtResource("2_0gysh")
 region = Rect2(0, 0, 192, 192)
@@ -152,6 +156,14 @@ region = Rect2(384, 0, 192, 192)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_036b0"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4grkl")
+}],
+"loop": true,
+"name": &"air",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_dj0x0")
@@ -420,6 +432,10 @@ animations = [{
 "speed": 15.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_6yrdb"]
+atlas = ExtResource("7_7dp3o")
+region = Rect2(576, 0, 192, 192)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_r7t2e"]
 atlas = ExtResource("7_fs7ks")
 region = Rect2(0, 0, 192, 192)
@@ -478,6 +494,14 @@ region = Rect2(384, 0, 192, 192)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_lisdf"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6yrdb")
+}],
+"loop": true,
+"name": &"air",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": null
@@ -578,6 +602,10 @@ animations = [{
 "speed": 15.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_ue0p1"]
+atlas = ExtResource("10_olqyp")
+region = Rect2(576, 0, 192, 192)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_n1x1j"]
 atlas = ExtResource("10_olqyp")
 region = Rect2(192, 0, 192, 192)
@@ -616,6 +644,14 @@ region = Rect2(576, 0, 192, 192)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_f5f5t"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ue0p1")
+}],
+"loop": true,
+"name": &"air",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": null
@@ -716,6 +752,10 @@ animations = [{
 "speed": 15.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_isbcs"]
+atlas = ExtResource("9_l6n3p")
+region = Rect2(576, 0, 192, 192)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_36dho"]
 atlas = ExtResource("9_l6n3p")
 region = Rect2(192, 0, 192, 192)
@@ -754,6 +794,14 @@ region = Rect2(576, 0, 192, 192)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_8erm5"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_isbcs")
+}],
+"loop": true,
+"name": &"air",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": null
@@ -854,6 +902,10 @@ animations = [{
 "speed": 15.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_142e3"]
+atlas = ExtResource("11_h4iuc")
+region = Rect2(576, 0, 192, 192)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_qpa8y"]
 atlas = ExtResource("11_h4iuc")
 region = Rect2(192, 0, 192, 192)
@@ -900,6 +952,14 @@ region = Rect2(384, 0, 192, 192)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_f1ek2"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_142e3")
+}],
+"loop": true,
+"name": &"air",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": null
@@ -1036,26 +1096,26 @@ shape = SubResource("RectangleShape2D_f3sb7")
 [node name="Body" type="AnimatedSprite2D" parent="." unique_id=955490563]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_036b0")
-animation = &"doublejump"
+animation = &"air"
 flip_h = true
 
 [node name="ThrustMask" type="AnimatedSprite2D" parent="." unique_id=973414495]
 sprite_frames = SubResource("SpriteFrames_lisdf")
-animation = &"cry_start"
+animation = &"air"
 
 [node name="DiveMask" type="AnimatedSprite2D" parent="." unique_id=1613367690]
 visible = false
 sprite_frames = SubResource("SpriteFrames_f5f5t")
-animation = &"cry_loop"
+animation = &"air"
 
 [node name="DoublejumpMask" type="AnimatedSprite2D" parent="." unique_id=265848805]
 visible = false
 sprite_frames = SubResource("SpriteFrames_8erm5")
-animation = &"cry_start"
+animation = &"air"
 
 [node name="Spear" type="AnimatedSprite2D" parent="." unique_id=2118708115]
 sprite_frames = SubResource("SpriteFrames_f1ek2")
-animation = &"dive"
+animation = &"air"
 
 [node name="SpearHitbox" type="Area2D" parent="." unique_id=1815314269]
 collision_layer = 0
