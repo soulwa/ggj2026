@@ -1,11 +1,12 @@
 [gd_scene format=3 uid="uid://ciijemsy51xup"]
 
 [ext_resource type="Script" uid="uid://c4a2x7frii434" path="res://Scripts/mask.gd" id="1_dgecq"]
-[ext_resource type="Texture2D" uid="uid://cfx2an7w88eht" path="res://Assets/Sprites/mask-selectors.png" id="2_dgecq"]
+[ext_resource type="Texture2D" uid="uid://cfx2an7w88eht" path="res://Assets/Sprites/mask - selectors.png" id="2_dgecq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_erexc"]
 
 [node name="MaskCrying" type="Area2D" unique_id=962368857]
+scale = Vector2(2, 2)
 collision_layer = 2
 script = ExtResource("1_dgecq")
 is_crying = true
