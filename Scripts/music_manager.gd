@@ -167,3 +167,9 @@ func play_cry() -> void:
 	tween.tween_interval(3)
 	await tween.finished
 	$SFX_Cry.play()
+
+func play_barnacle_shoot() -> void:
+	$SFX_BarnacleShoot.play()
+
+func play_bubble_pop() -> void:
+	$SFX_BubblePop.play()

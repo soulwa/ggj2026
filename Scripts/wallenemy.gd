@@ -45,6 +45,7 @@ func _on_player_detect_area_body_exited(body: Node2D) -> void:
 
 func shoot() -> void:
 	sprite.play("shoot")
+	MusicManager.play_barnacle_shoot()
 	await sprite.animation_finished
 	
 	var new_projectile: WallEnemyProjectile = projectile_scene.instantiate()

@@ -36,6 +36,7 @@ func pop_me() -> void:
 	collision_shape.disabled = true
 	damage_region_collision_shape.disabled = true
 	
+	MusicManager.play_bubble_pop()
 	sprite.play("pop")
 	await sprite.animation_finished
 	queue_free()

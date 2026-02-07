@@ -36,6 +36,10 @@
 [ext_resource type="AudioStream" uid="uid://bkqvjf1qdmg2q" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_verb_shroomScream_v01_-4dB.wav" id="34_313iq"]
 [ext_resource type="AudioStream" uid="uid://cmahacup12uds" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_verb_cry_v01_-7dB.wav" id="35_bggwv"]
 [ext_resource type="AudioStream" uid="uid://s4yqa5mqpm5t" path="res://Assets/Sfx/GGJ2026_STG_Fenrick_maskPickup_v01_-4dB.wav" id="36_u6hki"]
+[ext_resource type="AudioStream" uid="uid://ccpsiv7p8kl6b" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_verb_barnacle01_v01_-6dB.wav" id="37_01jp5"]
+[ext_resource type="AudioStream" uid="uid://c4klv7lyr7mk5" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_verb_barnacle02_v01_-6dB.wav" id="38_71hgo"]
+[ext_resource type="AudioStream" uid="uid://cqi2m0pqvktbb" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_verb_barnacle03_v01_-6dB.wav" id="39_pqmke"]
+[ext_resource type="AudioStream" uid="uid://cayug08rxkmkh" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_verb_bubblePop_v01_-9dB.wav" id="40_71hgo"]
 
 [sub_resource type="AudioStreamSynchronized" id="AudioStreamSynchronized_me85s"]
 stream_count = 3
@@ -81,6 +85,12 @@ streams_count = 3
 stream_0/stream = ExtResource("21_bggwv")
 stream_1/stream = ExtResource("22_u6hki")
 stream_2/stream = ExtResource("23_no07j")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_wg1jy"]
+streams_count = 3
+stream_0/stream = ExtResource("37_01jp5")
+stream_1/stream = ExtResource("38_71hgo")
+stream_2/stream = ExtResource("39_pqmke")
 
 [node name="MusicManager" type="Node" unique_id=1093222500]
 process_mode = 3
@@ -192,6 +202,14 @@ bus = &"SFX"
 
 [node name="SFX_Maskget" type="AudioStreamPlayer" parent="." unique_id=2077321075]
 stream = ExtResource("36_u6hki")
+bus = &"SFX"
+
+[node name="SFX_BarnacleShoot" type="AudioStreamPlayer" parent="." unique_id=445759822]
+stream = SubResource("AudioStreamRandomizer_wg1jy")
+bus = &"SFX"
+
+[node name="SFX_BubblePop" type="AudioStreamPlayer" parent="." unique_id=1460952522]
+stream = ExtResource("40_71hgo")
 bus = &"SFX"
 
 [connection signal="timeout" from="Timer_Footstep" to="." method="_on_timer_footstep_timeout"]
