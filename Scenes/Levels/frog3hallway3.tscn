@@ -70,7 +70,6 @@ fade_in_time = 2.0
 
 [node name="Player" parent="." unique_id=1327567935 instance=ExtResource("9_frehk")]
 position = Vector2(-592, 40)
-double_jump_pixels = 128
 
 [node name="LeftSpawn" parent="." unique_id=1409851272 instance=ExtResource("10_x1mi3")]
 position = Vector2(-592, 104)
@@ -80,10 +79,10 @@ position = Vector2(576, 104)
 direction = 1
 
 [connection signal="body_entered" from="TileMapLayer/LevelTransition" to="TileMapLayer/LevelTransition" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@108401" to="TileMapLayer/@Area2D@108401" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@108402" to="TileMapLayer/@Area2D@108402" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@108403" to="TileMapLayer/@Area2D@108403" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@108404" to="TileMapLayer/@Area2D@108404" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@108405" to="TileMapLayer/@Area2D@108405" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@108406" to="TileMapLayer/@Area2D@108406" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@108444" to="TileMapLayer/@Area2D@108444" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@77763" to="TileMapLayer/@Area2D@77763" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@77764" to="TileMapLayer/@Area2D@77764" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@77765" to="TileMapLayer/@Area2D@77765" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@77766" to="TileMapLayer/@Area2D@77766" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@77767" to="TileMapLayer/@Area2D@77767" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@77768" to="TileMapLayer/@Area2D@77768" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@77806" to="TileMapLayer/@Area2D@77806" method="_on_body_entered"]

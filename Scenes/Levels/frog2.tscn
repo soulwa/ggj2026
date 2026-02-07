@@ -58,7 +58,6 @@ tile_set = ExtResource("6_pwbqo")
 
 [node name="Player" parent="." unique_id=1327567935 instance=ExtResource("4_pwbqo")]
 position = Vector2(-504, 40)
-double_jump_pixels = 128
 
 [node name="LeftSpawn" parent="." unique_id=1409851272 instance=ExtResource("5_1uewa")]
 position = Vector2(-592, 40)
@@ -67,15 +66,15 @@ position = Vector2(-592, 40)
 position = Vector2(3178, 14)
 direction = 1
 
-[connection signal="body_entered" from="TileMapLayer/@Area2D@42284" to="TileMapLayer/@Area2D@42284" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@42285" to="TileMapLayer/@Area2D@42285" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@42286" to="TileMapLayer/@Area2D@42286" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@42287" to="TileMapLayer/@Area2D@42287" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@42288" to="TileMapLayer/@Area2D@42288" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@42289" to="TileMapLayer/@Area2D@42289" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@42290" to="TileMapLayer/@Area2D@42290" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@42293" to="TileMapLayer/@Area2D@42293" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@42294" to="TileMapLayer/@Area2D@42294" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@42295" to="TileMapLayer/@Area2D@42295" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@42296" to="TileMapLayer/@Area2D@42296" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@42297" to="TileMapLayer/@Area2D@42297" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/LevelTransition" to="TileMapLayer/LevelTransition" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@74167" to="TileMapLayer/@Area2D@74167" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@74168" to="TileMapLayer/@Area2D@74168" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@74169" to="TileMapLayer/@Area2D@74169" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@74170" to="TileMapLayer/@Area2D@74170" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@74171" to="TileMapLayer/@Area2D@74171" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@74172" to="TileMapLayer/@Area2D@74172" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@74174" to="TileMapLayer/@Area2D@74174" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@74175" to="TileMapLayer/@Area2D@74175" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@74176" to="TileMapLayer/@Area2D@74176" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@74177" to="TileMapLayer/@Area2D@74177" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@74178" to="TileMapLayer/@Area2D@74178" method="_on_body_entered"]
