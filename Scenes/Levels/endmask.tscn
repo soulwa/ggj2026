@@ -20,7 +20,7 @@ shader_parameter/contrast = 0.3370000160075
 [node name="EndMask" type="Node2D" unique_id=360288603]
 rotation = 0.0020805018
 script = ExtResource("1_2o5rt")
-left = "uid://bq4va81v4pgd0"
+left = "uid://b2c8c5424xxyx"
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1346476378]
 script = ExtResource("2_dih3r")
