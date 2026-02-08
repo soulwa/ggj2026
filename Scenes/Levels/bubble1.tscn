@@ -74,15 +74,15 @@ offset_top = 368.0
 offset_right = 300.0
 offset_bottom = 416.0
 theme_override_font_sizes/font_size = 30
-text = "POKING BUBBLES restores EVERYTHING."
+text = "POKING bubblesg restores EVERYTHING."
 
 [connection signal="body_entered" from="TileMapLayer/LevelTransition" to="TileMapLayer/LevelTransition" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@77069" to="TileMapLayer/@Area2D@77069" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@77070" to="TileMapLayer/@Area2D@77070" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@77071" to="TileMapLayer/@Area2D@77071" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@77072" to="TileMapLayer/@Area2D@77072" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@77073" to="TileMapLayer/@Area2D@77073" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@77074" to="TileMapLayer/@Area2D@77074" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@77075" to="TileMapLayer/@Area2D@77075" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@77076" to="TileMapLayer/@Area2D@77076" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@77077" to="TileMapLayer/@Area2D@77077" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@119509" to="TileMapLayer/@Area2D@119509" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@119510" to="TileMapLayer/@Area2D@119510" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@119511" to="TileMapLayer/@Area2D@119511" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@119512" to="TileMapLayer/@Area2D@119512" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@119513" to="TileMapLayer/@Area2D@119513" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@119514" to="TileMapLayer/@Area2D@119514" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@119515" to="TileMapLayer/@Area2D@119515" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@119516" to="TileMapLayer/@Area2D@119516" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@119517" to="TileMapLayer/@Area2D@119517" method="_on_body_entered"]
