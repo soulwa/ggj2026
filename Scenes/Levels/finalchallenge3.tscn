@@ -56,14 +56,14 @@ position = Vector2(1384, 34)
 position = Vector2(-47, 100)
 
 [connection signal="body_entered" from="TileMapLayer/LevelTransition" to="TileMapLayer/LevelTransition" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@95871" to="TileMapLayer/@Area2D@95871" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@95872" to="TileMapLayer/@Area2D@95872" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@95873" to="TileMapLayer/@Area2D@95873" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@95874" to="TileMapLayer/@Area2D@95874" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@95875" to="TileMapLayer/@Area2D@95875" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@95876" to="TileMapLayer/@Area2D@95876" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@95877" to="TileMapLayer/@Area2D@95877" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@95878" to="TileMapLayer/@Area2D@95878" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@95879" to="TileMapLayer/@Area2D@95879" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@98995" to="TileMapLayer/@Area2D@98995" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@98996" to="TileMapLayer/@Area2D@98996" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@98997" to="TileMapLayer/@Area2D@98997" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@98998" to="TileMapLayer/@Area2D@98998" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@98999" to="TileMapLayer/@Area2D@98999" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@99000" to="TileMapLayer/@Area2D@99000" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@99001" to="TileMapLayer/@Area2D@99001" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@99002" to="TileMapLayer/@Area2D@99002" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@99003" to="TileMapLayer/@Area2D@99003" method="_on_body_entered"]
 
 [editable path="CheckpointTall"]

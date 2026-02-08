@@ -78,10 +78,10 @@ texture = SubResource("AtlasTexture_t4x2v")
 offset = Vector2(-4, -30)
 
 [connection signal="body_entered" from="TileMapLayer/LevelTransition" to="TileMapLayer/LevelTransition" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@106136" to="TileMapLayer/@Area2D@106136" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@106137" to="TileMapLayer/@Area2D@106137" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@106138" to="TileMapLayer/@Area2D@106138" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@106139" to="TileMapLayer/@Area2D@106139" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@106140" to="TileMapLayer/@Area2D@106140" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@106141" to="TileMapLayer/@Area2D@106141" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@106142" to="TileMapLayer/@Area2D@106142" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@99987" to="TileMapLayer/@Area2D@99987" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@99988" to="TileMapLayer/@Area2D@99988" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@99989" to="TileMapLayer/@Area2D@99989" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@99990" to="TileMapLayer/@Area2D@99990" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@99991" to="TileMapLayer/@Area2D@99991" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@99992" to="TileMapLayer/@Area2D@99992" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@99993" to="TileMapLayer/@Area2D@99993" method="_on_body_entered"]

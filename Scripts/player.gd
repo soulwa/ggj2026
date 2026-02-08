@@ -749,28 +749,35 @@ func show_swapmask_visual() -> void:
 		swapmask_ui_left.hide()
 	
 	# update visuals
+	swapmask_ui_left.get_node("DiveMask/Glow").hide()
+	swapmask_ui_left.get_node("DoubleJumpMask/Glow").hide()
+	swapmask_ui_left.get_node("ThrustMask/Glow").hide()
+	swapmask_ui_right.get_node("DiveMask/Glow").hide()
+	swapmask_ui_right.get_node("DoubleJumpMask/Glow").hide()
+	swapmask_ui_right.get_node("ThrustMask/Glow").hide()
+	if thrusts_remaining > 0: swapmask_ui_left.get_node("ThrustMask").self_modulate = enabled_mask_modulate
+	else: swapmask_ui_left.get_node("ThrustMask").self_modulate = disabled_mask_modulate
+	if thrusts_remaining > 0: swapmask_ui_right.get_node("ThrustMask").self_modulate = enabled_mask_modulate
+	else: swapmask_ui_right.get_node("ThrustMask").self_modulate = disabled_mask_modulate
+	if dives_remaining > 0: swapmask_ui_left.get_node("DiveMask").self_modulate = enabled_mask_modulate
+	else: swapmask_ui_left.get_node("DiveMask").self_modulate = disabled_mask_modulate
+	if dives_remaining > 0: swapmask_ui_right.get_node("DiveMask").self_modulate = enabled_mask_modulate
+	else: swapmask_ui_right.get_node("DiveMask").self_modulate = disabled_mask_modulate
+	if doublejumps_remaining > 0: swapmask_ui_left.get_node("DoubleJumpMask").self_modulate = enabled_mask_modulate
+	else: swapmask_ui_left.get_node("DoubleJumpMask").self_modulate = disabled_mask_modulate
+	if doublejumps_remaining > 0: swapmask_ui_right.get_node("DoubleJumpMask").self_modulate = enabled_mask_modulate
+	else: swapmask_ui_right.get_node("DoubleJumpMask").self_modulate = disabled_mask_modulate
 	match swapmask_target:
 		Globals.Action.Thrust:
-			swapmask_ui_left.get_node("ThrustMask").modulate = enabled_mask_modulate
-			swapmask_ui_left.get_node("DiveMask").modulate = disabled_mask_modulate
-			swapmask_ui_left.get_node("DoubleJumpMask").modulate = disabled_mask_modulate
-			swapmask_ui_right.get_node("ThrustMask").modulate = enabled_mask_modulate
-			swapmask_ui_right.get_node("DiveMask").modulate = disabled_mask_modulate
-			swapmask_ui_right.get_node("DoubleJumpMask").modulate = disabled_mask_modulate
+			swapmask_ui_left.get_node("ThrustMask/Glow").show()
+			swapmask_ui_right.get_node("ThrustMask/Glow").show()
 		Globals.Action.Dive:
-			swapmask_ui_left.get_node("ThrustMask").modulate = disabled_mask_modulate
-			swapmask_ui_left.get_node("DiveMask").modulate = enabled_mask_modulate
-			swapmask_ui_left.get_node("DoubleJumpMask").modulate = disabled_mask_modulate
-			swapmask_ui_right.get_node("ThrustMask").modulate = disabled_mask_modulate
-			swapmask_ui_right.get_node("DiveMask").modulate = enabled_mask_modulate
-			swapmask_ui_right.get_node("DoubleJumpMask").modulate = disabled_mask_modulate
+			swapmask_ui_left.get_node("DiveMask/Glow").show()
+			swapmask_ui_right.get_node("DiveMask/Glow").show()
 		Globals.Action.DoubleJump:
-			swapmask_ui_left.get_node("ThrustMask").modulate = disabled_mask_modulate
-			swapmask_ui_left.get_node("DiveMask").modulate = disabled_mask_modulate
-			swapmask_ui_left.get_node("DoubleJumpMask").modulate = enabled_mask_modulate
-			swapmask_ui_right.get_node("ThrustMask").modulate = disabled_mask_modulate
-			swapmask_ui_right.get_node("DiveMask").modulate = disabled_mask_modulate
-			swapmask_ui_right.get_node("DoubleJumpMask").modulate = enabled_mask_modulate
+			swapmask_ui_left.get_node("DoubleJumpMask/Glow").show()
+			swapmask_ui_right.get_node("DoubleJumpMask/Glow").show()
+	
 	if Globals.has_downdash:
 		swapmask_ui_left.get_node("DiveMask").show()
 		swapmask_ui_right.get_node("DiveMask").show()

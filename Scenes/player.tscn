@@ -33,6 +33,7 @@
 [ext_resource type="Texture2D" uid="uid://drp087oejy2k2" path="res://Assets/Sprites/player-death-mask-up.png" id="22_36dho"]
 [ext_resource type="Texture2D" uid="uid://cfx2an7w88eht" path="res://Assets/Sprites/mask - selectors.png" id="24_2ijsl"]
 [ext_resource type="Texture2D" uid="uid://bu8yyo05qolcg" path="res://Assets/Sprites/player-death-spear.png" id="27_yh6i2"]
+[ext_resource type="Texture2D" uid="uid://druoxqdesgpk7" path="res://Assets/Sprites/radgrad.png" id="34_yh6i2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f3sb7"]
 size = Vector2(20, 16.166668)
@@ -1294,7 +1295,7 @@ collision_mask = 46
 floor_block_on_wall = false
 floor_snap_length = 0.0
 script = ExtResource("1_cvnsp")
-disabled_mask_modulate = Color(0.29411766, 0.29411766, 0.29411766, 0.39215687)
+disabled_mask_modulate = Color(0.29954746, 0.29954746, 0.29954743, 0.3137255)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=334823801]
 position = Vector2(0, 7.2500005)
@@ -1356,38 +1357,82 @@ emitting = false
 script = ExtResource("12_smash")
 
 [node name="SwapmaskUIRight" type="Node2D" parent="." unique_id=497003996]
+z_index = 3
 
 [node name="ThrustMask" type="Sprite2D" parent="SwapmaskUIRight" unique_id=390062780]
 position = Vector2(68, 0)
 scale = Vector2(2, 2)
 texture = SubResource("AtlasTexture_lisdf")
 
+[node name="Glow" type="Sprite2D" parent="SwapmaskUIRight/ThrustMask" unique_id=366072247]
+modulate = Color(1, 1, 1, 0.8627451)
+z_index = -1
+position = Vector2(0, -1.4999999)
+scale = Vector2(0.03, 0.03)
+texture = ExtResource("34_yh6i2")
+
 [node name="DiveMask" type="Sprite2D" parent="SwapmaskUIRight" unique_id=1365743981]
 position = Vector2(0, 72)
 scale = Vector2(2, 2)
 texture = SubResource("AtlasTexture_f5f5t")
+
+[node name="Glow" type="Sprite2D" parent="SwapmaskUIRight/DiveMask" unique_id=337530973]
+modulate = Color(1, 1, 1, 0.8627451)
+z_index = -1
+position = Vector2(2.2737368e-13, -0.5000001)
+scale = Vector2(0.03, 0.03)
+texture = ExtResource("34_yh6i2")
 
 [node name="DoubleJumpMask" type="Sprite2D" parent="SwapmaskUIRight" unique_id=58692241]
 position = Vector2(0, -66)
 scale = Vector2(2, 2)
 texture = SubResource("AtlasTexture_by7i4")
 
+[node name="Glow" type="Sprite2D" parent="SwapmaskUIRight/DoubleJumpMask" unique_id=725033235]
+modulate = Color(1, 1, 1, 0.8627451)
+z_index = -1
+position = Vector2(2.2737368e-13, 1.5000076)
+scale = Vector2(0.03, 0.03)
+texture = ExtResource("34_yh6i2")
+
 [node name="SwapmaskUILeft" type="Node2D" parent="." unique_id=1511842870]
+z_index = 3
 
 [node name="ThrustMask" type="Sprite2D" parent="SwapmaskUILeft" unique_id=38656487]
 position = Vector2(-68, 0)
 scale = Vector2(2, 2)
 texture = SubResource("AtlasTexture_lisdf")
 
+[node name="Glow" type="Sprite2D" parent="SwapmaskUILeft/ThrustMask" unique_id=854389002]
+modulate = Color(1, 1, 1, 0.8627451)
+z_index = -1
+position = Vector2(4.5474735e-13, -1.4999999)
+scale = Vector2(0.03, 0.03)
+texture = ExtResource("34_yh6i2")
+
 [node name="DiveMask" type="Sprite2D" parent="SwapmaskUILeft" unique_id=789192492]
 position = Vector2(0, 72)
 scale = Vector2(2, 2)
 texture = SubResource("AtlasTexture_f5f5t")
 
+[node name="Glow" type="Sprite2D" parent="SwapmaskUILeft/DiveMask" unique_id=1557419429]
+modulate = Color(1, 1, 1, 0.8627451)
+z_index = -1
+position = Vector2(2.2737368e-13, -0.5)
+scale = Vector2(0.03, 0.03)
+texture = ExtResource("34_yh6i2")
+
 [node name="DoubleJumpMask" type="Sprite2D" parent="SwapmaskUILeft" unique_id=1544245004]
 position = Vector2(0, -66)
 scale = Vector2(2, 2)
 texture = SubResource("AtlasTexture_by7i4")
+
+[node name="Glow" type="Sprite2D" parent="SwapmaskUILeft/DoubleJumpMask" unique_id=779774837]
+modulate = Color(1, 1, 1, 0.8627451)
+z_index = -1
+position = Vector2(2.2737368e-13, 1.5000076)
+scale = Vector2(0.03, 0.03)
+texture = ExtResource("34_yh6i2")
 
 [node name="SpearHitboxDive" type="Area2D" parent="." unique_id=879356101]
 collision_layer = 0

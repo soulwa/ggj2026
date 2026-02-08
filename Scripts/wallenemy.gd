@@ -47,7 +47,8 @@ func _on_player_detect_area_body_exited(body: Node2D) -> void:
 
 func shoot() -> void:
 	sprite.play("shoot")
-	MusicManager.play_barnacle_shoot()
+	if (player.global_position - global_position).length() < 1500:
+		MusicManager.play_barnacle_shoot()
 	await sprite.animation_finished
 	
 	var new_projectile: WallEnemyProjectile = projectile_scene.instantiate()
@@ -62,5 +63,6 @@ func shoot() -> void:
 	sprite.play("retract")
 
 func reset() -> void:
+	shoot_timer = 0
 	for child in projectile_origin.get_children():
 		child.reset()

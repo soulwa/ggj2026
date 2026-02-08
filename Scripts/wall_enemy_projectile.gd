@@ -10,6 +10,8 @@ class_name WallEnemyProjectile extends CharacterBody2D
 @export var scale_time: float = 0.5
 var scale_tween: Tween
 
+var player: Player
+
 func init_me(init_velocity: Vector2, parent_rotation_degrees: float):
 	velocity = init_velocity
 	rotation_degrees = 360 - parent_rotation_degrees
@@ -21,6 +23,10 @@ func _ready() -> void:
 	scale_tween.tween_property(self, "scale", Vector2.ONE * final_size, scale_time)
 
 func _physics_process(delta: float) -> void:
+	if player == null:
+		# enemy > spawn origin > Tilemaplayer > Level
+		player = get_parent().get_parent().get_parent().get_parent().find_child("Player")
+	
 	var collision = move_and_collide(velocity * delta)
 	if collision:
 		pop_me()
@@ -36,7 +42,8 @@ func pop_me() -> void:
 	collision_shape.disabled = true
 	damage_region_collision_shape.disabled = true
 	
-	MusicManager.play_bubble_pop()
+	if (player.global_position - global_position).length() < 1500:
+		MusicManager.play_bubble_pop()
 	sprite.play("pop")
 	await sprite.animation_finished
 	queue_free()

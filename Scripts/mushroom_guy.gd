@@ -88,9 +88,9 @@ func _setup_spawn_shader() -> void:
 	sprite.material = shader_material
 
 func _start_spawn_animation() -> void:
-	# Disable collision during spawn
-	$CollisionShape2D.disabled = true
-	damage_region.monitoring = false
+	# enable collision during spawn
+	$CollisionShape2D.disabled = false
+	damage_region.monitoring = true
 	
 	# Wait for spawn delay (for staggered spawns)
 	if spawn_delay > 0:
@@ -107,8 +107,8 @@ func _start_spawn_animation() -> void:
 	await spawn_tween.finished
 	
 	# Re-enable collision after spawn
-	$CollisionShape2D.disabled = false
-	damage_region.monitoring = true
+	#$CollisionShape2D.disabled = false
+	#damage_region.monitoring = true
 	is_spawning = false
 
 func _set_squash(value: float) -> void:
