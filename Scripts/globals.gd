@@ -1,5 +1,7 @@
 extends Node
 
+var active_controller_idx: int = 0
+
 var death_count := 0
 var time_spent := 0.0
 
@@ -72,3 +74,22 @@ func reset_game(new_game_plus: bool = true) -> void:
 	end_text_done = false
 	currently_selected_action = Action.Thrust
 	get_tree().change_scene_to_file(title_screen_path)
+
+
+func _input(event):
+	if event is InputEventMouseMotion\
+	or event is InputEventMouseButton\
+	or (event is InputEventJoypadMotion and abs(event.axis_value) < 0.2):
+		return
+	
+	var new_controller_idx: int
+	if event is InputEventJoypadButton\
+	or event is InputEventJoypadMotion:
+		new_controller_idx = event.device
+	elif event is InputEventKey:
+		new_controller_idx = -1
+	else:
+		new_controller_idx = -1
+	
+	if new_controller_idx != active_controller_idx:
+		active_controller_idx = new_controller_idx

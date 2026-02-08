@@ -173,20 +173,30 @@ func _ready() -> void:
 	swapmask_ui_left.hide()
 	swapmask_ui_right.hide()
 
+var input_move_left: bool
+var input_move_right: bool
+var input_move_up: bool
+var input_move_down: bool
+var prev_frame_input_move_left: bool
+var prev_frame_input_move_right: bool
+var prev_frame_input_move_up: bool
+var prev_frame_input_move_down: bool
+
 func _physics_process(delta: float) -> void:
 	
 	#region INPUT
 	var time = Time.get_ticks_msec()
 	
 	# Block all inputs when dead
-	var input_move_left = false if dead else Input.is_action_pressed("left")
-	var input_move_right = false if dead else Input.is_action_pressed("right")
-	var input_move_up = false if dead else Input.is_action_pressed("up")
-	var input_move_down = false if dead else Input.is_action_pressed("down")
+	input_move_left = false if dead else Input.is_action_pressed("left")
+	input_move_right = false if dead else Input.is_action_pressed("right")
+	input_move_up = false if dead else Input.is_action_pressed("up")
+	input_move_down = false if dead else Input.is_action_pressed("down")
 	var input_initial_move_left = false if dead else Input.is_action_just_pressed("left")
 	var input_initial_move_right = false if dead else Input.is_action_just_pressed("right")
 	var input_initial_move_up = false if dead else Input.is_action_just_pressed("up")
 	var input_initial_move_down = false if dead else Input.is_action_just_pressed("down")
+	
 	
 	var input_jump_pressed = false if dead else Input.is_action_just_pressed("jump")
 	var input_jump_held = false if dead else Input.is_action_pressed("jump")
@@ -199,6 +209,73 @@ func _physics_process(delta: float) -> void:
 	var input_swapmask_pressed = false if (dead or lock_input) else Input.is_action_just_pressed("switch_mask")
 	var input_swapmask_held = false if (dead or lock_input) else Input.is_action_pressed("switch_mask")
 	var input_swapmask_released = false if (dead or lock_input) else Input.is_action_just_released("switch_mask")
+	
+	# handle control stick input:
+	if Globals.active_controller_idx >= 0 and !dead:
+		const DEADZONE: float = 0.15
+		var axis_input: Vector2 = Vector2(Input.get_joy_axis(Globals.active_controller_idx, JOY_AXIS_LEFT_X), Input.get_joy_axis(Globals.active_controller_idx, JOY_AXIS_LEFT_Y)) 
+		var angle: float = axis_input.angle()
+		var magnitude: float = axis_input.length()
+		if magnitude < DEADZONE:
+			# do nothing
+			pass
+		elif angle < -3.5 * 2*PI / 8:
+			# left
+			if !input_move_left:
+				input_initial_move_left = true
+			input_move_left = true
+		elif angle < -2.5 * 2*PI / 8:
+			# upleft
+			if !input_move_up:
+				input_initial_move_up = true
+			input_move_up = true
+			if !input_move_left:
+				input_initial_move_left = true
+			input_move_left = true
+		elif angle < -1.5 * 2*PI / 8:
+			# up
+			if !input_move_up:
+				input_initial_move_up = true
+			input_move_up = true
+		elif angle < -0.5 * 2*PI / 8:
+			# upright
+			if !input_move_up:
+				input_initial_move_up = true
+			input_move_up = true
+			if !input_move_right:
+				input_initial_move_right = true
+			input_move_right = true
+		elif angle < 0.5 * 2*PI / 8:
+			# right
+			if !input_move_right:
+				input_initial_move_right = true
+			input_move_right = true
+		elif angle < 1.5 * 2*PI / 8:
+			# downright
+			if !input_move_down:
+				input_initial_move_down = true
+			input_move_down = true
+			if !input_move_right:
+				input_initial_move_right = true
+			input_move_right = true
+		elif angle < 2.5 * 2*PI / 8:
+			# down
+			if !input_move_down:
+				input_initial_move_down = true
+			input_move_down = true
+		elif angle < 3.5 * 2*PI / 8:
+			# downleft
+			if !input_move_down:
+				input_initial_move_down = true
+			input_move_down = true
+			if !input_move_left:
+				input_initial_move_left = true
+			input_move_left = true
+		else:
+			# left
+			if !input_move_left:
+				input_initial_move_left = true
+			input_move_left = true
 	
 	# resolve x move presses
 	last_tick_left = time if input_initial_move_left else last_tick_left
@@ -222,30 +299,39 @@ func _physics_process(delta: float) -> void:
 	elif input_move_down:
 		y_input_priority = 1
 	
+	var input_released_move_left = prev_frame_input_move_left and !input_move_left
+	var input_released_move_right = prev_frame_input_move_right and !input_move_right
+	var input_released_move_up = prev_frame_input_move_up and !input_move_up
+	var input_released_move_down = prev_frame_input_move_down and !input_move_down
+	
+	prev_frame_input_move_left = input_move_left
+	prev_frame_input_move_right = input_move_right
+	prev_frame_input_move_up = input_move_up
+	prev_frame_input_move_down = input_move_down
 	
 	
 	last_latest_direction = latest_direction
 	# presses
-	if Input.is_action_just_pressed("left"):
+	if input_initial_move_left:
 		dir_stack.erase(Vector2i.LEFT)
 		dir_stack.push_back(Vector2i.LEFT)
-	if Input.is_action_just_pressed("right"):
+	if input_initial_move_right:
 		dir_stack.erase(Vector2i.RIGHT)
 		dir_stack.push_back(Vector2i.RIGHT)
-	if Input.is_action_just_pressed("up") and Globals.has_double_jump:
+	if input_initial_move_up and Globals.has_double_jump:
 		dir_stack.erase(Vector2i.UP)
 		dir_stack.push_back(Vector2i.UP)
-	if Input.is_action_just_pressed("down") and Globals.has_downdash:
+	if input_initial_move_down and Globals.has_downdash:
 		dir_stack.erase(Vector2i.DOWN)
 		dir_stack.push_back(Vector2i.DOWN)
 	# releases
-	if Input.is_action_just_released("left"):
+	if input_released_move_left:
 		dir_stack.erase(Vector2i.LEFT)
-	if Input.is_action_just_released("right"):
+	if input_released_move_right:
 		dir_stack.erase(Vector2i.RIGHT)
-	if Input.is_action_just_released("up"):
+	if input_released_move_up:
 		dir_stack.erase(Vector2i.UP)
-	if Input.is_action_just_released("down"):
+	if input_released_move_down:
 		dir_stack.erase(Vector2i.DOWN)
 	latest_direction = dir_stack.back() if dir_stack.size() > 0 else Vector2i.ZERO
 	
