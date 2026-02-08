@@ -475,9 +475,9 @@ func _physics_process(delta: float) -> void:
 			# TODO (sam): do relevant stuff here if we need, like enemies, walls, spike
 			var body = collision.get_collider()
 			if body is EnemySpike:
-				if (spike_recoil_timer < 0 or (current_state == MoveState.DIVE and collision.get_normal().y < 0)):
+				if ((spike_recoil_timer < 0 or current_state == MoveState.DIVE) and collision.get_normal().y < 0):
 					print("avoided spike death")
-				if not (spike_recoil_timer >= 0 or (current_state == MoveState.DIVE and collision.get_normal().y < 0)):
+				if not ((spike_recoil_timer >= 0 or current_state == MoveState.DIVE) and collision.get_normal().y < 0):
 					hp = 0
 					die()
 	#endregion
