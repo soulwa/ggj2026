@@ -12,11 +12,11 @@ var should_shoot: bool = false
 @export var projectile_speed: float = 100
 
 @export var shoot_seconds: float = 5
-@export var shoot_on_sight_seconds: float = 1
+#@export var shoot_on_sight_seconds: float = 1
 var shoot_timer: float = 0
 
 
-@export var angle_variance: float = 10
+@export var angle_variance: float = 5
 
 
 func _ready() -> void:
@@ -66,3 +66,4 @@ func reset() -> void:
 	shoot_timer = 0
 	for child in projectile_origin.get_children():
 		child.reset()
+	sprite.play("idle")
