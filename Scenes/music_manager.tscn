@@ -17,13 +17,13 @@
 [ext_resource type="AudioStream" uid="uid://ck64wpqpqt2cy" path="res://Assets/Sfx/GGJ_2026_SFX_Fenrick_verb_thrust01_v02_-5dB.wav" id="15_3a8q5"]
 [ext_resource type="AudioStream" uid="uid://bv1uasjh2pvrf" path="res://Assets/Sfx/GGJ_2026_SFX_Fenrick_verb_thrust02_v02_-5dB.wav" id="16_hcsv6"]
 [ext_resource type="AudioStream" uid="uid://c3rut5bmlyip7" path="res://Assets/Sfx/GGJ_2026_SFX_Fenrick_verb_thrust03_v02_-5dB.wav" id="17_etocf"]
-[ext_resource type="AudioStream" uid="uid://dd7iru4ix3o2t" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_verb_dive_v02_-5dB.wav" id="17_mfpbl"]
 [ext_resource type="AudioStream" uid="uid://c821vdm6ru70u" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_wallBounce_v02_-6dB.wav" id="18_71hgo"]
-[ext_resource type="AudioStream" uid="uid://tr6cjcylei8y" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_verb_diveBounce01_v03_-6dB.wav" id="18_e0oj2"]
-[ext_resource type="AudioStream" uid="uid://phec1giki4h2" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_verb_diveBounce02_v03_-6dB.wav" id="19_313iq"]
 [ext_resource type="AudioStream" uid="uid://bf2n0lvwukt78" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_verb_doubleJump_v02_-6dB.wav" id="19_jtpmq"]
-[ext_resource type="AudioStream" uid="uid://1vgxk2unqee7" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_verb_diveBounce03_v03_-6dB.wav" id="20_fmjw1"]
+[ext_resource type="AudioStream" uid="uid://ctpgcik2kx10y" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_verb_dive_v03_-5dB.wav" id="20_fmjw1"]
+[ext_resource type="AudioStream" uid="uid://rsb4oa05doxb" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_verb_diveBounce01_v04_-6dB.wav" id="21_vrhb7"]
+[ext_resource type="AudioStream" uid="uid://nko3p8ukvoer" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_verb_diveBounce02_v04_-6dB.wav" id="22_x4ghg"]
 [ext_resource type="AudioStream" uid="uid://p7v7rkyj5j" path="res://Assets/Sfx/GGJ_2026_SFX_Fenrick_dry_maskSelect01_v01_-7dB.wav" id="23_3wvko"]
+[ext_resource type="AudioStream" uid="uid://55nkthace6yo" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_verb_diveBounce03_v04_-6dB.wav" id="23_ipp1j"]
 [ext_resource type="AudioStream" uid="uid://eu1c0vhxooci" path="res://Assets/Sfx/GGJ_2026_SFX_Fenrick_dry_maskSelect02_v01_-7dB.wav" id="24_hfkii"]
 [ext_resource type="AudioStream" uid="uid://c2mcxcka3yfr8" path="res://Assets/Sfx/GGJ2026_SFX_Fenrick_dry_openMenu_v02_-7dB.wav" id="24_tjvmt"]
 [ext_resource type="AudioStream" uid="uid://bt8t1a3df5006" path="res://Assets/Sfx/GGJ_2026_SFX_Fenrick_dry_maskSelect03_v01_-7dB.wav" id="25_cyg2j"]
@@ -88,9 +88,9 @@ stream_2/stream = ExtResource("17_etocf")
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_fmjw1"]
 playback_mode = 1
 streams_count = 3
-stream_0/stream = ExtResource("18_e0oj2")
-stream_1/stream = ExtResource("19_313iq")
-stream_2/stream = ExtResource("20_fmjw1")
+stream_0/stream = ExtResource("21_vrhb7")
+stream_1/stream = ExtResource("22_x4ghg")
+stream_2/stream = ExtResource("23_ipp1j")
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_3bh1g"]
 playback_mode = 1
@@ -156,13 +156,13 @@ volume_db = -1.7
 bus = &"SFX"
 
 [node name="SFX_Dive" type="AudioStreamPlayer" parent="." unique_id=1623284115]
-stream = ExtResource("17_mfpbl")
-volume_db = -4.131
+stream = ExtResource("20_fmjw1")
+volume_db = -4.3
 bus = &"SFX"
 
 [node name="SFX_Divebounce" type="AudioStreamPlayer" parent="." unique_id=1846079055]
 stream = SubResource("AudioStreamRandomizer_fmjw1")
-volume_db = -2.906
+volume_db = -1.2
 pitch_scale = 1.25
 bus = &"SFX"
 
