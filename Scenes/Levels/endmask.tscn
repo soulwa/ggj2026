@@ -76,6 +76,6 @@ fade_in_time = 2.0
 pre_timer = 2.0
 
 [connection signal="body_entered" from="TileMapLayer/LevelTransition" to="TileMapLayer/LevelTransition" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@37511" to="TileMapLayer/@Area2D@37511" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@37512" to="TileMapLayer/@Area2D@37512" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@37513" to="TileMapLayer/@Area2D@37513" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@38950" to="TileMapLayer/@Area2D@38950" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@38951" to="TileMapLayer/@Area2D@38951" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@38952" to="TileMapLayer/@Area2D@38952" method="_on_body_entered"]
