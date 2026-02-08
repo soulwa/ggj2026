@@ -45,7 +45,7 @@ tile_set = ExtResource("5_7nd03")
 
 [node name="ForegroundTiles" type="TileMapLayer" parent="." unique_id=1184481370]
 z_index = 1
-tile_map_data = PackedByteArray("AADu//j/AQAAAAAAAAD9//j/AQAAAAAAAAD2//j/AQAEAAAAAAATAPj/AQAEAAAAAAAHAPj/AQAIAAAAAAD6/wAAAQAAAAQAAAAFAAAAAQAAAAQAAAASACAAAAAAAAUAAAD2/xYAAAAAAAMAAAAGABUAAAAAAAMAAAD7/xUAAAAAAAMAAAAIABYAAAADAAIAABD+/xMAAAADAAIAAAABABMAAAADAAIAABD8/xUAAAAFAAIAAAAFABUAAAAFAAIAAAD3/xYAAAADAAIAAADu/yAAAAAAAAQAAADz/yAAAAAAAAQAAAANACAAAAABAAQAAAAOACAAAAAAAAQAAADy/yAAAAAAAAQAAADp/wMAAAABAAQAAAD9/xAAAAACAAIAAAADABEAAAACAAIAAAD8/w0AAAACAAIAAAAFAA0AAAACAAIAAAD+/wcAAAAAAAQAAAABAAcAAAAAAAQAABACAAcAAAAAAAQAAAABAA4AAAACAAIAAAA=")
+tile_map_data = PackedByteArray("AADu//j/AQAAAAAAAAD9//j/AQAAAAAAAAD2//j/AQAEAAAAAAATAPj/AQAEAAAAAAAHAPj/AQAIAAAAAAD6/wAAAQAAAAQAAAAFAAAAAQAAAAQAAAASACAAAAAAAAUAAAD2/xYAAAAAAAMAAAAGABUAAAAAAAMAAAD7/xUAAAAAAAMAAAAIABYAAAADAAIAABD+/xMAAAADAAIAAAABABMAAAADAAIAABD8/xUAAAAFAAIAAAAFABUAAAAFAAIAAAD3/xYAAAADAAIAAADu/yAAAAAAAAQAAADz/yAAAAAAAAQAAAANACAAAAABAAQAAAAOACAAAAAAAAQAAADy/yAAAAAAAAQAAADp/wMAAAABAAQAAAD+/wcAAAAAAAQAAAABAAcAAAAAAAQAABACAAcAAAAAAAQAAAAOAAAAAQAEAAgAAAAOAAEAAQAEAAgAAAAPAAQAAQAEAAgAAAANAAwAAQAIAAwAAADx/w8AAQAIAAwAAAADABEAAQAMAAwAAAD7/xIAAQAQAAwAAADt//v/AQAMAAgAAADq////AQAMAAgAAAD3/wUAAQAQAAwAAAA=")
 tile_set = ExtResource("6_wbuh1")
 
 [node name="Player" parent="." unique_id=1327567935 instance=ExtResource("4_7h88m")]
@@ -72,7 +72,7 @@ theme_override_font_sizes/font_size = 30
 text = "press action to SPIN."
 after_mushmask = true
 
-[connection signal="body_entered" from="TileMapLayer/@Area2D@53584" to="TileMapLayer/@Area2D@53584" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@53585" to="TileMapLayer/@Area2D@53585" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@53586" to="TileMapLayer/@Area2D@53586" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@53587" to="TileMapLayer/@Area2D@53587" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/LevelTransition" to="TileMapLayer/LevelTransition" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@58218" to="TileMapLayer/@Area2D@58218" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@58219" to="TileMapLayer/@Area2D@58219" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@58220" to="TileMapLayer/@Area2D@58220" method="_on_body_entered"]
