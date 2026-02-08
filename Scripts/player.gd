@@ -210,6 +210,12 @@ func _physics_process(delta: float) -> void:
 	var input_swapmask_held = false if (dead or lock_input) else Input.is_action_pressed("switch_mask")
 	var input_swapmask_released = false if (dead or lock_input) else Input.is_action_just_released("switch_mask")
 	
+	var input_die = false if (dead or lock_input) else Input.is_action_just_pressed("killself")
+	
+	if input_die:
+		die()
+		return
+	
 	# handle control stick input:
 	if Globals.active_controller_idx >= 0 and !dead:
 		const DEADZONE: float = 0.15
