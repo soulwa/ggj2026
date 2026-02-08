@@ -24,7 +24,7 @@ down = "uid://4c1ps6n1sm4p"
 script = ExtResource("2_v46p1")
 
 [node name="DecalsXl2" type="Sprite2D" parent="." unique_id=1633239638]
-position = Vector2(-1.9073486e-06, 318)
+position = Vector2(-1.9073489e-06, 296)
 rotation = 3.1415927
 scale = Vector2(1.7748309, 1.5703425)
 texture = ExtResource("3_f6soa")
