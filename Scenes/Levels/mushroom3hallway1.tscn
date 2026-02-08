@@ -85,12 +85,12 @@ theme_override_font_sizes/font_size = 30
 text = "DIVE restores SPIN and THRUST."
 after_mushmask = true
 
-[connection signal="body_entered" from="TileMapLayer/LevelTransition" to="TileMapLayer/LevelTransition" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@61707" to="TileMapLayer/@Area2D@61707" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@61708" to="TileMapLayer/@Area2D@61708" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@61709" to="TileMapLayer/@Area2D@61709" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@61710" to="TileMapLayer/@Area2D@61710" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@61711" to="TileMapLayer/@Area2D@61711" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@61712" to="TileMapLayer/@Area2D@61712" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@61713" to="TileMapLayer/@Area2D@61713" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@61714" to="TileMapLayer/@Area2D@61714" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@51705" to="TileMapLayer/@Area2D@51705" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@51706" to="TileMapLayer/@Area2D@51706" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@51707" to="TileMapLayer/@Area2D@51707" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@51708" to="TileMapLayer/@Area2D@51708" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@51710" to="TileMapLayer/@Area2D@51710" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@51711" to="TileMapLayer/@Area2D@51711" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@51712" to="TileMapLayer/@Area2D@51712" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@51713" to="TileMapLayer/@Area2D@51713" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@51714" to="TileMapLayer/@Area2D@51714" method="_on_body_entered"]
