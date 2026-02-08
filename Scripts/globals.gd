@@ -41,8 +41,8 @@ func _prewarm_spore_shader() -> void:
 var ignore_spawn_direction := false
 var opposite_direction_from := Level.Direction.Left
 
-var has_double_jump := true
-var has_downdash := true
+var has_double_jump := false
+var has_downdash := false
 var has_crying := false
 
 var has_medal_downdash = false

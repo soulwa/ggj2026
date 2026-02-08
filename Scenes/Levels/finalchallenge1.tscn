@@ -9,6 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://bsfa1tlsh7fwr" path="res://Scenes/player.tscn" id="7_v1ex0"]
 [ext_resource type="PackedScene" uid="uid://p8si7hu4ur8y" path="res://Scenes/player_spawn.tscn" id="8_7v4xs"]
 [ext_resource type="PackedScene" uid="uid://b7sqm3aysrc0e" path="res://Scenes/wallenemy.tscn" id="9_n6kq2"]
+[ext_resource type="PackedScene" uid="uid://dt70bejmpyt2p" path="res://Scenes/checkpoint_tall.tscn" id="10_yg6xg"]
+[ext_resource type="PackedScene" uid="uid://dkk27lpropj1k" path="res://Scenes/checkpoint_long.tscn" id="11_flnjd"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_expw3"]
 shader = ExtResource("4_flnjd")
@@ -40,6 +42,7 @@ tile_set = ExtResource("5_m5xo1")
 
 [node name="ForegroundTiles" type="TileMapLayer" parent="." unique_id=1941805934]
 z_index = 1
+tile_map_data = PackedByteArray("AADx/wwAAAAFAAIAAAD7/wwAAAAFAAIAAAD4/wIAAAAFAAIAACD3/wMAAAAFAAIAACDy/wwAAAADAAIAAAD//wwAAAADAAIAAAAaAAYAAAADAAIAADAeAAYAAAADAAIAACAbAAcAAAADAAIAADA3AA0AAAAFAAIAAAAtAA0AAAAFAAIAAAAuAA0AAAAFAAIAAAA+AA0AAAAFAAIAAABCAAoAAAADAAIAAGAZAAwAAAADAAIAAAAcAAwAAAADAAIAAAAgAAwAAAAEAAIAAAAaAAwAAAADAAIAABAUAAwAAAADAAIAABAhAAwAAAADAAIAABAfAAwAAAADAAIAABBFAAgAAAADAAIAABBHAAgAAAADAAIAABBBAOH/AAACAAAAAABCAOH/AAABAAAAAABIAOH/AAABAAAAAABAAOH/AAAGAAAAAABVAOv/AAAGAAAAAABYAOv/AAAGAAAAAABeAOv/AAABAAAAAABWAOv/AAACAAAAAABdAOv/AAACAAAAAAD0/wkAAQAEAAQAACBGAAUAAQAEAAQAACApAPj/AQAIAAAAAAAsAPj/AQAEAAAAAABKAP3/AQAEAAAAABBNAP3/AQAAAAAAAABDAOX/AQAEAAAAAABGAOX/AQAAAAAAAABUAM3/AQAAAAAAAABOAMz/AQAAAAAAAABKAMz/AQAEAAAAAABFAMz/AQAEAAAAAABHAMz/AQAAAAAAAABDAMz/AQAAAAAAAABBAMz/AQAIAAAAAABAAMz/AQAEAAAAABA8AMv/AQAEAAAAABA6AMv/AQAIAAAAAAAuANj/AAABAAAAAAAvANj/AAAHAAAAAAAzANj/AAAHAAAAAAAMAN//AAAAAAQAAAAQAN//AAAAAAQAAAAJAN//AAACAAQAAAAWAN//AAACAAQAAAALAN//AAAAAAUAAAAHAN//AAAAAAMAAAD7/+D/AAAAAAMAAAD5/+D/AAADAAIAAAD5/8b/AAADAAIAAAD9/8b/AAADAAIAAAD6/6r/AAAFAAIAAAACAKj/AAAFAAIAAAAJAKf/AAAFAAIAAAANAKf/AAAAAAMAAAAQAKf/AAAAAAMAAAAPAKf/AAAAAAQAAAATAKf/AAAAAAQAAAAzAKP/AAAAAAQAAAA1AKP/AAAFAAIAAAA6AKP/AAADAAIAAAA/AKP/AAAAAAMAAABBAKP/AAAAAAUAAABGAKP/AAAAAAUAABBDAKP/AAABAAUAAABHAKP/AAABAAQAAABKAKP/AAAAAAQAAABLAKP/AAAAAAQAAABgAMX/AAACAAAAAABwAMX/AAACAAAAAABzAMX/AAACAAAAAAB1AMX/AAACAAAAAABxAMX/AAACAAAAAABrAMX/AAACAAAAAABvAMX/AAAAAAAAAABsAMX/AAABAAAAAABkAMX/AAABAAAAAABlAMX/AAAHAAAAAAA4AMf/AAAFAAIAAABKAMf/AAAAAAQAAABQAMb/AAAAAAQAAAA=")
 tile_set = ExtResource("6_huusu")
 
 [node name="Player" parent="." unique_id=1327567935 instance=ExtResource("7_v1ex0")]
@@ -52,20 +55,56 @@ direction = 1
 [node name="LeftSpawn" parent="." unique_id=1409851272 instance=ExtResource("8_7v4xs")]
 position = Vector2(-590, 365)
 
+[node name="CheckpointTall" parent="." unique_id=186485059 instance=ExtResource("10_yg6xg")]
+position = Vector2(1712, -3464)
+
+[node name="Marker2D" parent="CheckpointTall" index="0" unique_id=399668683]
+position = Vector2(80, 496)
+
+[node name="CheckpointTall2" parent="." unique_id=20801696 instance=ExtResource("10_yg6xg")]
+position = Vector2(2032, -2312)
+
+[node name="Marker2D" parent="CheckpointTall2" index="0" unique_id=399668683]
+position = Vector2(-48, 496)
+
+[node name="CheckpointLong" parent="." unique_id=2075427257 instance=ExtResource("11_flnjd")]
+position = Vector2(3488, -824)
+
+[node name="Marker2D" parent="CheckpointLong" index="0" unique_id=399668683]
+position = Vector2(-608, 160)
+
+[node name="CheckpointTall3" parent="." unique_id=1202817899 instance=ExtResource("10_yg6xg")]
+position = Vector2(1760, 168)
+
+[node name="Marker2D" parent="CheckpointTall3" index="0" unique_id=399668683]
+position = Vector2(96, 256)
+
+[node name="CheckpointTall4" parent="." unique_id=1519364903 instance=ExtResource("10_yg6xg")]
+position = Vector2(-184, -608)
+
+[node name="Marker2D" parent="CheckpointTall4" index="0" unique_id=399668683]
+position = Vector2(56, 168)
+
 [connection signal="body_entered" from="TileMapLayer/LevelTransition" to="TileMapLayer/LevelTransition" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@71983" to="TileMapLayer/@Area2D@71983" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@71984" to="TileMapLayer/@Area2D@71984" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@71985" to="TileMapLayer/@Area2D@71985" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@71986" to="TileMapLayer/@Area2D@71986" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@71987" to="TileMapLayer/@Area2D@71987" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@71988" to="TileMapLayer/@Area2D@71988" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@71989" to="TileMapLayer/@Area2D@71989" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@71990" to="TileMapLayer/@Area2D@71990" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@71994" to="TileMapLayer/@Area2D@71994" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@71995" to="TileMapLayer/@Area2D@71995" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@71996" to="TileMapLayer/@Area2D@71996" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@71997" to="TileMapLayer/@Area2D@71997" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@71998" to="TileMapLayer/@Area2D@71998" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@71999" to="TileMapLayer/@Area2D@71999" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@72000" to="TileMapLayer/@Area2D@72000" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@72001" to="TileMapLayer/@Area2D@72001" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@97132" to="TileMapLayer/@Area2D@97132" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@97133" to="TileMapLayer/@Area2D@97133" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@97134" to="TileMapLayer/@Area2D@97134" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@97135" to="TileMapLayer/@Area2D@97135" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@97136" to="TileMapLayer/@Area2D@97136" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@97137" to="TileMapLayer/@Area2D@97137" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@97138" to="TileMapLayer/@Area2D@97138" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@97139" to="TileMapLayer/@Area2D@97139" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@97143" to="TileMapLayer/@Area2D@97143" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@97144" to="TileMapLayer/@Area2D@97144" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@97145" to="TileMapLayer/@Area2D@97145" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@97146" to="TileMapLayer/@Area2D@97146" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@97147" to="TileMapLayer/@Area2D@97147" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@97148" to="TileMapLayer/@Area2D@97148" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@97149" to="TileMapLayer/@Area2D@97149" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@97150" to="TileMapLayer/@Area2D@97150" method="_on_body_entered"]
+
+[editable path="CheckpointTall"]
+[editable path="CheckpointTall2"]
+[editable path="CheckpointLong"]
+[editable path="CheckpointTall3"]
+[editable path="CheckpointTall4"]

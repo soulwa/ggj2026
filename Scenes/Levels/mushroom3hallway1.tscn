@@ -60,10 +60,10 @@ tile_set = ExtResource("7_tb2x4")
 position = Vector2(-592, 40)
 
 [node name="LeftSpawn" parent="." unique_id=1409851272 instance=ExtResource("9_ea4tw")]
-position = Vector2(-893, 326)
+position = Vector2(-896, 328)
 
 [node name="RightSpawn" parent="." unique_id=471625365 instance=ExtResource("9_ea4tw")]
-position = Vector2(1600, -634)
+position = Vector2(1600, -632)
 direction = 1
 
 [node name="Helptext" parent="." unique_id=1654642092 instance=ExtResource("10_ec0k8")]
@@ -87,11 +87,11 @@ text = "DIVE restores SPIN and THRUST."
 after_mushmask = true
 
 [connection signal="body_entered" from="TileMapLayer/LevelTransition" to="TileMapLayer/LevelTransition" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@59808" to="TileMapLayer/@Area2D@59808" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@59809" to="TileMapLayer/@Area2D@59809" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@59810" to="TileMapLayer/@Area2D@59810" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@59811" to="TileMapLayer/@Area2D@59811" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@59812" to="TileMapLayer/@Area2D@59812" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@59813" to="TileMapLayer/@Area2D@59813" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@59814" to="TileMapLayer/@Area2D@59814" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@59815" to="TileMapLayer/@Area2D@59815" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@115454" to="TileMapLayer/@Area2D@115454" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@115455" to="TileMapLayer/@Area2D@115455" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@115456" to="TileMapLayer/@Area2D@115456" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@115457" to="TileMapLayer/@Area2D@115457" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@115458" to="TileMapLayer/@Area2D@115458" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@115459" to="TileMapLayer/@Area2D@115459" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@115460" to="TileMapLayer/@Area2D@115460" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@115461" to="TileMapLayer/@Area2D@115461" method="_on_body_entered"]
