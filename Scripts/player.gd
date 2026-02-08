@@ -185,18 +185,12 @@ var prev_frame_input_move_down: bool
 func _physics_process(delta: float) -> void:
 	var input_die = Input.is_action_just_pressed("killself")
 	if input_die:
+		dead = false
 		die()
 		return
 	
 	#region INPUT
 	var time = Time.get_ticks_msec()
-
-	var input_die = Input.is_action_just_pressed("killself")
-	
-	if input_die:
-		dead = false
-		die()
-		return
 	
 	# Block all inputs when dead
 	input_move_left = false if dead else Input.is_action_pressed("left")
