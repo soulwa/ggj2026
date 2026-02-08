@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b26yahfh282p7" path="res://Scripts/enemyfrog.gd" id="1_mxdow"]
 [ext_resource type="Texture2D" uid="uid://dinxxukahkamg" path="res://Assets/Sprites/frog.png" id="3_4qy08"]
-[ext_resource type="Script" path="res://Scripts/smash_particles.gd" id="4_smash"]
+[ext_resource type="Script" uid="uid://cvogmgc3vx3iq" path="res://Scripts/smash_particles.gd" id="4_smash"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mxdow"]
 size = Vector2(128.66667, 89)
@@ -98,7 +98,7 @@ animations = [{
 
 [node name="Enemy1" type="CharacterBody2D" unique_id=633650046]
 collision_layer = 16
-collision_mask = 2
+collision_mask = 34
 script = ExtResource("1_mxdow")
 player_detection_range = 600
 gravity = 100.0
@@ -121,5 +121,5 @@ position = Vector2(0, -23)
 sprite_frames = SubResource("SpriteFrames_mxdow")
 animation = &"idle"
 
-[node name="SmashParticles" type="CPUParticles2D" parent="."]
+[node name="SmashParticles" type="CPUParticles2D" parent="." unique_id=1643976545]
 script = ExtResource("4_smash")

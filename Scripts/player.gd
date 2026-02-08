@@ -930,6 +930,8 @@ func die() -> void:
 	position = spawnpoint
 	velocity = Vector2.ZERO
 	current_state = MoveState.NORMAL
+	is_jump_animation = false
+	is_doublejump_animation = false
 	hp = START_HP
 	
 	facedir = 1 if Globals.opposite_direction_from == -1 else -1 if Globals.opposite_direction_from == 1 else 1

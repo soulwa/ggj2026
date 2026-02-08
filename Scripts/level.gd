@@ -84,6 +84,8 @@ func reset_enemies() -> void:
 			entity.reset()
 		elif entity is MushroomTrap:
 			entity.reset()
+		elif entity is WallEnemy:
+			entity.reset()
 
 func reset_camera() -> void:
 	$Camera2D.force_initial_position_stable($Player.position, $Player.velocity)

@@ -40,3 +40,7 @@ func pop_me() -> void:
 	sprite.play("pop")
 	await sprite.animation_finished
 	queue_free()
+
+
+func reset() -> void:
+	queue_free()

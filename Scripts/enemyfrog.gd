@@ -92,6 +92,8 @@ func _physics_process(delta: float) -> void:
 		current_state = State.IDLE
 		return
 	
+	var moved: bool = false
+	
 	if (player.position.distance_to(position) < player_detection_range) and not aggroed:
 		aggroed = true
 		MusicManager.add_battler()
@@ -192,6 +194,7 @@ func _physics_process(delta: float) -> void:
 		
 		var xvel_before_move := velocity.x
 		move_and_slide()
+		moved = true
 		var col = get_last_slide_collision()
 		if col:
 			var normal = col.get_normal()
@@ -212,6 +215,7 @@ func _physics_process(delta: float) -> void:
 	elif current_state == State.JUMPING_DOWN:
 		var xvel_before_move := velocity.x
 		move_and_slide()
+		moved = true
 		var col = get_last_slide_collision()
 		if col:
 			var normal = col.get_normal()
@@ -233,6 +237,13 @@ func _physics_process(delta: float) -> void:
 	elif current_state == State.JUMPING_DOWN:
 		$AnimatedSprite2D.play("jumping_down")
 	#endregion
+	
+	if moved:
+		for idx in get_slide_collision_count():
+			var collision = get_slide_collision(idx)
+			var body = collision.get_collider()
+			if body is EnemySpike:
+				die()
 
 func _add_ground_dent() -> void:
 	# Emit particles upward (away from the ground)
@@ -252,6 +263,8 @@ func _add_ground_dent() -> void:
 					child.add_temporary_dent(dent_pos, Vector2.DOWN, 48.0, 2.0)
 					return
 
+var death_tween: Tween
+
 func die() -> void:
 	dead = true
 	$DamageRegion.monitoring = false
@@ -260,20 +273,30 @@ func die() -> void:
 	
 	MusicManager.play_killenemy()
 	
+	if aggroed:
+		aggroed = false
+		MusicManager.remove_battler()
+	
 	await $AnimatedSprite2D.animation_finished
 	
-	var tween = create_tween()
-	tween.tween_property(self, "modulate:a", 0.0, 2.0)
-	tween.tween_callback(func():
+	if death_tween: death_tween.kill()
+	death_tween = create_tween()
+	death_tween.tween_property(self, "modulate:a", 0.0, 2.0)
+	death_tween.tween_callback(func():
 		visible = false
 		self.modulate.a = 1.0
 	)
 
 func reset() -> void:
+	position = spawn
+	current_state = State.IDLE
+	
 	visible = true
+	self.modulate.a = 1.0
 	dead = false
 	$DamageRegion.monitoring = true
 	$CollisionShape2D.disabled = false
+	$AnimatedSprite2D.play("idle")
 	
-	position = spawn
-	current_state = State.IDLE
+	if death_tween: death_tween.kill()
+	
