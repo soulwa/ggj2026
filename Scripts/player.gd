@@ -190,6 +190,13 @@ func _physics_process(delta: float) -> void:
 	
 	#region INPUT
 	var time = Time.get_ticks_msec()
+
+	var input_die = Input.is_action_just_pressed("killself")
+	
+	if input_die:
+		dead = false
+		die()
+		return
 	
 	# Block all inputs when dead
 	input_move_left = false if dead else Input.is_action_pressed("left")
@@ -213,8 +220,6 @@ func _physics_process(delta: float) -> void:
 	var input_swapmask_pressed = false if (dead or lock_input) else Input.is_action_just_pressed("switch_mask")
 	var input_swapmask_held = false if (dead or lock_input) else Input.is_action_pressed("switch_mask")
 	var input_swapmask_released = false if (dead or lock_input) else Input.is_action_just_released("switch_mask")
-	
-	
 	
 	# handle control stick input:
 	if Globals.active_controller_idx >= 0 and !dead:
