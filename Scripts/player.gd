@@ -89,6 +89,7 @@ var double_jump_power: float
 @export var dive_gravity_multiplier := 2.0
 @export var dive_initial_y_vel := 1000.0
 @export var dive_bounce_boost_height := 32.0 * 4
+@export var dive_bounce_x_control_multiplier := 0.5
 
 @export_subgroup("Thrust Frog")
 @export var frog_bounce_force_x := 700.0
@@ -437,7 +438,7 @@ func _physics_process(delta: float) -> void:
 		
 		# left/right movement
 		if hmove != 0:
-			velocity.x = move_toward(velocity.x, hmove * air_top_speed, air_accel * delta)
+			velocity.x = move_toward(velocity.x, hmove * air_top_speed, air_accel * dive_bounce_x_control_multiplier * delta)
 		
 		# Collect all overlapping bodies first
 		var overlapping_bodies = spear_hitbox_dive.get_overlapping_bodies()
@@ -672,10 +673,12 @@ func bounce_off_wall() -> void:
 	disable_jump_cancel = true
 	MusicManager.play_sound_wallbounce()
 	MusicManager.stop_sound_thrust()
+	is_doublejump_animation = false
 
 func bounce_off_frog(frog: EnemyFrog) -> void:
 	MusicManager.play_frogbounce()
 	MusicManager.stop_sound_thrust()
+	is_doublejump_animation = false
 	velocity.x = -facedir * frog_bounce_force_x
 	velocity.y = frog_bounce_force_y
 	
@@ -690,6 +693,7 @@ func bounce_off_frog(frog: EnemyFrog) -> void:
 
 func bounce_off_mushroom(mushroom: MushroomGuy) -> void:
 	MusicManager.stop_sound_thrust()
+	is_doublejump_animation = false
 	velocity.x = -facedir * mushroom_bounce_force_x
 	velocity.y = mushroom_bounce_force_y
 	
@@ -704,6 +708,7 @@ func bounce_off_mushroom(mushroom: MushroomGuy) -> void:
 
 func bounce_off_bubble(bubble: WallEnemyProjectile) -> void:
 	MusicManager.stop_sound_thrust()
+	is_doublejump_animation = false
 	velocity.x = -facedir * bubble_bounce_force_x
 	velocity.y = bubble_bounce_force_y
 	
@@ -801,6 +806,7 @@ func begin_dive() -> void:
 		spear_hitbox_dive_shape_right.disabled = false
 		spear_hitbox_dive_shape_left.disabled = true
 	MusicManager.play_sound_dive()
+	end_thrust()
 	end_spin_hitbox()
 
 func dive_bounce(extra_height: float = 0) -> void:
@@ -835,6 +841,7 @@ func double_jump() -> void:
 	MusicManager.play_sound_doublejump()
 	spin_jump_hitbox.monitoring = true
 	spin_jump_hitbox_shape.disabled = false
+	end_thrust()
 
 func check_spin_hits() -> void:
 	if spin_jump_hitbox.monitoring:

@@ -20,7 +20,7 @@ var shoot_timer: float = 0
 
 
 func _ready() -> void:
-	shoot_timer = shoot_seconds
+	#shoot_timer = shoot_seconds
 	sprite.play("idle")
 
 
