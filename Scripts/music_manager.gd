@@ -3,6 +3,7 @@ extends Node
 @onready var music_opt_1: AudioStreamPlayer = $MusicOpt1
 @onready var music_opt_2: AudioStreamPlayer = $MusicOpt2
 var music: AudioStreamPlayer
+var init_music_volume_linear: float
 @export var crossfade_time: float = 2
 @export var music_slow_time: float = 0.5
 
@@ -10,7 +11,8 @@ var battlers: int = 0
 
 func _ready() -> void:
 	music = music_opt_1
-	music.play()
+	init_music_volume_linear = music.volume_linear
+	play_music()
 	crossfade_to_explore_music(true)
 
 func _process(_delta: float) -> void:
@@ -28,6 +30,10 @@ func remove_battler() -> void:
 	battlers = max(0, battlers - 1)
 	if battlers == 0:
 		crossfade_to_explore_music()
+
+func play_music() -> void:
+	music.volume_linear = init_music_volume_linear
+	music.play()
 
 func crossfade_to_battle_music(instant: bool = false) -> void:
 	if instant:
@@ -167,6 +173,9 @@ func play_cry() -> void:
 	tween.tween_interval(3)
 	await tween.finished
 	$SFX_Cry.play()
+
+func stop_cry() -> void:
+	$SFX_Cry.stop()
 
 func play_barnacle_shoot() -> void:
 	$SFX_BarnacleShoot.play()

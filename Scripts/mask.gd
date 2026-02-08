@@ -63,11 +63,11 @@ func _on_body_entered(body: Node2D) -> void:
 			queue_free()
 		if is_medal_downdash:
 			Globals.has_medal_downdash = true
-			MusicManager.play_maskget(true)
+			MusicManager.play_maskget(false)
 			queue_free()
 		if is_medal_doublejump:
 			Globals.has_medal_doublejump = true
-			MusicManager.play_maskget(true)
+			MusicManager.play_maskget(false)
 			queue_free()
 		
 		match Globals.currently_selected_action:

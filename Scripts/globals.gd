@@ -74,6 +74,8 @@ func reset_game(new_game_plus: bool = true) -> void:
 	end_text_done = false
 	currently_selected_action = Action.Thrust
 	get_tree().change_scene_to_file(title_screen_path)
+	MusicManager.stop_cry()
+	MusicManager.play_music()
 
 
 func _input(event):
