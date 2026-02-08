@@ -17,7 +17,7 @@ shader_parameter/contrast = 0.3370000160075
 
 [node name="FinalChasm" type="Node2D" unique_id=360288603]
 script = ExtResource("1_oqgxb")
-right = "uid://bhlowkskji67h"
+right = "uid://dlb737vadtbgt"
 up = "uid://4c1ps6n1sm4p"
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1346476378]
@@ -66,6 +66,6 @@ position = Vector2(0, -260)
 direction = 2
 
 [connection signal="body_entered" from="TileMapLayer/LevelTransition" to="TileMapLayer/LevelTransition" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@196691" to="TileMapLayer/@Area2D@196691" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@196692" to="TileMapLayer/@Area2D@196692" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@196693" to="TileMapLayer/@Area2D@196693" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@30397" to="TileMapLayer/@Area2D@30397" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@30398" to="TileMapLayer/@Area2D@30398" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@30399" to="TileMapLayer/@Area2D@30399" method="_on_body_entered"]
