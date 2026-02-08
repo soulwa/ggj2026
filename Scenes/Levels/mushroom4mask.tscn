@@ -55,7 +55,7 @@ position = Vector2(-504, 40)
 position = Vector2(-692, 86)
 
 [node name="RightSpawn" parent="." unique_id=471625365 instance=ExtResource("5_wbuh1")]
-position = Vector2(873, 21)
+position = Vector2(848, 40)
 direction = 1
 
 [node name="MaskDoublejump" parent="." unique_id=588720635 instance=ExtResource("6_ltlgd")]
@@ -73,6 +73,6 @@ text = "press action to SPIN."
 after_mushmask = true
 
 [connection signal="body_entered" from="TileMapLayer/LevelTransition" to="TileMapLayer/LevelTransition" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@58218" to="TileMapLayer/@Area2D@58218" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@58219" to="TileMapLayer/@Area2D@58219" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@58220" to="TileMapLayer/@Area2D@58220" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@116818" to="TileMapLayer/@Area2D@116818" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@116819" to="TileMapLayer/@Area2D@116819" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@116820" to="TileMapLayer/@Area2D@116820" method="_on_body_entered"]
