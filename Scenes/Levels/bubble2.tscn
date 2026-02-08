@@ -65,11 +65,11 @@ position = Vector2(-768, -24)
 position = Vector2(2239.746, -120)
 direction = 1
 
-[connection signal="body_entered" from="TileMapLayer/@Area2D@83362" to="TileMapLayer/@Area2D@83362" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@83363" to="TileMapLayer/@Area2D@83363" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@83364" to="TileMapLayer/@Area2D@83364" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@83365" to="TileMapLayer/@Area2D@83365" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@83372" to="TileMapLayer/@Area2D@83372" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@83373" to="TileMapLayer/@Area2D@83373" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@83374" to="TileMapLayer/@Area2D@83374" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@83375" to="TileMapLayer/@Area2D@83375" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/LevelTransition" to="TileMapLayer/LevelTransition" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@121923" to="TileMapLayer/@Area2D@121923" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@121924" to="TileMapLayer/@Area2D@121924" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@121925" to="TileMapLayer/@Area2D@121925" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@121932" to="TileMapLayer/@Area2D@121932" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@121933" to="TileMapLayer/@Area2D@121933" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@121934" to="TileMapLayer/@Area2D@121934" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@121935" to="TileMapLayer/@Area2D@121935" method="_on_body_entered"]
